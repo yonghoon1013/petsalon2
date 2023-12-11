@@ -1,0 +1,207 @@
+// 1. font)
+@font-face { // 이 폰트 굵기관련 문제 있음
+    font-family: 'Pretendard-Regular'; 
+   src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff'); 
+   font-weight: 400; 
+   font-style: normal; 
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+@font-face {
+    font-family: 'SUITE-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// 2. mixin)
+
+@mixin flex($x:center, $y:center){
+    display: flex;
+    justify-content: $x;
+    align-items: $y;
+
+    @content;
+}
+
+@mixin font($a:inherit, $b:inherit, $c:inherit){
+    font-size: $a;
+    font-weight: $b;
+    color: $c;
+
+    @content;
+}
+
+@mixin text(){
+    word-break: keep-all;
+    word-wrap: break-word;
+    @content;
+}
+
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// 3. color)
+$mainColor1: #FF8500;
+$mainColor2: #FFC700;
+$mainColor3: #FFFAED;
+
+$grayColor1: #2D2D2D;
+$grayColor2: #666666;
+$grayColor3: #7D7D7D;
+$grayColor4: #909090;
+$grayColor5: #C2C2C2;
+
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// 4. 변수들)
+$MarPad: 32px;
+
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== =====  ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+section.signUpWrapper{
+    margin: auto;
+    box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.2);
+    font-family: 'SUITE-Regular';
+    // ↑ 임시
+
+    width: 100%; max-width: 640px; min-height: 100vh;
+    padding: 100px $MarPad 150px;
+    background-color: $mainColor3;
+
+    >div.titleWrapper{
+        // outline: 1px solid red;
+        position: relative; top: 0; left: 0; z-index: 0;
+        margin-bottom: 60px;
+        @include flex();
+
+        >button.prevBtn{
+            // outline: 1px solid red;
+            position: absolute; top: 50%; left: 0; z-index: 0;
+            transform: translateY(-50%);
+        }
+
+        >h2{ 
+            // outline: 1px solid red;
+            display: inline-block;
+            @include font(1.875rem, 500, $grayColor3);
+            line-height: 166%;
+            white-space: nowrap;
+        }
+
+    }//div.titleWrapper
+
+
+    >form.signUpForm{
+        >div.inputWrapper{
+            // outline: 1px solid red;
+            &:not(:last-child){
+                margin-bottom: 52px;
+            }
+
+            >label{
+                @include font(1.625rem, 500, $grayColor3);
+                line-height: 192%; 
+                letter-spacing: -0.78px;
+                margin-bottom: 8px;
+            }
+            
+            >input{
+                width: 100%;
+                border: none; border-radius: 35px;
+                padding: 25px 38px;
+                @include font(1.625rem, 400, black);
+
+                &::placeholder{
+                    color: $grayColor5;
+                }
+                &:focus{
+                    outline: none;
+                }
+            }
+
+            >span{
+                display: none;
+                margin-top: 12px;
+                @include font(1.375rem, 400, rgba(144, 144, 144, 0.80));
+                
+                &.active{
+                    display: inline-block;
+                }
+            }
+        }//div.inputWrapper
+
+        >div.idWrapper{
+
+            >label.idLabel{
+
+            }
+            >input.idInput{
+
+            }
+            >span.idInfo{
+
+            }
+
+        }//div.idWrapper
+
+        >div.pwWrapper{
+            >label.pwLabel{
+
+            }//label.pwLabel
+            >input.pwInput{
+
+            }//input.pwInput
+
+        }//div.pwWrapper
+        
+        >div.pwCheckWrapper{
+            >label.pwCheckLabel{
+
+            }//label.pwLabel
+            >input.pwCheckInput{
+
+            }//input.pwInput
+            >span.pwInfo{
+
+            }//span.pwInfo
+
+        }//div.pwWrapper
+
+        >div.nickWrapper{
+            >label.nickLabel{
+
+            }//label.nickLabel
+
+            >input.nickInput{
+
+            }//input.nickInput
+
+            >span.nickInfo{
+
+            }//span.nickInfo
+        }//div.nickWrapper
+        
+        >button.submitBtn{
+            width: 100%;
+            border-radius: 35px;
+            background: $mainColor1;
+            padding: 25px;
+
+            @include flex();
+            @include font(1.875rem, 500, #FFF);
+            white-space: nowrap;
+        }//button.submitBtn
+
+    }//form.signUpForm
+
+}//section.signUpWrapper
+
+
+
+
+
+
+
+
+
+
+
+
