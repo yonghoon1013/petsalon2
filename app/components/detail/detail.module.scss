@@ -1,0 +1,227 @@
+section{
+    >.top{
+        position: relative;
+        padding: 3% 0 ;
+        >button{
+            cursor: pointer;
+        }
+        >p{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            font-size: 24px;
+        }
+    }
+
+    .detailIntro{
+
+        .desinerImg{
+            display: flex;
+            justify-content: center;
+            >div{
+                width: 50%;
+                aspect-ratio: 1;
+                background-color: cadetblue;
+                border-radius: 50%;
+            }
+        }
+
+        .introInfoBox{
+            .introInfo{
+                text-align: center;
+                padding: 5% 0;
+                >p{
+                    line-height: 1.5;
+                }
+                >.name{
+                    font-size: 18px;
+                    font-weight: bold;
+                }
+                >.like{
+                    font-weight: normal;
+                    color: rgb(129, 129, 129);
+                    >span{
+                        color: black;
+                        font-weight: bold;
+                    }
+                }
+                >.info{
+
+                }
+            }
+            .introBtn{
+                border-bottom: 1px solid black;
+                padding-bottom: 5%;
+                >ul{
+                    width: 80%;
+                    margin: auto;
+                    display: flex;
+                    justify-content: space-around;
+                    >li{
+                        position: relative;
+                        >div{
+                            >.img{
+                                width: 45px;
+                                height: 45px;
+                                background-color: chartreuse;
+                            }
+                            >.name{
+                                text-align: center;
+                            }
+                        }
+                        &:not(:last-of-type)::after {
+                            content: '';
+                            position: absolute;
+                            top: 50%;
+                            right: -50%;
+                            transform: translateY(-50%);
+                            height: 80%;
+                            width: 2px;
+                            background-color: rgb(0, 68, 255);
+                        }
+
+                    }
+                }
+            }
+        }
+
+    }
+
+    .designerInfoBox{
+        margin-top: 5%;
+        .title{
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 3%;
+        }
+        .designerInfoCon{
+
+            >li{
+                display: flex;
+                line-height: 2;
+                >.left{
+                    width: 25%;
+                }
+                >.right{
+                    width: 75%;
+                }
+            }
+        }
+    }
+
+    .portfolioBox{
+        margin-top: 5%;
+        .title{
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 3%;
+        }
+        .portfolioImg{
+            height: 300px;
+            .mySwiper{
+                height: 100%;
+                .swiperSlide{
+                    border-radius: 30px;
+                    background-color: rgb(226, 164, 164);
+                    width: 100%;
+                    height: 100%;
+                    text-align: center;
+                }
+            }
+        }
+    }
+
+    .guideBox{
+        margin-top: 5%;
+        .title{
+
+        }
+        >ul{
+
+            >li{
+                border-top: 1px solid black ;
+                >p{
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 5% 0;
+                    &::after{
+                        content: ">";
+                        display: block;
+                    }
+                }
+                >div{
+                    display: none;
+                    font-size: 14px;
+                    line-height: 1.2;
+                }
+                >div.on{
+                    display: block;
+                }
+            }
+        }
+    }
+
+    .commentBox{
+        .title{
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 3%;
+        }
+        >ul{
+            >li{
+                display: flex;
+                padding: 5% 0;
+                border-bottom: 1px solid #FFC88C;
+                &:nth-of-type(1){
+                    border-top: 1px solid #FFC88C;
+                }
+                >.left{
+                    >div{
+                        width: 80px;
+                        height: 80px;
+                        background-color: aquamarine;
+                        border-radius: 50%;
+                    }
+                }
+                >.right{
+                    margin-left: 5%;
+                    .authorBox{
+                        display: flex;
+                        margin-bottom: 3%;
+                        >.left{
+                            display: flex;
+                            width: 50%;
+                            .nickName{
+                                font-weight: bold;
+                                margin-right: 3%;
+                            }
+                            .time{
+                                margin-left: 3%;
+                                font-size: 12px;
+                                color: rgb(189, 189, 189);
+                            }
+                        }
+                        >.right{
+                            display: flex;
+                            justify-content: flex-end;
+                            width: 50%;
+                            .update{
+                                margin-right: 10%;
+                            }
+                            .delete{
+    
+                            }
+                        }
+                    }
+                    .comment{
+                        >p{
+                            font-size: 14px;
+                            line-height: 1.3;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

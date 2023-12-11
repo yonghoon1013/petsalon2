@@ -1,0 +1,206 @@
+.mypageSec {
+	background-color: #FFFAED;
+	padding: 8% 5% 8% 5%;
+	>.profile {
+		>.title {
+			font-size: 1.5rem;
+		}
+		>.titleBox {
+			box-shadow: 0px 0px 20px rgb(218, 218, 218);
+			background-color: white;
+			border-radius: 30px;
+			padding: 5%;
+			margin: 50px 0 0 0;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+
+			>.profPic {
+				width: 150px;
+				height: 150px;
+				border-radius: 100%;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				>img {width: 100%;}
+			}
+
+			>.profName {
+				font-weight: bold;
+				margin: 10px 0 0 0;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				>strong{}
+				>.nameSett{
+					>figure{
+						width: 20px;
+						height: 20px;
+						background-color: white;
+						>img{width: 100%;}
+					}
+				}
+			}
+
+			>.profEmail {margin: 10px 0 0 0;}
+
+			>.profDesc {margin: 10px 0 0 0;}
+		}
+		>.working{
+			margin:  30px 0 0 0;
+			display: flex;
+			justify-content: space-between;
+		}
+	
+	}
+	>.workpics{
+		margin: 130px 0 0 0;
+		>.title{
+			margin: 0 0 50px 0;
+			font-size: 1.5rem;
+		}
+		>.pics{
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			>.picBox{
+				&.active{
+					display: flex;
+				}
+				box-shadow: 0px 0px 20px rgb(218, 218, 218);
+				background-color: white;
+				border-radius: 30px;
+				padding: 5%;
+				display: none;
+				flex-wrap: wrap;
+				justify-content: center;
+				align-items: center;
+				gap: 10px;
+				width: 100%;
+				>li{
+					background-color: orange;
+					border-radius: 13px;
+					width: 130px;
+					height: 130px;
+					&.picAdd{
+						border: 2px dashed black;
+					}
+					>figure{
+						width: 100%;
+						height: 100%;
+						>img{
+							width: 100%;
+						}
+					}
+				}
+			}
+
+			>.picBoxModi{
+				&.active{
+					display: flex;
+				}
+				box-shadow: 0px 0px 20px rgb(218, 218, 218);
+				background-color: white;
+				border-radius: 30px;
+				padding: 5%;
+				display: none;
+				flex-wrap: wrap;
+				justify-content: center;
+				align-items: center;
+				gap: 10px;
+				width: 100%;
+				>li{
+					background-color: orange;
+					border-radius: 13px;
+					width: 130px;
+					height: 130px;
+					&.picAdd{
+						border: 2px dashed black;
+					}
+					>figure{
+						width: 100%;
+						height: 100%;
+						>img{
+							width: 100%;
+						}
+					}
+				}
+			}
+
+		}
+	}
+	>.info{
+		position: relative;
+		margin: 130px 0 0 0;
+		>.title{
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			>strong{font-size: 1.5rem;}
+			>.infoSetting{
+				>figure{
+					width: 30px;
+					background-color: #FFFAED;
+					>img{width: 100%;}
+				}
+			}
+		}
+		>.infoBox{
+			&.active{
+				display: block;
+			}
+			display: none;
+			box-shadow: 0px 0px 20px rgb(218, 218, 218);
+			padding: 5%;
+			margin: 50px 0 0 0;
+			background-color: white;
+			border-radius: 30px;
+			>div{
+				display: flex;
+				flex-direction: column;
+				margin: 5% 0 5% 0;
+				>span{
+					&:nth-of-type(2){
+						margin: 10px 0 0 0;
+					}
+				}
+			}
+			>.dDesc{}
+			>.dPrice{}
+			>.dTime{}
+			>.dAddress{}
+			>.dNumber{}
+		}
+		>.infoBoxModi{
+			&.active{
+				display: block;
+			}
+			display: none;
+			box-shadow: 0px 0px 20px rgb(218, 218, 218);
+			padding: 5%;
+			margin: 50px 0 0 0;
+			background-color: white;
+			border-radius: 30px;
+			>div{
+				display: flex;
+				flex-direction: column;
+				margin: 5% 0 5% 0;
+				>span{
+					&:nth-of-type(2){
+						margin: 10px 0 0 0;
+					}
+				}
+			}
+			>.dDesc{}
+			>.dPrice{}
+			>.dTime{}
+			>.dAddress{}
+			>.dNumber{}
+		}
+
+
+	}
+}
