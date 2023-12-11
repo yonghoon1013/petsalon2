@@ -7,20 +7,6 @@ import axios from 'axios';
 function Mypage() {
   const {profView} = useContext(myContext);
   const [data, setData] = useState([]);
-<<<<<<< HEAD
-  const [view, setView] = useState();
-  const [portPic, setPortPic] = useState([]);
-  const [infoMode, setInfoMode] = useState("list");
-  const [picMode, setPicMode] = useState("list");
-  const infMdDesc = useRef();
-  const infMddPrice = useRef();
-  const infMddTime1 = useRef();
-  const infMddTime2 = useRef();
-  const infMddAddress = useRef();
-  const infMddNumber1 = useRef();
-  const infMddNumber2 = useRef();
-  const infMddNumber3 = useRef();
-=======
   const [view, setView] = useState([]);
   const [portPic, setPortPic] = useState([]);
   const [infoMode, setInfoMode] = useState("list");
@@ -33,7 +19,6 @@ function Mypage() {
   const infMddNumber1 = useRef([]);
   const infMddNumber2 = useRef([]);
   const infMddNumber3 = useRef([]);
->>>>>>> fbf4860c19841fe5e20c7a3fe6707fef283b1526
   
   const dataLd = async () => {
     const sKey = sessionStorage.getItem("key");
@@ -99,8 +84,6 @@ function Mypage() {
     })
   };
 
-<<<<<<< HEAD
-=======
   const portDel = async (e, item) => {
     e.preventDefault();
     const sKey = sessionStorage.getItem("key");
@@ -110,7 +93,6 @@ function Mypage() {
     })
   }
 
->>>>>>> fbf4860c19841fe5e20c7a3fe6707fef283b1526
   useEffect(()=>{
     dataLd();
     portLd();
@@ -136,10 +118,6 @@ function Mypage() {
           <div><input type='checkbox'/></div>
         </div>
       </div>
-<<<<<<< HEAD
-=======
-
->>>>>>> fbf4860c19841fe5e20c7a3fe6707fef283b1526
       <div className={styles.workpics}>
         <div className={styles.title}>나의 포트폴리오</div>
         <div className={styles.pics}>
@@ -148,19 +126,11 @@ function Mypage() {
               <figure><img/></figure>
             </li>
             {
-<<<<<<< HEAD
-            portPic.map(item=>(
-            <li>
-              <figure><img src={item.imgUrl}/></figure>
-            </li>
-            ))
-=======
               portPic.map(item=>(
                 <li>
                   <figure><img src={item.imgUrl}/><button onClick={(e)=>{portDel(e, item)}}>삭제</button></figure>
                 </li>
               ))
->>>>>>> fbf4860c19841fe5e20c7a3fe6707fef283b1526
             }
           </ul>
           <form onSubmit={portPicUpload} className={`${styles.picBoxModi} ${picMode == "write" ? styles.active : ""}`}>
@@ -176,10 +146,6 @@ function Mypage() {
           </form>
         </div>
       </div>
-<<<<<<< HEAD
-=======
-
->>>>>>> fbf4860c19841fe5e20c7a3fe6707fef283b1526
       <div className={styles.info}>
         <div className={styles.title}>
           <strong>나의 영업정보</strong>
@@ -209,10 +175,6 @@ function Mypage() {
             <span>{`${data[0].dNumber1} - ${data[0].dNumber2} - ${data[0].dNumber3}`}</span>
           </div>
         </div>
-<<<<<<< HEAD
-=======
-
->>>>>>> fbf4860c19841fe5e20c7a3fe6707fef283b1526
         <form onSubmit={infoModify} className={`${styles.infoBoxModi} ${infoMode == "modify" ? styles.active : ""}`}>
           <div className={styles.dDesc}>
             <span>안내사항</span>
@@ -224,12 +186,8 @@ function Mypage() {
           </div>
           <div className={styles.dTime}>
             <span>영업시간</span>
-<<<<<<< HEAD
-            <input ref={infMddTime1} type='time' name='dTime1'/><input ref={infMddTime2} type='time' name='dTime2'/>
-=======
             <input ref={infMddTime1} type='time' name='dTime1'/>
             <input ref={infMddTime2} type='time' name='dTime2'/>
->>>>>>> fbf4860c19841fe5e20c7a3fe6707fef283b1526
           </div>
           <div className={styles.dAddress}>
             <span>주소</span>
@@ -237,13 +195,9 @@ function Mypage() {
           </div>
           <div className={styles.dNumber}>
             <span>H.P</span>
-<<<<<<< HEAD
-            <input ref={infMddNumber1} maxLength={3} name='dNumber1'/><input ref={infMddNumber2} maxLength={4} name='dNumber2'/><input ref={infMddNumber3} maxLength={4} name='dNumber3'/>
-=======
             <input ref={infMddNumber1} maxLength={3} name='dNumber1'/>
             <input ref={infMddNumber2} maxLength={4} name='dNumber2'/>
             <input ref={infMddNumber3} maxLength={4} name='dNumber3'/>
->>>>>>> fbf4860c19841fe5e20c7a3fe6707fef283b1526
           </div>
           <button onClick={()=>{setInfoMode("list")}}>수정완료</button>
           <button type='button' onClick={()=>{setInfoMode("list")}}>취소</button>
