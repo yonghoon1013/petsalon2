@@ -1,6 +1,10 @@
 "use client";
 import styles from "./detail.module.scss"
+<<<<<<< HEAD
 import React, { useEffect, useRef, useState } from 'react';
+=======
+import React, { useRef, useState } from 'react';
+>>>>>>> fbf4860c19841fe5e20c7a3fe6707fef283b1526
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 
@@ -13,13 +17,17 @@ import { useRouter } from "next/navigation";
 function Detail() {
     const [on, setOn] = useState(false);
     const router = useRouter();
+<<<<<<< HEAD
     
     const [location, setLocation] = useState(null);
+=======
+>>>>>>> fbf4860c19841fe5e20c7a3fe6707fef283b1526
 
     const accordionToggle = () => {
         setOn(!on);
     }
 
+<<<<<<< HEAD
     const geolocation = () => {
 
         if (navigator.geolocation) {
@@ -43,6 +51,8 @@ function Detail() {
         geolocation();
     }, [])
 
+=======
+>>>>>>> fbf4860c19841fe5e20c7a3fe6707fef283b1526
     return (
         <section>
             <div className={styles.top}>
@@ -213,7 +223,11 @@ function Detail() {
                             </div>
                         </div>
                     </li>
+<<<<<<< HEAD
 
+=======
+                    
+>>>>>>> fbf4860c19841fe5e20c7a3fe6707fef283b1526
                 </ul>
             </div>
 
