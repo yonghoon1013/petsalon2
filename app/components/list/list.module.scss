@@ -25,6 +25,9 @@ section{
             }
             .rank{
                 // display: flex;
+
+            }
+            .space{
                 position: relative;
                 &::after{
                     content: '';
@@ -35,9 +38,6 @@ section{
                     height: 100%;
                     background-color: #FF8500;
                 }
-            }
-            .space{
-
             }
         }
 
@@ -63,46 +63,50 @@ section{
             >li{
                 border-radius: 23px;
                 background-color: rgb(171, 171, 238);
-                padding: 5%;
-                padding-bottom: 5%;
                 margin-bottom: 4%;
-                .imgBox{
-                    display: flex;
-                    justify-content: space-between;
-                    >div{
-                        width: 30%;
-                        aspect-ratio: 1;
-                        border-radius: 10%;
-                        background-color: aqua;
-                    }
-                }
-                .infoBox{
-                    margin: 3% 0;
-                    display: flex;
-                    justify-content: space-between;
-                    .info{
-                        .name{
-                            font-weight: bold;
-                        }
-                        .like{
-                            font-size: 14px;
-                            line-height: 2;
-                        }
-                        .time{
-                            display: inline-block;
-                            background-color: #FF8500;
-                            color: white;
-                            font-size: 12px;
-                            border-radius: 10px;
-                            padding: 1%;
+                >a{
+                    padding: 5%;
+                    display: block;
+                    .imgBox{
+                        display: flex;
+                        justify-content: space-between;
+                        >img{
+                            width: 30%;
+                            aspect-ratio: 1;
+                            border-radius: 10%;
                         }
                     }
-                    .profileImg{
-                        width: 40px;
-                        height: 100%;
-                        border-radius: 50%;
-                        aspect-ratio: 1;
-                        background-color: chartreuse;
+                    .infoBox{
+                        margin: 3% 0;
+                        display: flex;
+                        justify-content: space-between;
+                        .info{
+                            .name{
+                                font-weight: bold;
+                            }
+                            .like{
+                                font-size: 14px;
+                                line-height: 2;
+                            }
+                            .time{
+                                display: inline-block;
+                                background-color: #FF8500;
+                                color: white;
+                                font-size: 12px;
+                                border-radius: 10px;
+                                padding: 1%;
+                            }
+                        }
+                        .profileImg{
+                            width: 40px;
+                            height: 100%;
+                            aspect-ratio: 1;
+                            >img{
+                                width: 100%;
+                                height: 100%;
+                                border-radius: 50%;
+                            }
+                        }
                     }
                 }
             }

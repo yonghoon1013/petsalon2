@@ -8,13 +8,94 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 
 import { Pagination, Navigation } from 'swiper/modules';
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 function Detail() {
     const [on, setOn] = useState(false);
     const router = useRouter();
-    
+    const {dataId} = useParams();
     const [location, setLocation] = useState(null);
+    const [detailItem,setDetailItem] = useState('');
+
+    const [data, setData] = useState([
+        {
+            "id": 1,
+            "name": "김씨",
+            "time": "09:00 ~ 18:00",
+            "like": "10",
+            "tel": "010-1052-9745",
+            "addr": "서울 강남 어딘가",
+            "lat": "37.5001",
+            "lon": "127.029",
+            "profileImg": "../asset/list/desiner.png",
+            "portfolio": ["../asset/list/test1.png", "../asset/list/test2.png", "../asset/list/test4.png", "../asset/list/test4.png"]
+        },
+        {
+            "id": 2,
+            "name": "이씨",
+            "time": "09:00 ~ 18:00",
+            "like": "8",
+            "tel": "010-0213-4785",
+            "addr": "서울 강남 어딘가",
+            "lat": "37.5035",
+            "lon": "127.026",
+            "profileImg": "../asset/list/desiner.png",
+            "portfolio": ["../asset/list/test4.png", "../asset/list/test1.png", "../asset/list/test3.png", "../asset/list/test3.png"]
+        },
+        {
+            "id": 3,
+            "name": "정씨",
+            "time": "09:00 ~ 18:00",
+            "like": "6",
+            "tel": "010-5551-1252",
+            "addr": "서울 강남 어딘가",
+            "lat": "37.5016",
+            "lon": "127.0263",
+            "profileImg": "../asset/list/desiner.png",
+            "portfolio": ["../asset/list/test3.png", "../asset/list/test2.png", "../asset/list/test4.png", "../asset/list/test4.png"]
+        },
+        {
+            "id": 4,
+            "name": "박씨",
+            "time": "09:00 ~ 18:00",
+            "like": "21",
+            "tel": "010-7756-6132",
+            "addr": "서울 강남 어딘가",
+            "lat": "37.49902",
+            "lon": "127.0271",
+            "profileImg": "../asset/list/desiner.png",
+            "portfolio": ["../asset/list/test2.png", "../asset/list/test1.png", "../asset/list/test3.png", "../asset/list/test4.png"]
+        },
+        {
+            "id": 5,
+            "name": "조씨",
+            "time": "09:00 ~ 18:00",
+            "like": "17",
+            "tel": "010-5321-3001",
+            "addr": "서울 어딘가",
+            "lat": "37.4895",
+            "lon": "127.0075",
+            "profileImg": "../asset/list/desiner.png",
+            "portfolio": ["../asset/list/test3.png", "../asset/list/test1.png", "../asset/list/test4.png", "../asset/list/test2.png"]
+        },
+        {
+            "id": 6,
+            "name": "최씨",
+            "time": "09:00 ~ 18:00",
+            "like": "5",
+            "tel": "010-2032-1354",
+            "addr": "한국 어딘가",
+            "lat": "37.4795",
+            "lon": "127.0353",
+            "profileImg": "../asset/list/desiner.png",
+            "portfolio": ["../asset/list/test2.png", "../asset/list/test3.png", "../asset/list/test1.png", "../asset/list/test4.png"]
+        },
+    ])
+
+    const dataLoad = (dataId) => {
+        setDetailItem(data.find((item)=> item.id === dataId));
+    }
+
 
     const accordionToggle = () => {
         setOn(!on);
@@ -41,7 +122,10 @@ function Detail() {
 
     useEffect(() => {
         geolocation();
+        dataLoad();
     }, [])
+
+    console.log(detailItem);
 
     return (
         <section>

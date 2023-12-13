@@ -135,7 +135,9 @@ section{
     .guideBox{
         margin-top: 5%;
         .title{
-
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 3%;
         }
         >ul{
 
@@ -144,7 +146,7 @@ section{
                 >p{
                     display: flex;
                     justify-content: space-between;
-                    padding: 5% 0;
+                    padding: 3% 0;
                     &::after{
                         content: ">";
                         display: block;
@@ -163,6 +165,7 @@ section{
     }
 
     .commentBox{
+        margin-top: 5%;
         .title{
             font-size: 18px;
             font-weight: bold;
