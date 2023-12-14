@@ -1,4 +1,4 @@
-import { dbConnect } from "../route";
+import dbConnect from "../db";
 
 export async function GET(req) {
     const qData = await Object.fromEntries(req.nextUrl.searchParams);
@@ -8,7 +8,6 @@ export async function GET(req) {
     await client.close();
     return Response.json(data);
 }
-
 
 export async function POST(req) {
     const qData = await req.json();

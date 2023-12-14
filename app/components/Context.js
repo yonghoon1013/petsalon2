@@ -5,7 +5,7 @@ import React, { createContext, useEffect, useState } from 'react'
 export const myContext = createContext();
 
 function Context({children}) {
-  // const [member, setMember] = useState();
+  const [member, setMember] = useState();
   const [profView, setProfView] = useState();
 
   const profLd = async () => {
@@ -17,19 +17,20 @@ function Context({children}) {
   };
 
   const memberLd = async () => {
-    await axios.get(`/api/member`)
+    await axios.get(`/api/list`)
     .then(res=>{
-      console.log(res);
+      // console.log(res.data);
+      setMember(res.data)
     });
   };
 
   useEffect(()=>{
-    // memberLd();
-    // profLd();
+    memberLd();
+    profLd();
   }, []);
 
   return (
-    <myContext.Provider value={{profView}}>
+    <myContext.Provider value={{profView,member}}>
         {children}
     </myContext.Provider>
   )
