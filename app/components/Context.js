@@ -17,14 +17,14 @@ function Context({children}) {
   };
 
   const memberLd = async () => {
-    await axios.get(`/api/member`)
+    await axios.get(`/api/list`)
     .then(res=>{
-      console.log(res);
+      console.log(res.data);
     });
   };
 
   useEffect(()=>{
-    // memberLd();
+    memberLd();
     profLd();
   }, []);
 

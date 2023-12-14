@@ -9,7 +9,6 @@ export async function GET(req) {
     return Response.json(data);
 }
 
-
 export async function POST(req) {
     const qData = await req.json();
     const { client, collection } = await dbConnect("dPics");
