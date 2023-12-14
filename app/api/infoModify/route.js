@@ -1,4 +1,4 @@
-import { dbConnect } from "../route";
+import dbConnect from "../db";
 
 export async function PUT(req) {
     const qData = await req.json();
