@@ -1,9 +1,12 @@
 "use client";
 import Link from "next/link";
 import styles from "./list.module.scss";
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import {myContext} from '../Context';
 
 function List() {
+
+    const {member} = useContext(myContext);
 
     const [data, setData] = useState([
         {
@@ -80,7 +83,7 @@ function List() {
         },
     ])
 
-    console.log(data);
+    console.log(member);
 
     return (
         <section>
