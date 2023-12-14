@@ -17,7 +17,7 @@ function Context({children}) {
   };
 
   const memberLd = async () => {
-    await axios.get(`/api/member`)
+    await axios.get(`/api/list`)
     .then(res=>{
       // console.log(res.data);
       setMember(res.data)
@@ -26,7 +26,7 @@ function Context({children}) {
 
   useEffect(()=>{
     memberLd();
-    // profLd();
+    profLd();
   }, []);
 
   return (

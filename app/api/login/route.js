@@ -1,5 +1,4 @@
-
-import { dbConnect } from "../route";
+import dbConnect from "../db";
 
 export async function GET(req){
     const qData = Object.fromEntries(req.nextUrl.searchParams);

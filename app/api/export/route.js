@@ -1,4 +1,4 @@
-import { dbConnect } from "../route";
+import dbConnect from "../db";
 
 export async function GET(req, res) {
     // let data = await collection.find({id: "hmmm", password: "12345"}).toArray();
