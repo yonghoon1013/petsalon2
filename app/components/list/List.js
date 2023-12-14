@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import styles from "./list.module.scss";
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {myContext} from '../Context';
 
 function List() {
@@ -83,6 +83,9 @@ function List() {
         },
     ])
 
+    if(!member) return <>로딩중</>
+
+
     console.log(member);
 
     return (
@@ -106,22 +109,22 @@ function List() {
             <div className={styles.designerListBox}>
                 <ul>
                     {
-                        data.map((item, index) => (
+                        member.map((item, index) => (
                             <li key={index}>
                                 <Link href={`/pages/detail/${item.id}`}>
                                 <div className={styles.imgBox}>
-                                <img src={item.portfolio[0]}></img>
+                                {/* <img src={item.portfolio[0]}></img>
                                 <img src={item.portfolio[1]}></img>
-                                <img src={item.portfolio[2]}></img>
+                                <img src={item.portfolio[2]}></img> */}
                             </div>
                             <div className={styles.infoBox}>
                                 <div className={styles.info}>
-                                    <p className={styles.name}>{item.name} (2.1Km)</p>
-                                    <p className={styles.like}>{item.like}</p>
-                                    <span className={styles.time}>{item.time}</span>
+                                    <p className={styles.name}>{item.nickname} (2.1Km)</p>
+                                    <p className={styles.like}>0</p>
+                                    <span className={styles.time}>{item.dTime1} ~ {item.dTime2}</span>
                                 </div>
                                 <div className={styles.profileImg}>
-                                    <img src={item.profileImg}></img>
+                                    <img src={item.imgUrl}></img>
                                 </div>
                             </div>
                                 </Link>
