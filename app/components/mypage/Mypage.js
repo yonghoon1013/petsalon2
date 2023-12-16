@@ -5,11 +5,17 @@ import { myContext } from '../Context'
 import axios from 'axios';
 
 function Mypage() {
-  const {profView, profLd, portLd, portPic} = useContext(myContext);
+  const {portLd, portPic} = useContext(myContext);
   const [data, setData] = useState([]);
+  const [memView, setMemView] = useState([]);
   const [view, setView] = useState([]);
+  const [mode, setMode] = useState("list");
   const [infoMode, setInfoMode] = useState("list");
   const [picMode, setPicMode] = useState("list");
+  const memMdProf = useRef([]);
+  const memMdNickname = useRef([]);
+  const memMdPassword = useRef([]);
+  const memMdInfo = useRef([]);
   const infMdDesc = useRef([]);
   const infMddPrice = useRef([]);
   const infMddTime1 = useRef([]);
@@ -24,6 +30,9 @@ function Mypage() {
     await axios.get(`/api/member?key=${sKey}`)
     .then(res=>{
       setData(res.data);
+      memMdNickname.current.value = res.data[0].nickname;
+      memMdPassword.current.value = res.data[0].nickname;
+      memMdInfo.current.value = res.data[0].nickname;
       infMdDesc.current.value = res.data[0].dDesc;
       infMddPrice.current.value = res.data[0].dPrice;
       infMddTime1.current.value = res.data[0].dTime1;
@@ -35,6 +44,30 @@ function Mypage() {
       });
   };
 
+  const profUpload = async (e) => {
+		e.preventDefault();
+		const sKey = sessionStorage.getItem("key");
+		const formData = new FormData(e.target);
+		const objData = Object.fromEntries(formData);
+    if (objData.upload.size == 0) {
+      axios.put(`/api/infoModify/${sKey}`, { key: sKey, imgUrl: e.target.oldProf.value, item: objData})
+      .then(res=>{
+        setData(res.data);
+      });
+    } else {
+      const fr = new FileReader();
+      fr.readAsDataURL(objData.upload);
+      fr.onload = (e) => {
+        axios.put(`/api/infoModify/${sKey}`, { key: sKey, imgUrl: e.target.result, item: objData})
+        .then(res=>{
+          setData(res.data);
+        });
+      };
+    }
+    setMode("list");
+	}
+
+
 
   const portPicUpload = async (e) => {
     e.preventDefault();
@@ -44,14 +77,13 @@ function Mypage() {
     formData.append("sKey", sKey);
     const objData = Object.fromEntries(formData);
     const fr = new FileReader();
-    fr.readAsDataURL(objData.upload)
+    fr.readAsDataURL(objData.upload);
     fr.onload = async (e) => {
       axios.post(`/api/portPic`, {item: objData, imgUrl: e.target.result})
       .then(res=>{
         setPortPic(res.data);
       });
       setPicMode("list");
-
     }
   }
 
@@ -65,14 +97,14 @@ function Mypage() {
     await axios.put(`/api/infoModify`, objData)
     .then(res=>{
       setData(res.data);
-      e.target.dDesc.value = res.data[0].dDesc;
-      e.target.dPrice.value = res.data[0].dPrice;
-      e.target.dTime1.value = res.data[0].dTime1;
-      e.target.dTime2.value = res.data[0].dTime2;
-      e.target.dAddress.value = res.data[0].dAddress;
-      e.target.dNumber1.value = res.data[0].dNumber1;
-      e.target.dNumber2.value = res.data[0].dNumber2;
-      e.target.dNumber3.value = res.data[0].dNumber3;
+      // e.target.dDesc.value = res.data[0].dDesc;
+      // e.target.dPrice.value = res.data[0].dPrice;
+      // e.target.dTime1.value = res.data[0].dTime1;
+      // e.target.dTime2.value = res.data[0].dTime2;
+      // e.target.dAddress.value = res.data[0].dAddress;
+      // e.target.dNumber1.value = res.data[0].dNumber1;
+      // e.target.dNumber2.value = res.data[0].dNumber2;
+      // e.target.dNumber3.value = res.data[0].dNumber3;
     })
   };
 
@@ -88,29 +120,56 @@ function Mypage() {
   useEffect(()=>{
     dataLd();
     portLd();
-    profLd();
-    portLd();
   }, [])
 
   if(!data[0]) return <>로딩중</>
 
   return (
     <section className={styles.mypageSec}>
+
       <div className={styles.profile}>
-        <div className={styles.title}>마이페이지</div>
-        <div className={styles.titleBox}>
-          <figure className={styles.profPic}>
-            <img src={profView}/>
-          </figure>
-          <div className={styles.profName}><strong>김아무개</strong><button className={styles.nameSett}><figure><img src='../asset/mypage/pensil.png'/></figure></button></div>          
-          <span className={styles.profEmail}>sdfgsf@naver.com</span>         
-          <p className={styles.profDesc}>설명들설명들설명들설명들설명들설명들설명들설명들설명들설명들설명들설명들설명들설명들설명들설명들설명들설명들설명들설명들설명들설명들설명들설명들설명들설명들설명들설명들설명들설명들설명들설명들설명들설명들설명들설명들설명들설명들설명들설명들설명들설명들설명들설명들설명들설명들설명들설명들설명들설명들</p>         
+        <div className={styles.title}>
+          <strong>마이페이지</strong>
+          <button className={styles.memSetting} onClick={()=>{setMode("modify")}}>
+            <figure><img src='../asset/mypage/setting.png'/></figure>
+          </button>
         </div>
+        <div className={`${styles.titleBox} ${mode == "list" ? styles.active : ""}`}>
+          <figure className={styles.profPic}>
+            <img src={data[0].imgUrl}/>
+          </figure>
+          <div className={styles.profName}>
+            <strong>{data[0].nickname}</strong>
+            <button className={styles.nameSett}>
+              <figure><img src='../asset/mypage/pensil.png'/></figure>
+            </button>
+          </div>          
+          <span className={styles.profEmail}></span>         
+          <p className={styles.profDesc}>{data[0].info}</p>         
+        </div>
+        <form onSubmit={profUpload} className={`${styles.titleBoxMod} ${mode == "modify" ? styles.active : ""}`}>
+          <input ref={memMdProf} name='upload' type='file' onChange={(e)=>{
+            e.preventDefault();
+            let pic = e.target.files[0];
+            pic && setMemView(URL.createObjectURL(pic));
+          }}/>
+          <figure className={styles.profPic}>
+            <img src={memView}/>
+          </figure>
+          <input value={data[0].imgUrl} name='oldProf'/>
+          <input ref={memMdNickname} name="nickname" type='text'/>
+          <input ref={memMdPassword} name='password' type='password'/>
+          <input name='password2' type='password'/>
+          <input ref={memMdInfo} name="info"/>
+          <button>저장</button>
+          <button onClick={()=>{setMode("list")}} type='button'>취소</button>
+        </form>
         <div className={styles.working}>
           <div><strong>영업시작</strong></div>
           <div><input type='checkbox'/></div>
         </div>
       </div>
+
       <div className={styles.workpics}>
         <div className={styles.title}>나의 포트폴리오</div>
         <div className={styles.pics}>
@@ -139,6 +198,7 @@ function Mypage() {
           </form>
         </div>
       </div>
+
       <div className={styles.info}>
         <div className={styles.title}>
           <strong>나의 영업정보</strong>
@@ -196,6 +256,7 @@ function Mypage() {
           <button type='button' onClick={()=>{setInfoMode("list")}}>취소</button>
         </form>
       </div>
+
     </section>
   )
 }

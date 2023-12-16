@@ -6,6 +6,7 @@ export async function GET(req) {
     const qData = Object.fromEntries(req.nextUrl.searchParams);
     let data = await collection.find({}).toArray();
 
+    console.log(req.url, req.method);
     await client.close();
     return Response.json(data);
 }

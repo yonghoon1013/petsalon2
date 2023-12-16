@@ -8,6 +8,12 @@ function Test() {
 	const [view, setView] = useState([]);
 	const [filtered, setFiltered] = useState([]);
 
+	const test = {
+		1: "a",
+		2: "b",
+		3: "c"
+	}
+
 	const making = async () => {
 		const l2 = member.filter(obj=>{
 			return (Fav.some(item => item.objKey == obj.key))
@@ -18,6 +24,7 @@ function Test() {
 	useEffect(() => {
 		memberLd();
 		favoriteLd();
+		console.log(test[1])
 	}, []);
 
 	useEffect(()=>{
