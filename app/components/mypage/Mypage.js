@@ -5,10 +5,9 @@ import { myContext } from '../Context'
 import axios from 'axios';
 
 function Mypage() {
-  const {profView} = useContext(myContext);
+  const {profView, profLd, portLd, portPic} = useContext(myContext);
   const [data, setData] = useState([]);
   const [view, setView] = useState([]);
-  const [portPic, setPortPic] = useState([]);
   const [infoMode, setInfoMode] = useState("list");
   const [picMode, setPicMode] = useState("list");
   const infMdDesc = useRef([]);
@@ -36,13 +35,6 @@ function Mypage() {
       });
   };
 
-  const portLd = async () =>{
-    const sKey = sessionStorage.getItem("key");
-    await axios.get(`/api/portPic?sKey=${sKey}`)
-    .then(res=>{
-      setPortPic(res.data);
-    })
-  }
 
   const portPicUpload = async (e) => {
     e.preventDefault();
@@ -96,8 +88,9 @@ function Mypage() {
   useEffect(()=>{
     dataLd();
     portLd();
+    profLd();
+    portLd();
   }, [])
-
 
   if(!data[0]) return <>로딩중</>
 

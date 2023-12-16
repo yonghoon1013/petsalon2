@@ -5,8 +5,10 @@ import React, { createContext, useEffect, useState } from 'react'
 export const myContext = createContext();
 
 function Context({children}) {
-  // const [member, setMember] = useState();
-  const [profView, setProfView] = useState();
+  const [member, setMember] = useState([]);
+  const [profView, setProfView] = useState([]);
+  const [Fav, setFav] = useState([]);
+  const [portPic, setPortPic] = useState([]);
 
   const profLd = async () => {
     const sKey = sessionStorage.getItem("key");
@@ -17,19 +19,29 @@ function Context({children}) {
   };
 
   const memberLd = async () => {
-    await axios.get(`/api/member`)
+    await axios.get(`/api/list`)
     .then(res=>{
-      console.log(res);
+      setMember(res.data);
     });
   };
 
-  useEffect(()=>{
-    // memberLd();
-    // profLd();
-  }, []);
+  const favoriteLd = async () => {
+		await axios.get(`/api/favorite`)
+			.then(res => {
+				setFav(res.data);
+			});
+	};
+
+  const portLd = async () =>{
+    const sKey = sessionStorage.getItem("key");
+    await axios.get(`/api/portPic?sKey=${sKey}`)
+    .then(res=>{
+      setPortPic(res.data);
+    });
+  };
 
   return (
-    <myContext.Provider value={{profView}}>
+    <myContext.Provider value={{profView, member, profLd, memberLd, favoriteLd, Fav, portLd, portPic}}>
         {children}
     </myContext.Provider>
   )
