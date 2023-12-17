@@ -5,7 +5,7 @@ import { myContext } from '../Context'
 import axios from 'axios';
 
 function Mypage() {
-  const {portLd, portPic} = useContext(myContext);
+  const {portLd, portPic, setPortPic} = useContext(myContext);
   const [data, setData] = useState([]);
   const [memView, setMemView] = useState([]);
   const [view, setView] = useState([]);
@@ -217,7 +217,7 @@ function Mypage() {
           </div>
           <div className={styles.dTime}>
             <span>영업시간</span>
-            <span>{`${data[0].dTime1} : ${data[0].dTime2}`}</span>
+            <span>{`${data[0].dTime1} ~ ${data[0].dTime2}`}</span>
           </div>
           <div className={styles.dAddress}>
             <span>주소</span>

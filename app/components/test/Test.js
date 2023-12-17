@@ -8,23 +8,16 @@ function Test() {
 	const [view, setView] = useState([]);
 	const [filtered, setFiltered] = useState([]);
 
-	const test = {
-		1: "a",
-		2: "b",
-		3: "c"
-	}
-
 	const making = async () => {
 		const l2 = member.filter(obj=>{
-			return (Fav.some(item => item.objKey == obj.key))
-		})
+			return (Fav.some(item => item.objKey == obj.key));
+		});
 		setFiltered(l2);
 	}
 
 	useEffect(() => {
 		memberLd();
 		favoriteLd();
-		console.log(test[1])
 	}, []);
 
 	useEffect(()=>{
@@ -36,7 +29,6 @@ function Test() {
 		let formData = new FormData(e.target);
 		let objData = Object.fromEntries(formData);
 		console.log(objData)
-
 		await axios.post(`/api/member`, objData);
 	}
 

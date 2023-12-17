@@ -32,7 +32,7 @@ function Context({children}) {
   };
 
   return (
-    <myContext.Provider value={{member, memberLd, favoriteLd, Fav, portLd, portPic}}>
+    <myContext.Provider value={{member, memberLd, favoriteLd, Fav, portLd, portPic, setPortPic}}>
         {children}
     </myContext.Provider>
   )
