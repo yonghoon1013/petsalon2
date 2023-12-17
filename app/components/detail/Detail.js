@@ -1,146 +1,93 @@
 "use client";
 import styles from "./detail.module.scss"
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import {myContext} from '../Context';
+import axios from "axios";
 
 
 import 'swiper/css';
 import 'swiper/css/pagination';
 
 import { Pagination, Navigation } from 'swiper/modules';
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
+
+
+
 
 function Detail() {
     const [on, setOn] = useState(false);
     const router = useRouter();
-    const {dataId} = useParams();
     const [location, setLocation] = useState(null);
-    const [detailItem,setDetailItem] = useState('');
+    const [detailItem,setDetailItem] = useState([]);
 
-    const [data, setData] = useState([
-        {
-            "id": 1,
-            "name": "김씨",
-            "time": "09:00 ~ 18:00",
-            "like": "10",
-            "tel": "010-1052-9745",
-            "addr": "서울 강남 어딘가",
-            "lat": "37.5001",
-            "lon": "127.029",
-            "profileImg": "../asset/list/desiner.png",
-            "portfolio": ["../asset/list/test1.png", "../asset/list/test2.png", "../asset/list/test4.png", "../asset/list/test4.png"]
-        },
-        {
-            "id": 2,
-            "name": "이씨",
-            "time": "09:00 ~ 18:00",
-            "like": "8",
-            "tel": "010-0213-4785",
-            "addr": "서울 강남 어딘가",
-            "lat": "37.5035",
-            "lon": "127.026",
-            "profileImg": "../asset/list/desiner.png",
-            "portfolio": ["../asset/list/test4.png", "../asset/list/test1.png", "../asset/list/test3.png", "../asset/list/test3.png"]
-        },
-        {
-            "id": 3,
-            "name": "정씨",
-            "time": "09:00 ~ 18:00",
-            "like": "6",
-            "tel": "010-5551-1252",
-            "addr": "서울 강남 어딘가",
-            "lat": "37.5016",
-            "lon": "127.0263",
-            "profileImg": "../asset/list/desiner.png",
-            "portfolio": ["../asset/list/test3.png", "../asset/list/test2.png", "../asset/list/test4.png", "../asset/list/test4.png"]
-        },
-        {
-            "id": 4,
-            "name": "박씨",
-            "time": "09:00 ~ 18:00",
-            "like": "21",
-            "tel": "010-7756-6132",
-            "addr": "서울 강남 어딘가",
-            "lat": "37.49902",
-            "lon": "127.0271",
-            "profileImg": "../asset/list/desiner.png",
-            "portfolio": ["../asset/list/test2.png", "../asset/list/test1.png", "../asset/list/test3.png", "../asset/list/test4.png"]
-        },
-        {
-            "id": 5,
-            "name": "조씨",
-            "time": "09:00 ~ 18:00",
-            "like": "17",
-            "tel": "010-5321-3001",
-            "addr": "서울 어딘가",
-            "lat": "37.4895",
-            "lon": "127.0075",
-            "profileImg": "../asset/list/desiner.png",
-            "portfolio": ["../asset/list/test3.png", "../asset/list/test1.png", "../asset/list/test4.png", "../asset/list/test2.png"]
-        },
-        {
-            "id": 6,
-            "name": "최씨",
-            "time": "09:00 ~ 18:00",
-            "like": "5",
-            "tel": "010-2032-1354",
-            "addr": "한국 어딘가",
-            "lat": "37.4795",
-            "lon": "127.0353",
-            "profileImg": "../asset/list/desiner.png",
-            "portfolio": ["../asset/list/test2.png", "../asset/list/test3.png", "../asset/list/test1.png", "../asset/list/test4.png"]
-        },
-    ])
+    const {member} = useContext(myContext);
 
-    const dataLoad = (dataId) => {
-        setDetailItem(data.find((item)=> item.id === dataId));
-    }
+    const paramsData = useSearchParams();
+    const sKey = paramsData.get("key");
 
 
-    const accordionToggle = () => {
-        setOn(!on);
-    }
+    // const a = member.filter((item)=>item.key == sKey);
 
-    const geolocation = () => {
 
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    // 위치 정보 가져오기 성공
-                    const { latitude, longitude } = position.coords;
-                    setLocation({ latitude, longitude });
-                    console.log(location);
-                },
-                (error) => {
-                    // 위치 정보 가져오기 실패
-                    console.error('Error getting geolocation:', error);
-                }
-            );
-        }
+    const detailGet = async () => {
+    
+        await axios.get(`/api/detail?key=${sKey}`)
+        .then(res=>{
+            setDetailItem(res.data);
+        });
+    };
 
-    }
 
     useEffect(() => {
-        geolocation();
-        dataLoad();
+        detailGet();
     }, [])
 
-    console.log(detailItem);
+console.log(member);
 
+    // const accordionToggle = () => {
+    //     setOn(!on);
+    // }
+
+    // const geolocation = () => {
+
+    //     if (navigator.geolocation) {
+    //         navigator.geolocation.getCurrentPosition(
+    //             (position) => {
+    //                 // 위치 정보 가져오기 성공
+    //                 const { latitude, longitude } = position.coords;
+    //                 setLocation({ latitude, longitude });
+    //                 // console.log(location);
+    //             },
+    //             (error) => {
+    //                 // 위치 정보 가져오기 실패
+    //                 console.error('Error getting geolocation:', error);
+    //             }
+    //         );
+    //     }
+
+    // }
+
+    // useEffect(() => {
+    //     geolocation();
+    // }, [])
+
+    if(!detailItem[0]) return <>로딩중</>
     return (
         <section>
-            <div className={styles.top}>
+            <div>{detailItem[0].nickname}</div>
+            {/* <div className={styles.top}>
                 <button onClick={() => router.back()}>뒤로</button>
                 <p>상세보기</p>
             </div>
 
             <div className={styles.detailIntro}>
                 <div className={styles.desinerImg}>
-                    <div></div>
+                    <img src={a[0].imgUrl}></img>
                 </div>
                 <div className={styles.introInfoBox}>
                     <div className={styles.introInfo}>
-                        <p className={styles.name}>김은지 디자이너</p>
+                        <p className={styles.name}>{a[0].nickname}</p>
                         <p className={styles.like}><span>35</span>명이 찜했습니다.</p>
                         <p className={styles.info}>모든 ~~~모든 ~~~모든 ~~~모든 ~~~모든 ~~~모든 ~~~모든 ~~~모든 ~~~모든 ~~~모든 ~~~모든 ~~~모든 ~~~</p>
                     </div>
@@ -181,15 +128,15 @@ function Detail() {
                 <ul className={styles.designerInfoCon}>
                     <li>
                         <p className={styles.left}>영업시간</p>
-                        <p className={styles.right}>11:00 ~ 22:00</p>
+                        <p className={styles.right}>{a[0].dTime1} ~ {a[0].dTime2}</p>
                     </li>
                     <li>
                         <p className={styles.left}>주소</p>
-                        <p className={styles.right}>서울 강남 어딘가</p>
+                        <p className={styles.right}>{a[0].dAddress}</p>
                     </li>
                     <li>
                         <p className={styles.left}>번호</p>
-                        <p className={styles.right}>010 - 4862 - 0192</p>
+                        <p className={styles.right}>{a[0].dNumber1} - {a[0].dNumber2} - {a[0].dNumber3}</p>
                     </li>
 
                 </ul>
@@ -298,7 +245,7 @@ function Detail() {
                         </div>
                     </li>
                 </ul>
-            </div>
+            </div> */}
 
         </section>
     )

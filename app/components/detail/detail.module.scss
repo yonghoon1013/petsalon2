@@ -19,7 +19,8 @@ section{
         .desinerImg{
             display: flex;
             justify-content: center;
-            >div{
+            >img{
+                display: block;
                 width: 50%;
                 aspect-ratio: 1;
                 background-color: cadetblue;
