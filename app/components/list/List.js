@@ -55,15 +55,15 @@ function List() {
                                 <Link href={`/pages/detail?key=${item.key}`}>
                                 <div className={styles.imgBox}>
                                         {
-                                            view.filter(obj=>obj.sKey == item.key).map(p=>(
-                                                <img src={p.imgUrl}></img>
+                                            view.filter(obj=>obj.sKey == item.key).map((p,index2)=>(
+                                                <img key={index2} src={p.imgUrl}></img>
                                             ))
                                             }
                             </div>
                             <div className={styles.infoBox}>
                                 <div className={styles.info}>
                                     <p className={styles.name}>{item.nickname} (2.1Km)</p>
-                                    <p className={styles.like}>0</p>
+                                    <p className={styles.like}>{item.like}</p>
                                     <span className={styles.time}>{item.dTime1} ~ {item.dTime2}</span>
                                 </div>
                                 <div className={styles.profileImg}>

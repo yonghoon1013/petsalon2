@@ -98,7 +98,7 @@ function Detail() {
                 <div className={styles.introInfoBox}>
                     <div className={styles.introInfo}>
                         <p className={styles.name}>{detailItem[0].nickname}</p>
-                        <p className={styles.like}><span>35</span>명이 찜했습니다.</p>
+                        <p className={styles.like}><span>{detailItem[0].like}</span>명이 찜했습니다.</p>
                         <p className={styles.info}>모든 ~~~모든 ~~~모든 ~~~모든 ~~~모든 ~~~모든 ~~~모든 ~~~모든 ~~~모든 ~~~모든 ~~~모든 ~~~모든 ~~~</p>
                     </div>
                     <div className={styles.introBtn}>

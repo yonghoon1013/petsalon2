@@ -31,8 +31,12 @@ function Context({children}) {
     });
   };
 
+  useEffect(()=>{
+    memberLd();
+  }, []);
+
   return (
-    <myContext.Provider value={{member, profView, memberLd, favoriteLd, Fav, portLd, portPic, setPortPic}}>
+    <myContext.Provider value={{member, memberLd, favoriteLd, Fav, portLd, portPic, setPortPic}}>
         {children}
     </myContext.Provider>
   )
