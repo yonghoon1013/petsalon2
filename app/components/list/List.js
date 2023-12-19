@@ -12,17 +12,6 @@ function List() {
     const [view, setView] = useState([]);
 
 
-
-
-
-    // const router = useRouter();
-
-    // const go = (item) =>{
-    //     router.push(`/pages/detail/${item.id}`);
-    //     console.log(item.id);
-    // }
-
-
     const portLoading = async () =>{
         await axios.get(`/api/portPic/dd`)
         .then(res=>{
@@ -39,6 +28,7 @@ function List() {
         // console.log(view);
     },[view])
 
+    console.log(member);
     if(!member) return <>로딩중</>
     return (
         <section>
@@ -57,7 +47,6 @@ function List() {
 
                 <p>반경 15km</p>
             </div>
-            {/* &item=${JSON.stringify(item)} */}
             <div className={styles.designerListBox}>
                 <ul>
                     {
@@ -65,16 +54,11 @@ function List() {
                             <li key={index}>
                                 <Link href={`/pages/detail?key=${item.key}`}>
                                 <div className={styles.imgBox}>
-                                <div>
                                         {
                                             view.filter(obj=>obj.sKey == item.key).map(p=>(
                                                 <img src={p.imgUrl}></img>
                                             ))
                                             }
-                                </div>
-                                {/* <img src={item.portfolio[0]}></img>
-                                <img src={item.portfolio[1]}></img>
-                                <img src={item.portfolio[2]}></img> */}
                             </div>
                             <div className={styles.infoBox}>
                                 <div className={styles.info}>

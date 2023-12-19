@@ -20,14 +20,12 @@ function Detail() {
     const router = useRouter();
     const [location, setLocation] = useState(null);
     const [detailItem,setDetailItem] = useState([]);
+    const [detailProtPic,setDetailProtPic] = useState([]);
 
     const {member} = useContext(myContext);
 
     const paramsData = useSearchParams();
     const sKey = paramsData.get("key");
-
-
-    // const a = member.filter((item)=>item.key == sKey);
 
 
     const detailGet = async () => {
@@ -39,55 +37,67 @@ function Detail() {
     };
 
 
+    const detailPortPicGet = async () => {
+        await axios.get(`/api/portPic?key=${sKey}`)
+        .then(res=>{
+            setDetailProtPic(res.data);
+        })
+    }
+
+
     useEffect(() => {
         detailGet();
+        detailPortPicGet();
     }, [])
 
-console.log(member);
+    useEffect(()=>{
+        console.log(detailProtPic);
+    },[detailProtPic])
 
-    // const accordionToggle = () => {
-    //     setOn(!on);
-    // }
+    const accordionToggle = () => {
+        setOn(!on);
+    }
 
-    // const geolocation = () => {
+    const geolocation = () => {
 
-    //     if (navigator.geolocation) {
-    //         navigator.geolocation.getCurrentPosition(
-    //             (position) => {
-    //                 // 위치 정보 가져오기 성공
-    //                 const { latitude, longitude } = position.coords;
-    //                 setLocation({ latitude, longitude });
-    //                 // console.log(location);
-    //             },
-    //             (error) => {
-    //                 // 위치 정보 가져오기 실패
-    //                 console.error('Error getting geolocation:', error);
-    //             }
-    //         );
-    //     }
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    // 위치 정보 가져오기 성공
+                    const { latitude, longitude } = position.coords;
+                    setLocation({ latitude, longitude });
+                    // console.log(location);
+                },
+                (error) => {
+                    // 위치 정보 가져오기 실패
+                    console.error('Error getting geolocation:', error);
+                }
+            );
+        }
 
-    // }
+    }
 
-    // useEffect(() => {
-    //     geolocation();
-    // }, [])
+    console.log(detailItem[0]);
+
+    useEffect(() => {
+        geolocation();
+    }, [])
 
     if(!detailItem[0]) return <>로딩중</>
     return (
         <section>
-            <div>{detailItem[0].nickname}</div>
-            {/* <div className={styles.top}>
-                <button onClick={() => router.back()}>뒤로</button>
+            <div className={styles.top}>
+                <button onClick={() => router.back()}><img src="../asset/detail/arrow-gray-icon.svg"></img></button>
                 <p>상세보기</p>
             </div>
 
             <div className={styles.detailIntro}>
                 <div className={styles.desinerImg}>
-                    <img src={a[0].imgUrl}></img>
+                    <img src={detailItem[0].imgUrl}></img>
                 </div>
                 <div className={styles.introInfoBox}>
                     <div className={styles.introInfo}>
-                        <p className={styles.name}>{a[0].nickname}</p>
+                        <p className={styles.name}>{detailItem[0].nickname}</p>
                         <p className={styles.like}><span>35</span>명이 찜했습니다.</p>
                         <p className={styles.info}>모든 ~~~모든 ~~~모든 ~~~모든 ~~~모든 ~~~모든 ~~~모든 ~~~모든 ~~~모든 ~~~모든 ~~~모든 ~~~모든 ~~~</p>
                     </div>
@@ -95,25 +105,33 @@ console.log(member);
                         <ul>
                             <li>
                                 <div>
-                                    <div className={styles.img}>사진</div>
+                                    <div className={styles.img}>
+                                        <img src="../asset/detail/like-icon.svg"></img>
+                                    </div>
                                     <p className={styles.name}>좋아요</p>
                                 </div>
                             </li>
                             <li>
-                                <div>
-                                    <div className={styles.img}>사진</div>
+                            <div>
+                                    <div className={styles.img}>
+                                        <img src="../asset/detail/location-icon.svg"></img>
+                                    </div>
                                     <p className={styles.name}>위치</p>
                                 </div>
                             </li>
                             <li>
-                                <div>
-                                    <div className={styles.img}>사진</div>
+                            <div>
+                                    <div className={styles.img}>
+                                        <img src="../asset/detail/tel-icon.svg"></img>
+                                    </div>
                                     <p className={styles.name}>전화</p>
                                 </div>
                             </li>
                             <li>
-                                <div>
-                                    <div className={styles.img}>사진</div>
+                            <div>
+                                    <div className={styles.img}>
+                                        <img src="../asset/detail/share-icon.svg"></img>
+                                    </div>
                                     <p className={styles.name}>공유</p>
                                 </div>
                             </li>
@@ -128,15 +146,15 @@ console.log(member);
                 <ul className={styles.designerInfoCon}>
                     <li>
                         <p className={styles.left}>영업시간</p>
-                        <p className={styles.right}>{a[0].dTime1} ~ {a[0].dTime2}</p>
+                        <p className={styles.right}>{detailItem[0].dTime1} ~ {detailItem[0].dTime2}</p>
                     </li>
                     <li>
                         <p className={styles.left}>주소</p>
-                        <p className={styles.right}>{a[0].dAddress}</p>
+                        <p className={styles.right}>{detailItem[0].dAddress}</p>
                     </li>
                     <li>
                         <p className={styles.left}>번호</p>
-                        <p className={styles.right}>{a[0].dNumber1} - {a[0].dNumber2} - {a[0].dNumber3}</p>
+                        <p className={styles.right}>{detailItem[0].dNumber1} - {detailItem[0].dNumber2} - {detailItem[0].dNumber3}</p>
                     </li>
 
                 </ul>
@@ -153,11 +171,13 @@ console.log(member);
                         modules={[Pagination]}
                         className={styles.mySwiper}
                     >
-                        <SwiperSlide className={styles.swiperSlide}>Slide 1</SwiperSlide>
-                        <SwiperSlide className={styles.swiperSlide}>Slide 2</SwiperSlide>
-                        <SwiperSlide className={styles.swiperSlide}>Slide 3</SwiperSlide>
-                        <SwiperSlide className={styles.swiperSlide}>Slide 4</SwiperSlide>
-                        <SwiperSlide className={styles.swiperSlide}>Slide 5</SwiperSlide>
+                            {
+                                detailProtPic.map((item)=>(
+                                    <SwiperSlide className={styles.swiperSlide}>
+                                        <img src={item.imgUrl}></img>
+                                    </SwiperSlide>
+                                ))
+                            }
                     </Swiper>
                 </div>
             </div>
@@ -245,7 +265,7 @@ console.log(member);
                         </div>
                     </li>
                 </ul>
-            </div> */}
+            </div>
 
         </section>
     )
