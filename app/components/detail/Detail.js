@@ -1,101 +1,58 @@
 "use client";
 import styles from "./detail.module.scss"
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import {myContext} from '../Context';
+import axios from "axios";
 
 
 import 'swiper/css';
 import 'swiper/css/pagination';
 
 import { Pagination, Navigation } from 'swiper/modules';
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
+
+
+
 
 function Detail() {
     const [on, setOn] = useState(false);
     const router = useRouter();
-    const {dataId} = useParams();
     const [location, setLocation] = useState(null);
-    const [detailItem,setDetailItem] = useState('');
+    const [detailItem,setDetailItem] = useState([]);
+    const [detailProtPic,setDetailProtPic] = useState([]);
 
-    const [data, setData] = useState([
-        {
-            "id": 1,
-            "name": "김씨",
-            "time": "09:00 ~ 18:00",
-            "like": "10",
-            "tel": "010-1052-9745",
-            "addr": "서울 강남 어딘가",
-            "lat": "37.5001",
-            "lon": "127.029",
-            "profileImg": "../asset/list/desiner.png",
-            "portfolio": ["../asset/list/test1.png", "../asset/list/test2.png", "../asset/list/test4.png", "../asset/list/test4.png"]
-        },
-        {
-            "id": 2,
-            "name": "이씨",
-            "time": "09:00 ~ 18:00",
-            "like": "8",
-            "tel": "010-0213-4785",
-            "addr": "서울 강남 어딘가",
-            "lat": "37.5035",
-            "lon": "127.026",
-            "profileImg": "../asset/list/desiner.png",
-            "portfolio": ["../asset/list/test4.png", "../asset/list/test1.png", "../asset/list/test3.png", "../asset/list/test3.png"]
-        },
-        {
-            "id": 3,
-            "name": "정씨",
-            "time": "09:00 ~ 18:00",
-            "like": "6",
-            "tel": "010-5551-1252",
-            "addr": "서울 강남 어딘가",
-            "lat": "37.5016",
-            "lon": "127.0263",
-            "profileImg": "../asset/list/desiner.png",
-            "portfolio": ["../asset/list/test3.png", "../asset/list/test2.png", "../asset/list/test4.png", "../asset/list/test4.png"]
-        },
-        {
-            "id": 4,
-            "name": "박씨",
-            "time": "09:00 ~ 18:00",
-            "like": "21",
-            "tel": "010-7756-6132",
-            "addr": "서울 강남 어딘가",
-            "lat": "37.49902",
-            "lon": "127.0271",
-            "profileImg": "../asset/list/desiner.png",
-            "portfolio": ["../asset/list/test2.png", "../asset/list/test1.png", "../asset/list/test3.png", "../asset/list/test4.png"]
-        },
-        {
-            "id": 5,
-            "name": "조씨",
-            "time": "09:00 ~ 18:00",
-            "like": "17",
-            "tel": "010-5321-3001",
-            "addr": "서울 어딘가",
-            "lat": "37.4895",
-            "lon": "127.0075",
-            "profileImg": "../asset/list/desiner.png",
-            "portfolio": ["../asset/list/test3.png", "../asset/list/test1.png", "../asset/list/test4.png", "../asset/list/test2.png"]
-        },
-        {
-            "id": 6,
-            "name": "최씨",
-            "time": "09:00 ~ 18:00",
-            "like": "5",
-            "tel": "010-2032-1354",
-            "addr": "한국 어딘가",
-            "lat": "37.4795",
-            "lon": "127.0353",
-            "profileImg": "../asset/list/desiner.png",
-            "portfolio": ["../asset/list/test2.png", "../asset/list/test3.png", "../asset/list/test1.png", "../asset/list/test4.png"]
-        },
-    ])
+    const {member} = useContext(myContext);
 
-    const dataLoad = (dataId) => {
-        setDetailItem(data.find((item)=> item.id === dataId));
+    const paramsData = useSearchParams();
+    const sKey = paramsData.get("key");
+
+
+    const detailGet = async () => {
+    
+        await axios.get(`/api/detail?key=${sKey}`)
+        .then(res=>{
+            setDetailItem(res.data);
+        });
+    };
+
+
+    const detailPortPicGet = async () => {
+        await axios.get(`/api/portPic?key=${sKey}`)
+        .then(res=>{
+            setDetailProtPic(res.data);
+        })
     }
 
+
+    useEffect(() => {
+        detailGet();
+        detailPortPicGet();
+    }, [])
+
+    useEffect(()=>{
+        console.log(detailProtPic);
+    },[detailProtPic])
 
     const accordionToggle = () => {
         setOn(!on);
@@ -109,7 +66,7 @@ function Detail() {
                     // 위치 정보 가져오기 성공
                     const { latitude, longitude } = position.coords;
                     setLocation({ latitude, longitude });
-                    console.log(location);
+                    // console.log(location);
                 },
                 (error) => {
                     // 위치 정보 가져오기 실패
@@ -120,53 +77,61 @@ function Detail() {
 
     }
 
+    console.log(detailItem[0]);
+
     useEffect(() => {
         geolocation();
-        dataLoad();
     }, [])
 
-    console.log(detailItem);
-
+    if(!detailItem[0]) return <>로딩중</>
     return (
         <section>
             <div className={styles.top}>
-                <button onClick={() => router.back()}>뒤로</button>
+                <button onClick={() => router.back()}><img src="../asset/detail/arrow-gray-icon.svg"></img></button>
                 <p>상세보기</p>
             </div>
 
             <div className={styles.detailIntro}>
                 <div className={styles.desinerImg}>
-                    <div></div>
+                    <img src={detailItem[0].imgUrl}></img>
                 </div>
                 <div className={styles.introInfoBox}>
                     <div className={styles.introInfo}>
-                        <p className={styles.name}>김은지 디자이너</p>
-                        <p className={styles.like}><span>35</span>명이 찜했습니다.</p>
+                        <p className={styles.name}>{detailItem[0].nickname}</p>
+                        <p className={styles.like}><span>{detailItem[0].like}</span>명이 찜했습니다.</p>
                         <p className={styles.info}>모든 ~~~모든 ~~~모든 ~~~모든 ~~~모든 ~~~모든 ~~~모든 ~~~모든 ~~~모든 ~~~모든 ~~~모든 ~~~모든 ~~~</p>
                     </div>
                     <div className={styles.introBtn}>
                         <ul>
                             <li>
                                 <div>
-                                    <div className={styles.img}>사진</div>
+                                    <div className={styles.img}>
+                                        <img src="../asset/detail/like-icon.svg"></img>
+                                    </div>
                                     <p className={styles.name}>좋아요</p>
                                 </div>
                             </li>
                             <li>
-                                <div>
-                                    <div className={styles.img}>사진</div>
+                            <div>
+                                    <div className={styles.img}>
+                                        <img src="../asset/detail/location-icon.svg"></img>
+                                    </div>
                                     <p className={styles.name}>위치</p>
                                 </div>
                             </li>
                             <li>
-                                <div>
-                                    <div className={styles.img}>사진</div>
+                            <div>
+                                    <div className={styles.img}>
+                                        <img src="../asset/detail/tel-icon.svg"></img>
+                                    </div>
                                     <p className={styles.name}>전화</p>
                                 </div>
                             </li>
                             <li>
-                                <div>
-                                    <div className={styles.img}>사진</div>
+                            <div>
+                                    <div className={styles.img}>
+                                        <img src="../asset/detail/share-icon.svg"></img>
+                                    </div>
                                     <p className={styles.name}>공유</p>
                                 </div>
                             </li>
@@ -181,15 +146,15 @@ function Detail() {
                 <ul className={styles.designerInfoCon}>
                     <li>
                         <p className={styles.left}>영업시간</p>
-                        <p className={styles.right}>11:00 ~ 22:00</p>
+                        <p className={styles.right}>{detailItem[0].dTime1} ~ {detailItem[0].dTime2}</p>
                     </li>
                     <li>
                         <p className={styles.left}>주소</p>
-                        <p className={styles.right}>서울 강남 어딘가</p>
+                        <p className={styles.right}>{detailItem[0].dAddress}</p>
                     </li>
                     <li>
                         <p className={styles.left}>번호</p>
-                        <p className={styles.right}>010 - 4862 - 0192</p>
+                        <p className={styles.right}>{detailItem[0].dNumber1} - {detailItem[0].dNumber2} - {detailItem[0].dNumber3}</p>
                     </li>
 
                 </ul>
@@ -206,11 +171,13 @@ function Detail() {
                         modules={[Pagination]}
                         className={styles.mySwiper}
                     >
-                        <SwiperSlide className={styles.swiperSlide}>Slide 1</SwiperSlide>
-                        <SwiperSlide className={styles.swiperSlide}>Slide 2</SwiperSlide>
-                        <SwiperSlide className={styles.swiperSlide}>Slide 3</SwiperSlide>
-                        <SwiperSlide className={styles.swiperSlide}>Slide 4</SwiperSlide>
-                        <SwiperSlide className={styles.swiperSlide}>Slide 5</SwiperSlide>
+                            {
+                                detailProtPic.map((item)=>(
+                                    <SwiperSlide className={styles.swiperSlide}>
+                                        <img src={item.imgUrl}></img>
+                                    </SwiperSlide>
+                                ))
+                            }
                     </Swiper>
                 </div>
             </div>

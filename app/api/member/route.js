@@ -13,7 +13,7 @@ export async function GET(req) {
 export async function POST(req) {
     const qData = await req.json();
     const {client, collection} = await dbConnect("member");
-    await collection.insertOne({id: qData.id, password: qData.pw, nickname:qData.nick, key: qData.key});
+    await collection.insertOne({id: qData.id, password: qData.pw, nickname:qData.nick, key: qData.key, info: "", imgUrl: "", lng: "", lat: "", dAddress: "", dDesc: "", dNumber1: "", dNumber2: "", dNumber3: "", dPrice: "", dTime1: "", dTime2: "", like: "0"});
     const dataGet = await collection.find().toArray();
 
     await client.close();
@@ -23,7 +23,7 @@ export async function POST(req) {
 export async function DELETE(req) {
     const qData = await Object.fromEntries(req.nextUrl.searchParams);
     const {client, collection} = await dbConnect("member");
-    await collection.deleteOne({id: qData.id});
+    await collection.deleteOne({key: qData.key});
     const dataGet = await collection.find().toArray();
 
     await client.close();
