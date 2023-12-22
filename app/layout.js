@@ -10,6 +10,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <Context>
+        <head>
+          {/* 카카오 로그인 */}
+          <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+        </head>
         <body>
           <main>{children}</main>
         </body>
