@@ -56,7 +56,34 @@ $grayColor5: #C2C2C2;
 $MarPad: 32px;
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====  ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+body{
+// background-color: red;
+}
+
+*{
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px; 
+}
+html{
+    font-size: 16px;
+}
+ul li{
+    list-style-type: none;
+}
+img{
+    vertical-align: middle;
+}
+button{
+    border: none;
+    cursor: pointer;
+}
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== =====  ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+
+
+
 section.signUpWrapper{
+    // outline: 1px solid red;
     margin: auto;
     box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.2);
     font-family: 'SUITE-Regular';
@@ -65,33 +92,49 @@ section.signUpWrapper{
     width: 100%; max-width: 640px; min-height: 100vh;
     padding: 100px $MarPad 150px;
     background-color: $mainColor3;
+    overflow: hidden;
 
-    >div.titleWrapper{
+    >div.topWrapper{
         // outline: 1px solid red;
-        position: relative; top: 0; left: 0; z-index: 0;
-        margin-bottom: 60px;
-        @include flex();
+        margin-bottom: 53px;
+        @include flex(flex-start);
 
         >button.prevBtn{
-            // outline: 1px solid red;
-            position: absolute; top: 50%; left: 0; z-index: 0;
-            transform: translateY(-50%);
+            width: 11px; height: 21px;
+            background: url('/LeeTest/img/prev_arrow_icon.svg') left top / 100% 100% no-repeat scroll;
         }
 
-        >h2{ 
-            // outline: 1px solid red;
-            display: inline-block;
-            @include font(1.875rem, 500, $grayColor3);
-            line-height: 166%;
+    }//div.topWrapper
+
+    >div.textWrapper{
+        // outline: 1px solid red;
+        margin-bottom: 53px;
+
+        @include flex(flex-start, flex-start){
+            flex-direction: column;
+        }
+
+        >h2{
+            @include font(2.25rem, 700, $mainColor1);
             white-space: nowrap;
+            line-height: 120%;
+            letter-spacing: -0.72px;
+            margin-bottom: 12px;
         }
-
-    }//div.titleWrapper
+        >span{
+            @include font(1.5rem, 500, $mainColor1);
+            @include text();
+            letter-spacing: -0.48px;
+        }
+    }//div.textWrapper
 
 
     >form.signUpForm{
+        // outline: 1px solid red;
+        width: 100%;
         >div.inputWrapper{
             // outline: 1px solid red;
+            width: 100%;
             &:not(:last-child){
                 margin-bottom: 52px;
             }
@@ -116,15 +159,48 @@ section.signUpWrapper{
                     outline: none;
                 }
             }
+            
+            >div.pwBoxWrapper{
+                position: relative; top: 0px; left: 0px; z-index: 0;
+                width: 100%;
+                border-radius: 35px;
+                background-color: white;
+                overflow: hidden;
+                
+                >input{
+                    width: 100%;
+                    padding: 25px 38px;
+                    @include font(1.625rem, 400, black);
+
+                    &::placeholder{
+                        color: $grayColor5;
+                    }
+                    &:focus{
+                        outline: none;
+                    }
+                }
+
+                >button.pwVisualBtn{
+                    position: absolute; top: 50%; right: 38px;
+                    transform: translateY(-50%);
+                    width: 35px; height: 35px;
+
+                    background: url('/LeeTest/img/eye_icon.svg') 100% 100% / contain no-repeat scroll;
+
+                    &.active{
+                        background: url('/LeeTest/img/eye_active_icon.svg') 100% 100% / contain no-repeat scroll;
+                    }
+                }
+            }//pwBoxWrapper
 
             >span{
-                display: none;
-                margin-top: 12px;
-                @include font(1.375rem, 400, rgba(144, 144, 144, 0.80));
+                display: inline-block;
+                margin-top: 13px;
+                @include font(1.375rem, 400, $mainColor1);
+                @include text();
+                white-space: pre-line;
+                line-height: 150%;
                 
-                &.active{
-                    display: inline-block;
-                }
             }
         }//div.inputWrapper
 
@@ -133,9 +209,36 @@ section.signUpWrapper{
             >label.idLabel{
 
             }
-            >input.idInput{
+            >div.idInputWrapper{
+                // outline: 1px solid red;
+                @include flex(flex-start);
+                border-radius: 35px;
+                overflow: hidden; 
+                height: 80px;
 
-            }
+                >input.idInput{
+                    width: 100%;
+                    border: none; 
+                    padding: 25px 38px;
+                    @include font(1.625rem, 400, black);
+    
+                    &::placeholder{
+                        color: $grayColor5;
+                    }
+                    &:focus{
+                        outline: none;
+                    }
+
+                }//input.idInput
+                >button.idCheckBtn{
+                    padding: 10px;
+                    height: 100%;
+                    background-color: $mainColor1;
+
+                    @include font(0.875rem, 600, white);
+                    white-space: nowrap;
+                }//button.idDupliCheckBtn
+            }//idInputWrapper
             >span.idInfo{
 
             }
@@ -149,6 +252,9 @@ section.signUpWrapper{
             >input.pwInput{
 
             }//input.pwInput
+            >button.pwVisualBtn{
+
+            }
 
         }//div.pwWrapper
         
@@ -180,14 +286,20 @@ section.signUpWrapper{
         }//div.nickWrapper
         
         >button.submitBtn{
+            pointer-events: none;
             width: 100%;
             border-radius: 35px;
-            background: $mainColor1;
+            background: $grayColor5;
             padding: 25px;
 
             @include flex();
             @include font(1.875rem, 500, #FFF);
             white-space: nowrap;
+
+            &.active{
+                pointer-events: auto;
+                background: $mainColor1;
+            }
         }//button.submitBtn
 
     }//form.signUpForm

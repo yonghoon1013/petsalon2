@@ -35,8 +35,16 @@ function Context({children}) {
 
 
 
+  const alertBoard = (txt = '') => {
+		Swal.fire({
+		  text: txt,
+		  confirmButtonColor: '#FF8500',
+		  confirmButtonText: '확인',
+		})
+	}//alertBoard() 함수정의
+
   return (
-    <myContext.Provider value={{member, memberLd, favoriteLd, Fav, portLd, portPic, setPortPic}}>
+    <myContext.Provider value={{member, memberLd, favoriteLd, Fav, portLd, portPic, setPortPic, alertBoard}}>
         {children}
     </myContext.Provider>
   )
