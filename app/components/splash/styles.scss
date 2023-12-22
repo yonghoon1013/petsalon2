@@ -1,0 +1,178 @@
+// 1. font)
+@font-face { // 이 폰트 굵기관련 문제 있음
+    font-family: 'Pretendard-Regular'; 
+   src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff'); 
+   font-weight: 400; 
+   font-style: normal; 
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+@font-face {
+    font-family: 'SUITE-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// 2. mixin)
+
+@mixin flex($x:center, $y:center){
+    display: flex;
+    justify-content: $x;
+    align-items: $y;
+
+    @content;
+}
+
+@mixin font($a:inherit, $b:inherit, $c:inherit){
+    font-size: $a;
+    font-weight: $b;
+    color: $c;
+
+    @content;
+}
+
+@mixin text(){
+    word-break: keep-all;
+    word-wrap: break-word;
+    @content;
+}
+
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// 3. color)
+$mainColor1: #FF8500;
+$mainColor2: #FFC700;
+$mainColor3: #FFFAED;
+
+$grayColor1: #2D2D2D;
+$grayColor2: #666666;
+$grayColor3: #7D7D7D;
+$grayColor4: #909090;
+$grayColor5: #C2C2C2;
+
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// 4. 변수들)
+$MarPad: 32px;
+
+// 5. 애니메이션)
+@keyframes splash_cat{
+    0%{
+        transform: rotate(8deg);
+    }
+    50%{
+        transform: rotate(-8deg);     
+    }
+    100%{
+        transform: rotate(7deg);     
+    }
+}
+
+@keyframes splash_dog{
+    0%{
+        transform: rotate(-8deg);
+    }
+    50%{
+        transform: rotate(8deg);     
+    }
+    100%{
+        transform: rotate(-7deg);     
+    }
+}
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== =====  ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+body{
+// background-color: red;
+}
+
+*{
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px; 
+}
+html{
+    font-size: 16px;
+}
+ul li{
+    list-style-type: none;
+}
+img{
+    vertical-align: middle;
+}
+button{
+    border: none;
+    cursor: pointer;
+}
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== =====  ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+
+div.splashWrapper{
+    &.noVisual{
+        display: none;
+    }
+    // outline: 1px solid red;
+
+    //fixed로 하고 싶었지만 그럼 PC버전에서 화면전체를 크기로 잡아서 absolute로 함
+    position: absolute; top: 0; left: 0; z-index: 10;
+    width: 100%; height: 100%;
+    background-color: $mainColor1;
+
+    >div.contentsWrapper{
+        position: relative; top: 0; left: 0; z-index: 0;
+        width: 100%; height: 100vh;
+        >figure.logoWrapper{
+            // outline: 1px solid white;
+            position: absolute; top: 50%; left: 50%; z-index: 0;
+            transform: translate(-50%, -50%);
+            width: 50%; height: 40vw; max-height: 260px;
+    
+            @include flex(flex-start){flex-direction: column};
+    
+            >ul.catAndDog{
+                // outline: 1px solid red;
+
+                // 고양이랑 강아지 크기가 달라서 딱 서로 중앙에 있는 걸로 보이려고 이렇게 함
+                transform: translateX(2%); 
+                width: 85%; height: 50%;
+                flex-shrink: 0;
+    
+                @include flex();
+    
+                >li{
+                    // outline: 1px solid gray;
+                    flex-shrink: 0;
+                    height: 100%;
+    
+                    &:nth-of-type(1){
+                        width: 40%;
+                        margin-right: 10px;
+                        background: url('/LeeTest/img/intro_cat_icon.svg') center center / contain no-repeat scroll;
+    
+                        animation: splash_cat 1.7s alternate linear infinite;
+                    }
+                    &:nth-of-type(2){
+                        width: 50%;
+                        background: url('/LeeTest/img/intro_dog_icon.svg') center center / contain no-repeat scroll;
+    
+                        animation: splash_dog 1.7s alternate linear infinite;
+                    }
+                }
+            }
+            >figcaption{
+                // outline: 1px solid red;
+                width: 100%; height: 100%;
+                background: url('/LeeTest/img/intro_text_icon.svg') center center / contain no-repeat scroll;
+            }
+        }//figure.logoWrapper
+    
+        >span.introduction{
+            // outline: 1px solid red;
+            position: absolute; bottom: 10%; left: 50%; z-index: 0;
+            transform: translateX(-50%);
+            @include font(1.625rem, 600, $mainColor3);
+            white-space: nowrap;
+
+            @media (max-width: 425px) {
+                font-size: 1.2rem;
+            }
+        }
+    }//div.contentsWrapper
+}//div.splashWrapper

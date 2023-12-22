@@ -1,0 +1,222 @@
+// 1. font)
+@font-face { // 이 폰트 굵기관련 문제 있음
+    font-family: 'Pretendard-Regular'; 
+   src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff'); 
+   font-weight: 400; 
+   font-style: normal; 
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+@font-face {
+    font-family: 'SUITE-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// 2. mixin)
+
+@mixin flex($x:center, $y:center){
+    display: flex;
+    justify-content: $x;
+    align-items: $y;
+
+    @content;
+}
+
+@mixin font($a:inherit, $b:inherit, $c:inherit){
+    font-size: $a;
+    font-weight: $b;
+    color: $c;
+
+    @content;
+}
+
+@mixin text(){
+    word-break: keep-all;
+    word-wrap: break-word;
+    @content;
+}
+
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// 3. color)
+$mainColor1: #FF8500;
+$mainColor2: #FFC700;
+$mainColor3: #FFFAED;
+
+$grayColor1: #2D2D2D;
+$grayColor2: #666666;
+$grayColor3: #7D7D7D;
+$grayColor4: #909090;
+$grayColor5: #C2C2C2;
+
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// 4. 변수들)
+$MarPad: 32px;
+
+// 5. 애니메이션)
+@keyframes slide{
+    from{
+        transform: translateX(0%);
+    }
+    to{
+        transform: translateX(-100%);     
+    }
+}
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== =====  ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+body{
+    // background-color: red;
+}
+
+*{
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px; 
+}
+html{
+    font-size: 16px;
+}
+ul li{
+    list-style-type: none;
+}
+img{ 
+    vertical-align: middle;
+}
+button{
+    border: none;
+    cursor: pointer;
+}
+
+    // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====  ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+
+    section.introWrapper{
+        position: relative; top: 0; left: 0;
+        // outline: 1px solid red;
+        margin: auto;
+        padding: 120px 0px; 
+        box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.2);
+        font-family: 'SUITE-Regular';
+        // ↑ 임시
+
+        width: 100%; max-width: 640px; min-height: 100vh;
+        background-color: $mainColor3;
+        overflow: hidden;
+        @include flex(flex-start){
+            flex-direction: column;
+        };
+
+        >div.headWrapper{
+            // outline: 1px solid red;
+            width: 100%;
+            padding: 0px $MarPad;
+            margin-bottom: 35px;
+            @include flex(flex-start){
+                flex-direction: column;
+            };
+
+            >h1{
+                width: 80%; height: 43vw;
+                max-height: 274px;
+                margin-bottom: 48px;
+
+                >img{
+                    width: 100%;
+                }
+            }
+
+            >strong{
+                @include font(2rem, 700, $mainColor1);
+                line-height: 118%;
+                white-space: nowrap;
+            }
+        }//div.headWrapper
+
+        >ul.imgSlideAni{
+            // outline: 1px solid red;
+            // background-color: gray;
+            width: 100%;
+            height: 52vw; max-height: 290px;
+            overflow: hidden;
+            @include flex(flex-start);
+
+            >li{
+                flex-shrink: 0;
+                // outline: 1px solid blue;
+                height: 100%;
+                // background: url('/LeeTest/img/slide_ani.svg') left top / cover repeat-x scroll;
+                animation: slide 7s linear infinite;
+                >img{
+                    height: 100%;
+                }
+                
+            }   
+        }//ul.imgSlideAni
+
+        >div.btnWrapper{
+            margin-top: 60px;
+            width: 100%;
+            padding: 0px $MarPad;
+
+            @include flex(flex-start){
+                flex-direction: column
+            };
+
+            >button{
+                width: 100%;
+                border-radius: 35px;
+                padding: 25px;
+                @include flex();
+                @include font(1.875rem, 500, #FFF);
+                white-space: nowrap; 
+
+                &::before{
+                    //outline: 1px solid red;
+                    content: '';
+                    width: 27px; height: 27px;
+                    margin-right: 12px;
+
+                }
+            }
+            
+            >button.kakaoSignUpBtn{
+                background: $mainColor1;
+                margin-bottom: 24px;
+
+                &::before{
+                    background: url('/LeeTest/img/kakaoLogin_icon.svg') center center / 100% 100% no-repeat scroll;
+                }
+            }//button.kakaoSignUpBtn
+            
+            >button.normalSignUpBtn{
+                background: $mainColor2;
+                
+                &::before{
+                    background: url('/LeeTest/img/normalLogin_icon.svg') center center / 100% 100% no-repeat scroll;
+                }
+            }//button.normalSignUpBtn
+
+            
+            >a{
+                margin-top: 40px;
+                @include font(1.625rem, 500, $mainColor1);
+            
+                @include flex(flex-start);
+                &::after{
+                    content: '';
+                    width: 7px; height: 15px;
+                    background: url('/LeeTest/img/text_arrow_icon.svg') left top / contain no-repeat scroll;
+                    margin-left: 9px;
+
+                    transition: .2s;
+                }
+
+                &:hover{
+                    &::after{
+                        transform: translateX(10px);
+                    }
+                }
+            }
+        }//div.btnWrapper
+
+    }//section.introWrapper    
