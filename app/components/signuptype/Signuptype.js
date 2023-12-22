@@ -2,9 +2,11 @@
 
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import { useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef } from 'react';
+import { myContext } from '../Context';
 
 export default function Signuptype() {
+    const {alertBoard} = useContext(myContext);
     const navigation = useRouter();
 
     const elAllInput = useRef(),
@@ -64,7 +66,7 @@ export default function Signuptype() {
             }
 
             if(error){//에러
-                alert('가입에 오류가 생겼습니다.');
+                alertBoard('가입에 오류가 생겼습니다.');
                 
                 sessionStorage.removeItem('signUpData');
                 sessionStorage.removeItem('signUpMode');
@@ -77,7 +79,7 @@ export default function Signuptype() {
 
                 navigation.push('/pages/login');
 
-                alert('가입이 완료되었습니다.');    
+                alertBoard('가입이 완료되었습니다.');    
             }
         }//if(elSubmitBtn.current.classList.contains('active'))
     }//signUpFun() 함수정의

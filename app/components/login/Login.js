@@ -3,9 +3,12 @@
 import axios from 'axios'
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React, { useRef, useState } from 'react'
+import React, { useContext, useRef, useState } from 'react'
+import { myContext } from '../Context';
 
 function Login() {
+
+  const {alertBoard} = useContext(myContext);
     const navigation = useRouter();
 
     const elPwInput = useRef();
@@ -45,7 +48,7 @@ function Login() {
           localStorage.setItem("loginObj", JSON.stringify(loginObj));
           navigation.push('/');
         } else {
-          alert("아이디 또는 비밀번호를 다시 확인해주세요."); //"응 실패 그거"
+          alertBoard("아이디 또는 비밀번호를 다시 확인해주세요."); //"응 실패 그거"
         }
       })
     }//loginFn(e) 함수정의
@@ -76,7 +79,7 @@ function Login() {
                   localStorage.setItem("loginObj", JSON.stringify(loginObj));
                   navigation.push('/');
                 } else {
-                  alert("아직 카카오로 가입하신 적이 없는 회원입니다."); //"응 실패 그거"
+                  alertBoard("아직 카카오로 가입하신 적이 없는 회원입니다."); //"응 실패 그거"
                 }
               })//.then
 

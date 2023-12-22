@@ -13,6 +13,8 @@ export default function RootLayout({ children }) {
         <head>
           {/* 카카오 로그인 */}
           <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+          {/* alert창 */}
+          <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
         </head>
         <body>
           <main>{children}</main>

@@ -3,9 +3,12 @@
 import axios from 'axios';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useContext } from 'react';
+import { myContext } from '../Context';
 
 export default function Intro() {
 
+  const {alertBoard} = useContext(myContext);
   const navigation = useRouter();
 
   const kakaoLogout = () => {
@@ -61,7 +64,7 @@ export default function Intro() {
 
               }else{//카카오로 회원가입한 적이 있음
                 kakaoLogout();
-                alert('이미 카카오 계정이 있는 회원입니다.');
+                alertBoard('이미 카카오 계정이 있는 회원입니다.');
               }
 
             });//.then

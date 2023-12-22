@@ -2,9 +2,12 @@
 
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
+import { myContext } from '../Context';
 
 export default function Signup() {
+
+    const {alertBoard} = useContext(myContext);
     const navigation = useRouter();
 
     const [pwType1, setPwType1] = useState('password'),
@@ -39,7 +42,7 @@ export default function Signup() {
                 if(res.data){
                     idWarningStr = '* 중복되는 아이디가 있습니다.';
                 }else{
-                    alert('해당 아이디는 사용 가능합니다.');
+                    alertBoard('해당 아이디는 사용 가능합니다.');
                 }
             });
         }//else
