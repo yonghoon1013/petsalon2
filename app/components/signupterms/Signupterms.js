@@ -85,13 +85,10 @@ export default function Signupterm() {
 
     //이전 버튼 함수)
     const prevFun = () => {
-        const signUpMode = sessionStorage.getItem("signUpMode");
 
         sessionStorage.removeItem('signUpMode');
-        if(signUpMode == 'kakao'){//카카오 회원가입 경우)
-            sessionStorage.removeItem('signUpData');
+        sessionStorage.removeItem('signUpData');
 
-        }
         navigation.push('/pages/intro');
     }//prevFun() 함수정의
 
