@@ -8,9 +8,8 @@ import axios from "axios";
 
 function List() {
 
-    const {member} = useContext(myContext);
+    const {member, memberLd} = useContext(myContext);
     const [view, setView] = useState([]);
-
 
     const portLoading = async () =>{
         await axios.get(`/api/portPic/dd`)
@@ -22,13 +21,10 @@ function List() {
 
     useEffect(()=>{
         portLoading();
+        memberLd();
     },[])
 
-    useEffect(()=>{
-        // console.log(view);
-    },[view])
 
-    console.log(member);
     if(!member) return <>로딩중</>
     return (
         <section>

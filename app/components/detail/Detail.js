@@ -2,7 +2,7 @@
 import styles from "./detail.module.scss"
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import {myContext} from '../Context';
+import { myContext } from '../Context';
 import axios from "axios";
 
 
@@ -19,71 +19,108 @@ function Detail() {
     const [on, setOn] = useState(false);
     const router = useRouter();
     const [location, setLocation] = useState(null);
-    const [detailItem,setDetailItem] = useState([]);
-    const [detailProtPic,setDetailProtPic] = useState([]);
+    const [detailItem, setDetailItem] = useState([]);
+    const [detailProtPic, setDetailProtPic] = useState([]);
 
-    const {member} = useContext(myContext);
+    const [likeCheck, setLikeCheck] = useState(null);
+
+    const { member } = useContext(myContext);
 
     const paramsData = useSearchParams();
-    const sKey = paramsData.get("key");
+    const objKey = paramsData.get("key");
 
 
     const detailGet = async () => {
-    
-        await axios.get(`/api/detail?key=${sKey}`)
-        .then(res=>{
-            setDetailItem(res.data);
-        });
+        await axios.get(`/api/member?key=${objKey}`)
+            .then(res => {
+                setDetailItem(res.data);
+            });
     };
 
 
     const detailPortPicGet = async () => {
-        await axios.get(`/api/portPic?key=${sKey}`)
-        .then(res=>{
-            setDetailProtPic(res.data);
-        })
+        await axios.get(`/api/portPic?key=${objKey}`)
+            .then(res => {
+                setDetailProtPic(res.data);
+            })
+    }
+
+
+    const likeLoad = async () => {
+        const sKey = sessionStorage.getItem("key");
+        await axios.get(`/api/detail?sKey=${sKey}&objKey=${objKey}`)
+            .then(res => {
+                setLikeCheck(res.data);
+            })
+    }
+
+
+    //클릭시
+    const likeTest = async () => {
+        const sKey = sessionStorage.getItem("key");
+        await axios.get(`/api/detail?sKey=${sKey}&objKey=${objKey}`)
+            .then(res => {
+                if (res.data) {
+                    axios.post(`/api/detail`, { key: Date.now().toString(), sKey, objKey })
+                        .then(res => {
+                            setLikeCheck(res.data);
+                            detailGet();
+                        })
+
+                } else {
+                    axios.delete(`/api/detail?sKey=${sKey}&objKey=${objKey}`)
+                        .then(res => {
+                            setLikeCheck(res.data);
+                            detailGet();
+                        })
+
+                }
+            })
+
     }
 
 
     useEffect(() => {
         detailGet();
         detailPortPicGet();
+        likeLoad();
     }, [])
 
-    useEffect(()=>{
-        console.log(detailProtPic);
-    },[detailProtPic])
+
+    useEffect(() => {
+        likeLoad();
+        console.log(likeCheck);
+    }, [member])
+
 
     const accordionToggle = () => {
         setOn(!on);
     }
 
-    const geolocation = () => {
+    // const geolocation = () => {
 
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    // 위치 정보 가져오기 성공
-                    const { latitude, longitude } = position.coords;
-                    setLocation({ latitude, longitude });
-                    // console.log(location);
-                },
-                (error) => {
-                    // 위치 정보 가져오기 실패
-                    console.error('Error getting geolocation:', error);
-                }
-            );
-        }
+    //     if (navigator.geolocation) {
+    //         navigator.geolocation.getCurrentPosition(
+    //             (position) => {
+    //                 // 위치 정보 가져오기 성공
+    //                 const { latitude, longitude } = position.coords;
+    //                 setLocation({ latitude, longitude });
+    //                 // console.log(location);
+    //             },
+    //             (error) => {
+    //                 // 위치 정보 가져오기 실패
+    //                 console.error('Error getting geolocation:', error);
+    //             }
+    //         );
+    //     }
 
-    }
+    // }
 
-    console.log(detailItem[0]);
+    // useEffect(() => {
+    //     geolocation();
+    // }, [])
 
-    useEffect(() => {
-        geolocation();
-    }, [])
-
-    if(!detailItem[0]) return <>로딩중</>
+    if (!detailItem[0]) return <>로딩중</>
     return (
         <section>
             <div className={styles.top}>
@@ -103,16 +140,16 @@ function Detail() {
                     </div>
                     <div className={styles.introBtn}>
                         <ul>
-                            <li>
+                            <li onClick={() => likeTest()}>
                                 <div>
                                     <div className={styles.img}>
-                                        <img src="../asset/detail/like-icon.svg"></img>
+                                        <img src={likeCheck ? "../asset/detail/like-icon.svg" : "../asset/detail/like-color-icon.svg"}></img>
                                     </div>
                                     <p className={styles.name}>좋아요</p>
                                 </div>
                             </li>
                             <li>
-                            <div>
+                                <div>
                                     <div className={styles.img}>
                                         <img src="../asset/detail/location-icon.svg"></img>
                                     </div>
@@ -120,7 +157,7 @@ function Detail() {
                                 </div>
                             </li>
                             <li>
-                            <div>
+                                <div>
                                     <div className={styles.img}>
                                         <img src="../asset/detail/tel-icon.svg"></img>
                                     </div>
@@ -128,7 +165,7 @@ function Detail() {
                                 </div>
                             </li>
                             <li>
-                            <div>
+                                <div>
                                     <div className={styles.img}>
                                         <img src="../asset/detail/share-icon.svg"></img>
                                     </div>
@@ -171,13 +208,13 @@ function Detail() {
                         modules={[Pagination]}
                         className={styles.mySwiper}
                     >
-                            {
-                                detailProtPic.map((item)=>(
-                                    <SwiperSlide className={styles.swiperSlide}>
-                                        <img src={item.imgUrl}></img>
-                                    </SwiperSlide>
-                                ))
-                            }
+                        {
+                            detailProtPic.map((item, index) => (
+                                <SwiperSlide key={index} className={styles.swiperSlide}>
+                                    <img src={item.imgUrl}></img>
+                                </SwiperSlide>
+                            ))
+                        }
                     </Swiper>
                 </div>
             </div>
