@@ -17,7 +17,8 @@ function Context({children}) {
   };
 
   const favoriteLd = async () => {
-		await axios.get(`/api/favorite`)
+    const sKey = sessionStorage.getItem("key");
+		await axios.get(`/api/favorite?sKey=${sKey}`)
 			.then(res => {
 				setFav(res.data);
 			});
@@ -31,9 +32,8 @@ function Context({children}) {
     });
   };
 
-  useEffect(()=>{
-    memberLd();
-  }, []);
+
+
 
   return (
     <myContext.Provider value={{member, memberLd, favoriteLd, Fav, portLd, portPic, setPortPic}}>
