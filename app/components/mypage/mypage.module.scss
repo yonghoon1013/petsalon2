@@ -39,7 +39,12 @@
 				flex-direction: column;
 				justify-content: center;
 				align-items: center;
-				>img {width: 100%;}
+				>img {
+					object-fit: cover;
+					border-radius: 100%;
+					width: 100%;
+					height: 100%;
+				}
 			}
 
 			>.profName {
@@ -150,11 +155,26 @@
 					&.picAdd{
 						border: 2px dashed black;
 					}
-					>figure{
-						width: 100%;
-						height: 100%;
-						>img{
+					&.addedPicsBox{
+						>.addedPics{
+							display: flex;
+							flex-direction: column;
+							justify-content: center;
+							align-items: center;
 							width: 100%;
+							height: 100%;
+							position: relative;
+							>img{
+								object-fit: cover;
+								width: 100%;
+								height: 100%;
+								border-radius: 13px;
+							}
+							>button{
+								position: absolute;
+								top: 5%;
+								right: 5%;
+							}
 						}
 					}
 				}

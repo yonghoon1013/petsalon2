@@ -20,6 +20,7 @@ function Context({children}) {
 		await axios.get(`/api/favorite`)
 			.then(res => {
 				setFav(res.data);
+        console.log(res.data);
 			});
 	};
 

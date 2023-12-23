@@ -21,7 +21,6 @@ export async function POST(req) {
 
 export async function DELETE(req) {
     const qData = await Object.fromEntries(req.nextUrl.searchParams);
-    console.log(qData);
     const { client, collection } = await dbConnect("dPics");
     await collection.deleteOne({key: qData.key});
     const dataGet = await collection.find({sKey: qData.sKey}).toArray();

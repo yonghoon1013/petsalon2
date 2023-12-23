@@ -68,7 +68,6 @@ function Mypage() {
 	}
 
 
-
   const portPicUpload = async (e) => {
     e.preventDefault();
     const sKey = sessionStorage.getItem("key");
@@ -87,6 +86,7 @@ function Mypage() {
     }
   }
 
+  
   const infoModify = async (e) => {
     e.preventDefault();
     const sKey = sessionStorage.getItem("key");
@@ -179,8 +179,11 @@ function Mypage() {
             </li>
             {
               portPic.map(item=>(
-                <li>
-                  <figure><img src={item.imgUrl}/><button onClick={(e)=>{portDel(e, item)}}>삭제</button></figure>
+                <li className={styles.addedPicsBox}>
+                  <figure className={styles.addedPics}>
+                    <img src={item.imgUrl}/>
+                    <button onClick={(e)=>{portDel(e, item)}}>삭제</button>
+                  </figure>
                 </li>
               ))
             }
