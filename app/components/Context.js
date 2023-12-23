@@ -17,7 +17,8 @@ function Context({children}) {
   };
 
   const favoriteLd = async () => {
-		await axios.get(`/api/favorite`)
+    const sKey = sessionStorage.getItem("key");
+		await axios.get(`/api/favorite?sKey=${sKey}`)
 			.then(res => {
 				setFav(res.data);
         console.log(res.data);
@@ -32,8 +33,19 @@ function Context({children}) {
     });
   };
 
+
+
+
+  const alertBoard = (txt = '') => {
+		Swal.fire({
+		  text: txt,
+		  confirmButtonColor: '#FF8500',
+		  confirmButtonText: '확인',
+		})
+	}//alertBoard() 함수정의
+
   return (
-    <myContext.Provider value={{member, memberLd, favoriteLd, Fav, portLd, portPic, setPortPic}}>
+    <myContext.Provider value={{member, memberLd, favoriteLd, Fav, portLd, portPic, setPortPic, alertBoard}}>
         {children}
     </myContext.Provider>
   )

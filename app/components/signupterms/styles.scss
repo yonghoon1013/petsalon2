@@ -1,0 +1,319 @@
+// 1. font)
+@font-face { // 이 폰트 굵기관련 문제 있음
+    font-family: 'Pretendard-Regular'; 
+   src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff'); 
+   font-weight: 400; 
+   font-style: normal; 
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+@font-face {
+    font-family: 'SUITE-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// 2. mixin)
+
+@mixin flex($x:center, $y:center){
+    display: flex;
+    justify-content: $x;
+    align-items: $y;
+
+    @content;
+}
+
+@mixin font($a:inherit, $b:inherit, $c:inherit){
+    font-size: $a;
+    font-weight: $b;
+    color: $c;
+
+    @content;
+}
+
+@mixin text(){
+    word-break: keep-all;
+    word-wrap: break-word;
+    @content;
+}
+
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// 3. color)
+$mainColor1: #FF8500;
+$mainColor2: #FFC700;
+$mainColor3: #FFFAED;
+
+$grayColor1: #2D2D2D;
+$grayColor2: #666666;
+$grayColor3: #7D7D7D;
+$grayColor4: #909090;
+$grayColor5: #C2C2C2;
+
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// 4. 변수들)
+$MarPad: 32px;
+
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== =====  ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+body{
+// background-color: red;
+}
+
+*{
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px; 
+}
+html{
+    font-size: 16px;
+}
+ul li{
+    list-style-type: none;
+}
+img{
+    vertical-align: middle;
+}
+button{
+    border: none;
+    cursor: pointer;
+}
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== =====  ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+
+
+
+section.signUpTearmsWrapper{
+    // outline: 1px solid red;
+    margin: auto;
+    box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.2);
+    font-family: 'SUITE-Regular';
+    // ↑ 임시
+
+    width: 100%; max-width: 640px; min-height: 100vh;
+    padding: 100px $MarPad 150px;
+    background-color: $mainColor3;
+    overflow: hidden;
+
+    >div.topWrapper{
+        // outline: 1px solid red;
+        margin-bottom: 53px;
+        @include flex(flex-start);
+
+        >button.prevBtn{
+            width: 11px; height: 21px;
+            background: url('/LeeTest/img/prev_arrow_icon.svg') left top / 100% 100% no-repeat scroll;
+        }
+
+    }//div.topWrapper
+
+    >div.textWrapper{
+        // outline: 1px solid red;
+        margin-bottom: 53px;
+
+        @include flex(flex-start, flex-start){
+            flex-direction: column;
+        }
+
+        >h2{
+            @include font(2.25rem, 700, $mainColor1);
+            white-space: nowrap;
+            line-height: 120%;
+            letter-spacing: -0.72px;
+            margin-bottom: 12px;
+        }
+        >span{
+            @include font(1.5rem, 500, $mainColor1);
+            @include text();
+            letter-spacing: -0.48px;
+        }
+    }//div.textWrapper
+
+    >form.signUpTermForm{
+        >div.termWrapper{
+
+            input[type="checkbox"]{
+                display: none;
+            }
+            label{
+                width: 28px; height: 28px;
+                border-radius: 7px;
+                border: 2px solid $grayColor5;
+                cursor: pointer;
+
+                &::after{
+                    display: none;
+                    content: '';
+                    width: 18px; height: 18px;
+                    background: url('/LeeTest/img/whiteCheck_icon.svg') center center / 100% 100% no-repeat scroll;
+                }
+            }
+
+            input:checked + label{
+                border: none;
+                background-color: $mainColor1;
+                @include flex();
+
+                &::after{
+                    display: inline-block;
+                }
+            }
+    
+            >strong.allCheck{
+                @include flex(space-between);
+                @include font(1.875rem, 500, black);
+                line-height: 166%;
+                border-bottom: 2px solid #E3E3E3;
+
+                >input[type="checkbox"]{
+                    
+                }
+                >label.allTerm_label{
+
+                }//label.allTerm_label
+            }//strong.allCheck
+    
+            >ul{
+                padding-top: 20px;
+                margin-bottom: 310px;
+
+                >li{
+                    // outline: 1px solid red;
+                    &:not(:last-child){
+                        margin-bottom: 16px;
+                    }
+                    
+                    >h3{
+                        @include flex(space-between); 
+                        cursor: pointer;  
+
+                        >strong.titleText{
+                            @include font(1.625rem, 400, #2D2D2D);
+                            line-height: 192%; 
+                            letter-spacing: -0.78px;
+                            white-space: nowrap;
+
+                        }
+                        >i.arrowIcon{
+                            // outline: 1px solid red; 
+                            width: 24px; height: 24px;
+                            background: url('/LeeTest/img/accArrow_icon.svg') center center / 100% 100% no-repeat scroll;
+
+                            transform: rotate(0deg);
+
+                            transition: .2s;
+                        }
+                    }//h3  
+                    
+                    >div.accordionWrapper{
+                        width: 100%; height: 0px;
+                        margin-top: 20px;
+                        border-radius: 10px;
+                        background: #FFF;
+                        box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+                        overflow: hidden;
+                        // display: none;
+
+                        transition: .3s;
+
+                        >p.detailTxt{
+                            width: 100%; height: 410px;
+                            box-shadow: inset 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+                            padding: 15px 30px;
+                            @include text();
+                            white-space: pre-line;
+                            overflow: auto;
+
+                            @include font(1rem, 400, $grayColor1);
+                            line-height: 150%;
+                            letter-spacing: -0.48px;
+
+                            //스크롤바 css↓
+                            &::-webkit-scrollbar {
+                                width: 8px;  
+                            }
+
+                            &::-webkit-scrollbar-thumb {
+                                background: $grayColor5; /* 스크롤바의 색상 */
+                                
+                                border-radius: 10px;
+                            }
+                            
+                            &::-webkit-scrollbar-track {
+                                box-shadow: inset 0px 0px 2px 0px rgba(0, 0, 0, 0.25);
+                            }
+                            
+                            // &::-webkit-scrollbar {
+                            //     display: none;
+                            // }
+                        }//p.detailTxt
+
+                        >div.agreeWrapper{
+                            width: 100%; height: 70px;
+                            @include flex(space-between);
+                            padding: 0px 30px;
+
+                            >span{
+                                @include font(1rem, 600, $grayColor2);
+                                color: #2D2D2D;
+                                line-height: 250%;
+                                letter-spacing: -0.48px;
+                                white-space: nowrap;
+                            }
+                            >input{
+                            }
+                            >label{
+
+                            }
+                        }//div.agreeWrapper
+
+                    }//div.accordionWrapper
+
+                    &.active{
+                        >h3{
+                            >i.arrowIcon{
+                                transform: rotate(180deg);
+                            }
+                        }//h3
+
+                        >div.accordionWrapper{
+                            margin-bottom: 36px;
+                            height: 480px;
+                        }
+                    }//&.active
+                }//li
+            }//ul
+        }//div.termWrapper
+
+        >button.submitBtn{
+            pointer-events: none;
+            width: 100%;
+            border-radius: 35px;
+            background: $grayColor5;
+            padding: 25px;
+
+            @include flex();
+            @include font(1.875rem, 500, #FFF);
+            white-space: nowrap;
+
+            &.active{
+                pointer-events: auto;
+                background: $mainColor1;
+            }
+        }//button.submitBtn
+
+    }//form.signUpTermForm
+
+
+}//section.signUpTearmsWrapper
+
+
+
+
+
+
+
+
+
+
+
+

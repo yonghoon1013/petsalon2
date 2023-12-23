@@ -1,88 +1,174 @@
 "use client";
 import styles from "./detail.module.scss"
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { myContext } from '../Context';
+import axios from "axios";
 
 
 import 'swiper/css';
 import 'swiper/css/pagination';
 
 import { Pagination, Navigation } from 'swiper/modules';
-import { useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
+
+
+
 
 function Detail() {
     const [on, setOn] = useState(false);
     const router = useRouter();
-    
     const [location, setLocation] = useState(null);
+    const [detailItem, setDetailItem] = useState([]);
+    const [detailProtPic, setDetailProtPic] = useState([]);
+
+    const [likeCheck, setLikeCheck] = useState(null);
+
+    const { member } = useContext(myContext);
+
+    const paramsData = useSearchParams();
+    const objKey = paramsData.get("key");
+
+
+    const detailGet = async () => {
+        await axios.get(`/api/member?key=${objKey}`)
+            .then(res => {
+                setDetailItem(res.data);
+            });
+    };
+
+
+    const detailPortPicGet = async () => {
+        await axios.get(`/api/portPic?key=${objKey}`)
+            .then(res => {
+                setDetailProtPic(res.data);
+            })
+    }
+
+
+    const likeLoad = async () => {
+        const sKey = JSON.parse(localStorage.getItem("loginObj")).id
+        await axios.get(`/api/detail?sKey=${sKey}&objKey=${objKey}`)
+            .then(res => {
+                setLikeCheck(res.data);
+            })
+    }
+
+
+    //클릭시
+    const likeTest = async () => {
+        const sKey = JSON.parse(localStorage.getItem("loginObj")).id
+        await axios.get(`/api/detail?sKey=${sKey}&objKey=${objKey}`)
+            .then(res => {
+                if (res.data) {
+                    axios.post(`/api/detail`, { key: Date.now().toString(), sKey, objKey })
+                        .then(res => {
+                            setLikeCheck(res.data);
+                            detailGet();
+                        })
+
+                } else {
+                    axios.delete(`/api/detail?sKey=${sKey}&objKey=${objKey}`)
+                        .then(res => {
+                            setLikeCheck(res.data);
+                            detailGet();
+                        })
+
+                }
+            })
+
+    }
+
+
+    useEffect(() => {
+        detailGet();
+        detailPortPicGet();
+        likeLoad();
+    }, [])
+
+
+    useEffect(() => {
+        likeLoad();
+        console.log(likeCheck);
+    }, [member])
+
 
     const accordionToggle = () => {
         setOn(!on);
     }
 
-    const geolocation = () => {
+    // const geolocation = () => {
 
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    // 위치 정보 가져오기 성공
-                    const { latitude, longitude } = position.coords;
-                    setLocation({ latitude, longitude });
-                    console.log(location);
-                },
-                (error) => {
-                    // 위치 정보 가져오기 실패
-                    console.error('Error getting geolocation:', error);
-                }
-            );
-        }
+    //     if (navigator.geolocation) {
+    //         navigator.geolocation.getCurrentPosition(
+    //             (position) => {
+    //                 // 위치 정보 가져오기 성공
+    //                 const { latitude, longitude } = position.coords;
+    //                 setLocation({ latitude, longitude });
+    //                 // console.log(location);
+    //             },
+    //             (error) => {
+    //                 // 위치 정보 가져오기 실패
+    //                 console.error('Error getting geolocation:', error);
+    //             }
+    //         );
+    //     }
 
-    }
+    // }
 
-    useEffect(() => {
-        geolocation();
-    }, [])
+    // useEffect(() => {
+    //     geolocation();
+    // }, [])
 
+    if (!detailItem[0]) return <>로딩중</>
     return (
         <section>
             <div className={styles.top}>
-                <button onClick={() => router.back()}>뒤로</button>
+                <button onClick={() => router.back()}><img src="../asset/detail/arrow-gray-icon.svg"></img></button>
                 <p>상세보기</p>
             </div>
 
             <div className={styles.detailIntro}>
                 <div className={styles.desinerImg}>
-                    <div></div>
+                    <img src={detailItem[0].imgUrl}></img>
                 </div>
                 <div className={styles.introInfoBox}>
                     <div className={styles.introInfo}>
-                        <p className={styles.name}>김은지 디자이너</p>
-                        <p className={styles.like}><span>35</span>명이 찜했습니다.</p>
+                        <p className={styles.name}>{detailItem[0].nickname}</p>
+                        <p className={styles.like}><span>{detailItem[0].like}</span>명이 찜했습니다.</p>
                         <p className={styles.info}>모든 ~~~모든 ~~~모든 ~~~모든 ~~~모든 ~~~모든 ~~~모든 ~~~모든 ~~~모든 ~~~모든 ~~~모든 ~~~모든 ~~~</p>
                     </div>
                     <div className={styles.introBtn}>
                         <ul>
-                            <li>
+                            <li onClick={() => likeTest()}>
                                 <div>
-                                    <div className={styles.img}>사진</div>
+                                    <div className={styles.img}>
+                                        <img src={likeCheck ? "../asset/detail/like-icon.svg" : "../asset/detail/like-color-icon.svg"}></img>
+                                    </div>
                                     <p className={styles.name}>좋아요</p>
                                 </div>
                             </li>
                             <li>
                                 <div>
-                                    <div className={styles.img}>사진</div>
+                                    <div className={styles.img}>
+                                        <img src="../asset/detail/location-icon.svg"></img>
+                                    </div>
                                     <p className={styles.name}>위치</p>
                                 </div>
                             </li>
                             <li>
                                 <div>
-                                    <div className={styles.img}>사진</div>
+                                    <div className={styles.img}>
+                                        <img src="../asset/detail/tel-icon.svg"></img>
+                                    </div>
                                     <p className={styles.name}>전화</p>
                                 </div>
                             </li>
                             <li>
                                 <div>
-                                    <div className={styles.img}>사진</div>
+                                    <div className={styles.img}>
+                                        <img src="../asset/detail/share-icon.svg"></img>
+                                    </div>
                                     <p className={styles.name}>공유</p>
                                 </div>
                             </li>
@@ -97,15 +183,15 @@ function Detail() {
                 <ul className={styles.designerInfoCon}>
                     <li>
                         <p className={styles.left}>영업시간</p>
-                        <p className={styles.right}>11:00 ~ 22:00</p>
+                        <p className={styles.right}>{detailItem[0].dTime1} ~ {detailItem[0].dTime2}</p>
                     </li>
                     <li>
                         <p className={styles.left}>주소</p>
-                        <p className={styles.right}>서울 강남 어딘가</p>
+                        <p className={styles.right}>{detailItem[0].dAddress}</p>
                     </li>
                     <li>
                         <p className={styles.left}>번호</p>
-                        <p className={styles.right}>010 - 4862 - 0192</p>
+                        <p className={styles.right}>{detailItem[0].dNumber1} - {detailItem[0].dNumber2} - {detailItem[0].dNumber3}</p>
                     </li>
 
                 </ul>
@@ -122,11 +208,13 @@ function Detail() {
                         modules={[Pagination]}
                         className={styles.mySwiper}
                     >
-                        <SwiperSlide className={styles.swiperSlide}>Slide 1</SwiperSlide>
-                        <SwiperSlide className={styles.swiperSlide}>Slide 2</SwiperSlide>
-                        <SwiperSlide className={styles.swiperSlide}>Slide 3</SwiperSlide>
-                        <SwiperSlide className={styles.swiperSlide}>Slide 4</SwiperSlide>
-                        <SwiperSlide className={styles.swiperSlide}>Slide 5</SwiperSlide>
+                        {
+                            detailProtPic.map((item, index) => (
+                                <SwiperSlide key={index} className={styles.swiperSlide}>
+                                    <img src={item.imgUrl}></img>
+                                </SwiperSlide>
+                            ))
+                        }
                     </Swiper>
                 </div>
             </div>

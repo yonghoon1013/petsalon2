@@ -1,8 +1,31 @@
 "use client";
+import Link from "next/link";
 import styles from "./list.module.scss";
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import {myContext} from '../Context';
+import axios from "axios";
+// import { useRouter } from "next/navigation";
 
 function List() {
+
+    const {member, memberLd} = useContext(myContext);
+    const [view, setView] = useState([]);
+
+    const portLoading = async () =>{
+        await axios.get(`/api/portPic/dd`)
+        .then(res=>{
+            setView(res.data);
+        })
+    }
+
+
+    useEffect(()=>{
+        portLoading();
+        memberLd();
+    },[])
+
+
+    if(!member) return <>로딩중</>
     return (
         <section>
 
@@ -14,55 +37,43 @@ function List() {
 
             <div className={styles.orderBox}>
                 <div>
-                    <p className={styles.rank}>인기순</p>
                     <p className={styles.space}>거리순</p>
+                    <p className={styles.rank}>인기순</p>
                 </div>
 
                 <p>반경 15km</p>
             </div>
-
             <div className={styles.designerListBox}>
                 <ul>
-
-                    <li>
-                        <div className={styles.imgBox}>
-                            <div>사진</div>
-                            <div>사진</div>
-                            <div>사진</div>
-                        </div>
-                        <div className={styles.infoBox}>
-                            <div className={styles.info}>
-                                <p className={styles.name}>김한성 디자이너 (2.1Km)</p>
-                                <p className={styles.like}>5(45)</p>
-                                <span className={styles.time}>12:00 ~ 20:00</span>
+                    {
+                        member.map((item, index) => (
+                            <li key={index}>
+                                <Link href={`/pages/detail?key=${item.key}`}>
+                                <div className={styles.imgBox}>
+                                        {
+                                            view.filter(obj=>obj.sKey == item.key).map((p,index2)=>(
+                                                <img key={index2} src={p.imgUrl}></img>
+                                            ))
+                                            }
                             </div>
-                            <div className={styles.profileImg}></div>
-                        </div>
-                    </li>
-
-                    <li>
-                        <div className={styles.imgBox}>
-                            <div>사진</div>
-                            <div>사진</div>
-                            <div>사진</div>
-                        </div>
-                        <div className={styles.infoBox}>
-                            <div className={styles.info}>
-                                <p className={styles.name}>김한성 디자이너 (2.1Km)</p>
-                                <p className={styles.like}>5(45)</p>
-                                <span className={styles.time}>12:00 ~ 20:00</span>
+                            <div className={styles.infoBox}>
+                                <div className={styles.info}>
+                                    <p className={styles.name}>{item.nickname} (2.1Km)</p>
+                                    <p className={styles.like}>{item.like}</p>
+                                    <span className={styles.time}>{item.dTime1} ~ {item.dTime2}</span>
+                                </div>
+                                <div className={styles.profileImg}>
+                                    <img src={item.imgUrl}></img>
+                                </div>
                             </div>
-                            <div className={styles.profileImg}></div>
-                        </div>
-                    </li>
-
+                                </Link>
+                        </li>
+                        
+                        ))
+                    }
                 </ul>
             </div>
 
-
-            <div className={styles.shopListBox}>
-
-            </div>
 
         </section>
     )

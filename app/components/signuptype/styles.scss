@@ -1,0 +1,217 @@
+// 1. font)
+@font-face { // 이 폰트 굵기관련 문제 있음
+    font-family: 'Pretendard-Regular'; 
+   src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff'); 
+   font-weight: 400; 
+   font-style: normal; 
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+@font-face {
+    font-family: 'SUITE-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// 2. mixin)
+
+@mixin flex($x:center, $y:center){
+    display: flex;
+    justify-content: $x;
+    align-items: $y;
+
+    @content;
+}
+
+@mixin font($a:inherit, $b:inherit, $c:inherit){
+    font-size: $a;
+    font-weight: $b;
+    color: $c;
+
+    @content;
+}
+
+@mixin text(){
+    word-break: keep-all;
+    word-wrap: break-word;
+    @content;
+}
+
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// 3. color)
+$mainColor1: #FF8500;
+$mainColor2: #FFC700;
+$mainColor3: #FFFAED;
+
+$grayColor1: #2D2D2D;
+$grayColor2: #666666;
+$grayColor3: #7D7D7D;
+$grayColor4: #909090;
+$grayColor5: #C2C2C2;
+
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// 4. 변수들)
+$MarPad: 32px;
+
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== =====  ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+body{
+// background-color: red;
+}
+
+*{
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px; 
+}
+html{
+    font-size: 16px;
+}
+ul li{
+    list-style-type: none;
+}
+img{
+    vertical-align: middle;
+}
+button{
+    border: none;
+    cursor: pointer;
+}
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== =====  ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+
+
+
+section.signUpTypeWrapper{
+    // outline: 1px solid red;
+    margin: auto;
+    box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.2);
+    font-family: 'SUITE-Regular';
+    // ↑ 임시
+
+    width: 100%; max-width: 640px; min-height: 100vh;
+    padding: 100px $MarPad 150px;
+    background-color: $mainColor3;
+    overflow: hidden;
+
+    >div.topWrapper{
+        // outline: 1px solid red;
+        margin-bottom: 53px;
+        @include flex(flex-start);
+
+        >button.prevBtn{
+            width: 11px; height: 21px;
+            background: url('/LeeTest/img/prev_arrow_icon.svg') left top / 100% 100% no-repeat scroll;
+        }
+
+    }//div.topWrapper
+
+    >div.textWrapper{
+        // outline: 1px solid red;
+        margin-bottom: 53px;
+
+        @include flex(flex-start, flex-start){
+            flex-direction: column;
+        }
+
+        >h2{
+            @include font(2.25rem, 700, $mainColor1);
+            white-space: nowrap;
+            line-height: 120%;
+            letter-spacing: -0.72px;
+            margin-bottom: 12px;
+        }
+        >span{
+            @include font(1.5rem, 500, $mainColor1);
+            @include text();
+            letter-spacing: -0.48px;
+        }
+    }//div.textWrapper
+
+    >form.signUpTypeForm{
+        @include flex(flex-start){
+            flex-direction: column;
+        }
+
+        >div.typeWrapper{
+            // outline: 1px solid red;
+            margin-bottom: 105px;
+            >figure{
+                // outline: 1px solid blue;
+                width: 34vw; max-width: 285px;
+                cursor: pointer;
+
+                >input{
+                    display: none;
+                }
+
+                >label{
+                    // outline: 1px solid green;
+                    width: 100%; height: 34vw; max-height: 285px;
+                    display: inline-block;
+                    cursor: pointer;
+                    
+                }
+
+                >figcaption{
+                    @include font(1.625rem, 600, $grayColor4);
+                    text-align: center;
+                    margin-top: 20px;
+                }
+
+                
+            }//figure
+
+
+            >figure.groomerWrapper{
+                margin-bottom: 32px;
+                >label{
+                    background: url('/LeeTest/img/groomer_gray_icon.svg') center center / 100% 100% no-repeat scroll;
+                }
+            }//figure.groomerWrapper
+
+            >figure.petOwnerWrapper{
+                
+                >label{
+                    background: url('/LeeTest/img/owner_gray_icon.svg') center center / 100% 100% no-repeat scroll;
+                }
+            }//figure.petOwnerWrapper
+
+            >figure:has(input:checked){
+                &.groomerWrapper{
+                    >label{
+                        background: url('/LeeTest/img/groomer_icon.svg') center center / 100% 100% no-repeat scroll;
+                    }
+                }
+
+                &.petOwnerWrapper{
+                    >label{
+                        background: url('/LeeTest/img/owner_icon.svg') center center / 100% 100% no-repeat scroll;
+                    }
+                }
+
+                >figcaption{
+                    color: $mainColor1;
+                }
+            }
+        }//div.typeWrapper
+
+        >button.submitBtn{
+            pointer-events: none;
+            width: 100%;
+            border-radius: 35px;
+            background: $grayColor5;
+            padding: 25px;
+
+            @include flex();
+            @include font(1.875rem, 500, #FFF);
+            white-space: nowrap;
+
+            &.active{
+                pointer-events: auto;
+                background: $mainColor1;
+            }
+        }//button.submitBtn
+    }//form.signUpTypeForm
+
+}//section.signUpTearmsWrapper
