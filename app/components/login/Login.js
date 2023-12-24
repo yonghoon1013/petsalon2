@@ -70,7 +70,7 @@ function Login() {
 
               axios.get(`/api/login?id=${'kakao_' + response.id}&pw=kakao123!`)
               .then(res=>{
-                console.log('res', res);
+                
                 if(res.data.length > 0) {//가입한 적이 있을 때)
                   const loginObj = {
                     id: res.data[0].id,
