@@ -36,15 +36,16 @@ function Login() {
 
       axios.get(`/api/login?id=${objData.id}&pw=${objData.pw}`)
       .then(res=>{
-        // console.log(res.data);
 
         if(res.data.length > 0) {//가입한 아이디가 있을 때)
           const loginObj = {
               id: res.data[0].id,
-              // nickname: res.data[0].nickname
+              key: res.data[0].key,
+              nickname: res.data[0].nickname
           }//loginObj 객체
 
-          sessionStorage.setItem("loginBool", true);
+          //local에서 session으로 고친 구간
+          sessionStorage.setItem("loginBool", true); 
           sessionStorage.setItem("loginObj", JSON.stringify(loginObj));
           navigation.push('/');
         } else {
@@ -69,12 +70,15 @@ function Login() {
 
               axios.get(`/api/login?id=${'kakao_' + response.id}&pw=kakao123!`)
               .then(res=>{
+                console.log('res', res);
                 if(res.data.length > 0) {//가입한 적이 있을 때)
                   const loginObj = {
                     id: res.data[0].id,
-                    // nickname: res.data[0].nickname
+                    key: res.data[0].key,
+                    nickname: res.data[0].nickname
                   }//loginObj 객체
                   
+                  //local에서 session으로 고친 구간
                   sessionStorage.setItem("loginBool", true);
                   sessionStorage.setItem("loginObj", JSON.stringify(loginObj));
                   navigation.push('/');
