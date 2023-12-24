@@ -11,7 +11,7 @@ export default function Splash() {
   const navigation = useRouter();
 
   const autoFun = async () => {
-    const loginBool = localStorage.getItem("loginBool"); //없으면 null값 나옴
+    const loginBool = sessionStorage.getItem("loginBool"); //없으면 null값 나옴
     
     if(loginBool == 'true'){//이전에 로그인 하고 로그아웃 안한 경우(바로 메인화면으로 가기)
       navigation.push('/');
