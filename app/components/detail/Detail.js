@@ -47,17 +47,18 @@ function Detail() {
 
 
     const likeLoad = async () => {
-        const sKey = sessionStorage.getItem("key");
+        const sKey = JSON.parse(sessionStorage.getItem("loginObj")).key;
         await axios.get(`/api/detail?sKey=${sKey}&objKey=${objKey}`)
             .then(res => {
                 setLikeCheck(res.data);
             })
     }
 
+   
 
     //클릭시
     const likeTest = async () => {
-        const sKey = sessionStorage.getItem("key");
+        const sKey = JSON.parse(sessionStorage.getItem("loginObj")).key;
         await axios.get(`/api/detail?sKey=${sKey}&objKey=${objKey}`)
             .then(res => {
                 if (res.data) {
