@@ -62,7 +62,7 @@ function Detail() {
         await axios.get(`/api/detail?sKey=${sKey}&objKey=${objKey}`)
             .then(res => {
                 if (res.data) {
-                    axios.post(`/api/detail`, { key: Date.now().toString(), sKey, objKey })
+                    axios.post(`/api/detail`, { key: Date.now().toString(), sKey:String(sKey), objKey:String(objKey) })
                         .then(res => {
                             setLikeCheck(res.data);
                             detailGet();

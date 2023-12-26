@@ -42,8 +42,7 @@ function Login() {
               // nickname: res.data[0].nickname
               //loginObj 객체
           sessionStorage.setItem("loginBool", true);
-          sessionStorage.setItem("loginObj", loginObj.id);
-          sessionStorage.setItem("key", loginObj.key);
+          sessionStorage.setItem("loginObj", JSON.stringify(loginObj));
           navigation.push('/');
         } else {
           alertBoard("아이디 또는 비밀번호를 다시 확인해주세요."); //"응 실패 그거"
