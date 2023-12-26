@@ -21,7 +21,6 @@ function Context({children}) {
 		await axios.get(`/api/favorite?sKey=${sKey}`)
 			.then(res => {
 				setFav(res.data);
-        console.log(res.data);
 			});
 	};
 

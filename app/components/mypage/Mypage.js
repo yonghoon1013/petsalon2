@@ -120,7 +120,7 @@ function Mypage() {
   useEffect(()=>{
     dataLd();
     portLd();
-  }, [])
+  }, []);
 
   if(!data[0]) return <>로딩중</>
 

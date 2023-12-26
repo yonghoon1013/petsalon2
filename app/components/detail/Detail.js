@@ -58,7 +58,7 @@ function Detail() {
 
     //클릭시
     const likeTest = async () => {
-        const sKey = JSON.parse(sessionStorage.getItem("loginObj")).key;
+        const sKey = JSON.parse(sessionStorage.getItem("key"));
         await axios.get(`/api/detail?sKey=${sKey}&objKey=${objKey}`)
             .then(res => {
                 if (res.data) {

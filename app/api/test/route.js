@@ -25,3 +25,4 @@ export async function POST(req) {
     await client2.close();
     return Response.json(dataGet);
 }
+

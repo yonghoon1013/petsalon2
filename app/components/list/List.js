@@ -15,15 +15,13 @@ function List() {
         await axios.get(`/api/portPic/dd`)
         .then(res=>{
             setView(res.data);
-        })
+        });
     }
-
 
     useEffect(()=>{
         portLoading();
         memberLd();
     },[])
-
 
     if(!member) return <>로딩중</>
     return (
