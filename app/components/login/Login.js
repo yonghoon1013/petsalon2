@@ -36,16 +36,17 @@ function Login() {
 
       axios.get(`/api/login?id=${objData.id}&pw=${objData.pw}`)
       .then(res=>{
-        // console.log(res.data);
 
         if(res.data.length > 0) {//가입한 아이디가 있을 때)
           const loginObj = {
               id: res.data[0].id,
-              // nickname: res.data[0].nickname
+              key: res.data[0].key,
+              nickname: res.data[0].nickname
           }//loginObj 객체
 
-          localStorage.setItem("loginBool", true);
-          localStorage.setItem("loginObj", JSON.stringify(loginObj));
+          //local에서 session으로 고친 구간
+          sessionStorage.setItem("loginBool", true); 
+          sessionStorage.setItem("loginObj", JSON.stringify(loginObj));
           navigation.push('/');
         } else {
           alertBoard("아이디 또는 비밀번호를 다시 확인해주세요."); //"응 실패 그거"
@@ -69,14 +70,17 @@ function Login() {
 
               axios.get(`/api/login?id=${'kakao_' + response.id}&pw=kakao123!`)
               .then(res=>{
+                
                 if(res.data.length > 0) {//가입한 적이 있을 때)
                   const loginObj = {
                     id: res.data[0].id,
-                    // nickname: res.data[0].nickname
+                    key: res.data[0].key,
+                    nickname: res.data[0].nickname
                   }//loginObj 객체
                   
-                  localStorage.setItem("loginBool", true);
-                  localStorage.setItem("loginObj", JSON.stringify(loginObj));
+                  //local에서 session으로 고친 구간
+                  sessionStorage.setItem("loginBool", true);
+                  sessionStorage.setItem("loginObj", JSON.stringify(loginObj));
                   navigation.push('/');
                 } else {
                   alertBoard("아직 카카오로 가입하신 적이 없는 회원입니다."); //"응 실패 그거"
