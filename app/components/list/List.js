@@ -1,4 +1,5 @@
 "use client";
+import Footer from "@/app/Footer";
 import Link from "next/link";
 import styles from "./list.module.scss";
 import React, { useContext, useEffect, useState } from 'react';
@@ -152,7 +153,7 @@ function List() {
                 </ul>
             </div>
 
-
+			<Footer />
         </section>
     )
 }
