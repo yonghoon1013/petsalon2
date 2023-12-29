@@ -38,13 +38,17 @@ function Login() {
       .then(res=>{
 
         if(res.data.length > 0) {//가입한 아이디가 있을 때)
-          const loginObj = res.data[0]
-              // nickname: res.data[0].nickname
-              //loginObj 객체
+          const loginObj = {
+              id: res.data[0].id,
+              key: res.data[0].key,
+              nickname: res.data[0].nickname
+              }//loginObj 객체
+
+          //local에서 session으로 고친 구간
           sessionStorage.setItem("loginBool", true);
           sessionStorage.setItem("key", res.data[0].key);
           sessionStorage.setItem("loginObj", JSON.stringify(loginObj));
-          navigation.push('/');
+          navigation.push('/pages/list');
         } else {
           alertBoard("아이디 또는 비밀번호를 다시 확인해주세요."); //"응 실패 그거"
         }
@@ -53,7 +57,7 @@ function Login() {
 
     const kakaoLoginBtn = () => {
         
-      if(!Kakao.isInitialized()) {//초기화(init)이 되있는지 여부에 따라 true, false
+      if(!Kakao.isInitialized()){//초기화(init)이 되있는지 여부에 따라 true, false
         Kakao.init('a9eac40c80c43a51d4280e2f8cbd816f') //초기화는 한 번만 //이미 된 상태에서 또 하면 오류라서 이렇게 함
       }
       
@@ -78,7 +82,7 @@ function Login() {
                   //local에서 session으로 고친 구간
                   sessionStorage.setItem("loginBool", true);
                   sessionStorage.setItem("loginObj", JSON.stringify(loginObj));
-                  navigation.push('/');
+                  navigation.push('/pages/list');
                 } else {
                   alertBoard("아직 카카오로 가입하신 적이 없는 회원입니다."); //"응 실패 그거"
                 }

@@ -9,6 +9,7 @@ function Context({children}) {
   const [member, setMember] = useState([]);
   const [Fav, setFav] = useState([]);
   const [portPic, setPortPic] = useState([]);
+  const [location, setLocation] = useState(null);
   const [userMode, setUserMode] = useState("designer");
   const navi = useRouter();
 
