@@ -8,7 +8,7 @@ import axios from "axios";
 
 function List() {
 
-    const {member, memberLd, location, geolocation} = useContext(myContext);
+    const {member, memberLd, location, geolocation, lgChecking} = useContext(myContext);
     const [view, setView] = useState([]);
     const [filterMatcheData,setFilterMatcheData] = useState([]);
 
@@ -17,7 +17,7 @@ function List() {
         await axios.get(`/api/portPic/dd`)
         .then(res=>{
             setView(res.data);
-        })
+        });
     }
 
 
@@ -66,6 +66,7 @@ function List() {
         geolocation();
         portLoading();
         memberLd();
+        lgChecking();
         locationCompute();
     },[])
     

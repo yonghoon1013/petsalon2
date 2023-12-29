@@ -1,5 +1,8 @@
 import axios from 'axios'
 import styles from './page.module.scss'
+import Intro from './components/intro/Intro';
+import Splash from './components/splash/Splash';
+import "./components/intro/styles.scss"
 
 export default function Home() {
 
@@ -53,7 +56,19 @@ export default function Home() {
 
 
   return (
-    <section className={styles.main}>
+    <section className='introWrapper'>
+      <Splash />
+
+      <div className='headWrapper'>
+        <h1>
+            <img src='/LeeTest/img/logo.svg' alt='댕냥살롱'/>
+        </h1>
+        <strong>
+            어떤 회원가입을 원하시나요?
+        </strong>
+      </div>
+      <Intro />
+
     </section>
-  )
+)
 }

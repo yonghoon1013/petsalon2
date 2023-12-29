@@ -4,7 +4,6 @@ export async function GET(req) {
     const {client, collection} = await dbConnect("favorite");
     const qData = Object.fromEntries(req.nextUrl.searchParams);
     let data = await collection.find({sKey: qData.sKey, objKey: qData.objKey}).toArray();
-    console.log(data);
 
     // const likeCheck = data.some(item=>{
     //     return item.sKey === qData.sKey && item.objKey === qData.objKey;
@@ -23,8 +22,7 @@ export async function POST(req) {
     const qData = await req.json();
     const {client, collection} = await dbConnect("favorite");
     await collection.insertOne(qData);
-    const res = await collection.find({objKey:qData.objKey}).toArray();
-    console.log(res.length);
+    const res = await collection.find({objKey: qData.objKey}).toArray();
 
     await likeUpdate(qData, res);
 
@@ -35,9 +33,8 @@ export async function POST(req) {
 export async function DELETE(req) {
     const qData = await Object.fromEntries(req.nextUrl.searchParams);
     const {client, collection} = await dbConnect("favorite");
-    await collection.deleteOne({sKey:qData.sKey, objKey:qData.objKey});
+    await collection.deleteMany({sKey: qData.sKey, objKey: qData.objKey});
     const res = await collection.find({objKey:qData.objKey}).toArray();
-    console.log(res.length);
 
     await likeUpdate(qData, res);
 

@@ -38,14 +38,11 @@ function Login() {
       .then(res=>{
 
         if(res.data.length > 0) {//가입한 아이디가 있을 때)
-          const loginObj = {
-              id: res.data[0].id,
-              key: res.data[0].key,
-              nickname: res.data[0].nickname
-          }//loginObj 객체
-
-          //local에서 session으로 고친 구간
-          sessionStorage.setItem("loginBool", true); 
+          const loginObj = res.data[0]
+              // nickname: res.data[0].nickname
+              //loginObj 객체
+          sessionStorage.setItem("loginBool", true);
+          sessionStorage.setItem("key", res.data[0].key);
           sessionStorage.setItem("loginObj", JSON.stringify(loginObj));
           navigation.push('/');
         } else {
@@ -56,7 +53,7 @@ function Login() {
 
     const kakaoLoginBtn = () => {
         
-      if(!Kakao.isInitialized()){//초기화(init)이 되있는지 여부에 따라 true, false
+      if(!Kakao.isInitialized()) {//초기화(init)이 되있는지 여부에 따라 true, false
         Kakao.init('a9eac40c80c43a51d4280e2f8cbd816f') //초기화는 한 번만 //이미 된 상태에서 또 하면 오류라서 이렇게 함
       }
       

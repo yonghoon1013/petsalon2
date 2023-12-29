@@ -79,7 +79,7 @@ export default function Signuptype() {
 
                 navigation.push('/pages/login');
 
-                alertBoard('가입이 완료되었습니다.');    
+                alertBoard('가입이 완료되었습니다.');
             }
         }//if(elSubmitBtn.current.classList.contains('active'))
     }//signUpFun() 함수정의
