@@ -8,7 +8,7 @@ import axios from "axios";
 
 function List() {
 
-    const {member, memberLd} = useContext(myContext);
+    const {member, memberLd, lgChecking} = useContext(myContext);
     const [view, setView] = useState([]);
 
     const portLoading = async () =>{
@@ -21,6 +21,7 @@ function List() {
     useEffect(()=>{
         portLoading();
         memberLd();
+        lgChecking();
     },[])
 
     if(!member) return <>로딩중</>

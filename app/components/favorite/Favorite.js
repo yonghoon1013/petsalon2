@@ -7,10 +7,11 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 
 function Favorite() {
-	const { memberLd, profView, member, favoriteLd, Fav } = useContext(myContext);
+	const { memberLd, profView, member, favoriteLd, Fav, lgChecking } = useContext(myContext);
 	const [designers, setDesigners] = useState([]);
 	const [filtered, setFiltered] = useState([]);
 	const navi = useRouter();
+
 
 	const StarIcon = () => (
 		<svg
@@ -33,6 +34,7 @@ function Favorite() {
 	useEffect(() => {
 		memberLd();
 		favoriteLd();
+		lgChecking();
 	}, []);
 
 	useEffect(()=>{
