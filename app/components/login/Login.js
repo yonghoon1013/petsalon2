@@ -42,12 +42,13 @@ function Login() {
               id: res.data[0].id,
               key: res.data[0].key,
               nickname: res.data[0].nickname
-          }//loginObj 객체
+              }//loginObj 객체
 
           //local에서 session으로 고친 구간
-          sessionStorage.setItem("loginBool", true); 
+          sessionStorage.setItem("loginBool", true);
+          sessionStorage.setItem("key", res.data[0].key);
           sessionStorage.setItem("loginObj", JSON.stringify(loginObj));
-          navigation.push('/');
+          navigation.push('/pages/list');
         } else {
           alertBoard("아이디 또는 비밀번호를 다시 확인해주세요."); //"응 실패 그거"
         }
@@ -81,7 +82,7 @@ function Login() {
                   //local에서 session으로 고친 구간
                   sessionStorage.setItem("loginBool", true);
                   sessionStorage.setItem("loginObj", JSON.stringify(loginObj));
-                  navigation.push('/');
+                  navigation.push('/pages/list');
                 } else {
                   alertBoard("아직 카카오로 가입하신 적이 없는 회원입니다."); //"응 실패 그거"
                 }

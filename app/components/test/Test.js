@@ -26,10 +26,14 @@ function Test() {
 
 	const inputTest = async (e) => {
 		e.preventDefault();
+		const sKey = sessionStorage.getItem("key");
 		let formData = new FormData(e.target);
+		formData.append("key", sKey);
 		let objData = Object.fromEntries(formData);
-		console.log(objData)
-		await axios.post(`/api/member`, objData);
+		await axios.post(`/api/test`, objData)
+		.then(res=>{
+			console.log(res.data)
+		})
 	}
 
 	const deleteTest = async (e) => {
@@ -47,7 +51,6 @@ function Test() {
 		const sKey = sessionStorage.getItem("key");
 		const formData = new FormData(e.target);
 		const objData = Object.fromEntries(formData);
-		console.log(objData);
 		const fr = new FileReader();
 		fr.readAsDataURL(objData.upload);
 		fr.onload = (e) => {

@@ -182,6 +182,45 @@ section{
 
     .commentBox{
         margin-top: 5%;
+        >form{
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10%;
+            >.left{
+                width: 10%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                .writerImgBox{
+                    width: 100%;
+                    aspect-ratio: 1;
+                    >img{
+                        border-radius: 50%;
+                        background-color: white;
+                        width: 100%;
+                        aspect-ratio: 1;
+                    }
+                }
+                >.writerName{
+                    padding: 5% 0;
+                }
+            }
+
+            >.right{
+                width: 80%;
+                display: flex;
+                box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.25);
+                    >input{
+                        width: 85%;
+                    }
+                    >button{
+                        width: 15%;
+                        cursor: pointer;
+                        background-color: #FF8500;
+                    }
+            }
+        }
+
         .title{
             font-size: 18px;
             font-weight: bold;
@@ -196,24 +235,35 @@ section{
                     border-top: 1px solid #FFC88C;
                 }
                 >.left{
-                    >div{
-                        width: 80px;
-                        height: 80px;
+                    width: 10%;
+                    >img{
+                        width: 100%;
+                        aspect-ratio: 1;
                         background-color: aquamarine;
                         border-radius: 50%;
                     }
                 }
                 >.right{
                     margin-left: 5%;
+                    width: 90%;
                     .authorBox{
                         display: flex;
+                        align-items: center;
                         margin-bottom: 3%;
                         >.left{
                             display: flex;
+                            align-items: center;
                             width: 50%;
                             .nickName{
                                 font-weight: bold;
                                 margin-right: 3%;
+                                padding: 1.5%;
+                                font-size: 0.8rem;
+                            }
+                            .nickName.writer{
+                                border-radius: 10%;
+                                background-color: #FF8500;
+                                color: white;
                             }
                             .time{
                                 margin-left: 3%;
@@ -225,11 +275,8 @@ section{
                             display: flex;
                             justify-content: flex-end;
                             width: 50%;
-                            .update{
-                                margin-right: 10%;
-                            }
                             .delete{
-    
+                                cursor: pointer;
                             }
                         }
                     }

@@ -104,7 +104,7 @@ export default function Intro() {
             onClick={() => {signUpFun(true)}}>
                 일반 회원가입
             </button>
-            <Link href='./login'>이미 계정이 있어요</Link>
+            <Link href='/pages/login'>이미 계정이 있어요</Link>
         </div>
     </>
   )
