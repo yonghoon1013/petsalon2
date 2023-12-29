@@ -8,6 +8,7 @@ function Context({children}) {
   const [member, setMember] = useState([]);
   const [Fav, setFav] = useState([]);
   const [portPic, setPortPic] = useState([]);
+  const [location, setLocation] = useState(null);
 
   const memberLd = async () => {
     await axios.get(`/api/list`)
@@ -32,6 +33,27 @@ function Context({children}) {
     });
   };
 
+  const geolocation = async () => {
+    const sKey = JSON.parse(sessionStorage.getItem("loginObj")).key;
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          async (position) => {
+                // 위치 정보 가져오기 성공
+                const { latitude, longitude } = position.coords;
+                setLocation({ latitude, longitude });
+                await axios.put(`/api/list?key=${sKey}&&lat=${latitude}&&lng=${longitude}`)
+                .then(res=>{
+
+                })
+            },
+            (error) => {
+                // 위치 정보 가져오기 실패
+                console.error('Error getting geolocation:', error);
+            }
+        );
+    }
+
+}
 
 
 
@@ -45,7 +67,7 @@ function Context({children}) {
 	}//alertBoard() 함수정의
 
   return (
-    <myContext.Provider value={{member, memberLd, favoriteLd, Fav, portLd, portPic, setPortPic, alertBoard}}>
+    <myContext.Provider value={{member, memberLd, favoriteLd, Fav, portLd, portPic, setPortPic, alertBoard, location, geolocation}}>
         {children}
     </myContext.Provider>
   )

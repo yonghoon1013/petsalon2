@@ -10,3 +10,13 @@ export async function GET(req) {
     await client.close();
     return Response.json(data);
 }
+
+export async function PUT(req) {
+    const qData = Object.fromEntries(req.nextUrl.searchParams);
+    const {client, collection} = await dbConnect("member");
+    await collection.updateOne({key:qData.key}, {$set: {lat: qData.lat, lng:qData.lng}});
+    const data = await collection.find().toArray();
+
+    await client.close();
+    return Response.json(data);
+}

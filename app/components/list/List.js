@@ -8,8 +8,10 @@ import axios from "axios";
 
 function List() {
 
-    const {member, memberLd} = useContext(myContext);
+    const {member, memberLd, location, geolocation} = useContext(myContext);
     const [view, setView] = useState([]);
+    const [filterMatcheData,setFilterMatcheData] = useState([]);
+
 
     const portLoading = async () =>{
         await axios.get(`/api/portPic/dd`)
@@ -19,26 +21,101 @@ function List() {
     }
 
 
+
+    const likeRank = async () =>{
+        setFilterMatcheData([...filterMatcheData].sort((a, b) => parseInt(b.like) - parseInt(a.like)));
+    }
+
+      //현재위치 거리변환 및 계산,
+    const locationCompute = async () => {
+        if (location && location.latitude && location.longitude) {
+            const filteredMatches = member.filter((item) => {
+                const distance = getDistanceFromLatLonInKm(location.latitude, location.longitude, item.lat, item.lng);
+                return distance <= 15; // 거리가 800m 이내인지 확인
+            });
+
+            filteredMatches.sort((a, b) => {
+                const distanceA = getDistanceFromLatLonInKm(location.latitude, location.longitude, a.lat, a.lng);
+                const distanceB = getDistanceFromLatLonInKm(location.latitude, location.longitude, b.lat, b.lng);
+                return distanceA - distanceB;
+            });
+
+            setFilterMatcheData(filteredMatches);
+            getFormattedAddress( location.latitude, location.longitude);
+        }
+    }
+
+    const getDistanceFromLatLonInKm = (lat1, lon1, lat2, lon2) => {
+        const R = 6371; // 지구의 반지름 (단위: km)
+        const dLat = deg2rad(lat2 - lat1);
+        const dLon = deg2rad(lon2 - lon1);
+        const a =
+            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        const d = R * c; // 두 지점 사이의 거리 (단위: km)
+        return d;
+    };
+
+    const deg2rad = (deg) => {
+        return deg * (Math.PI / 180);
+    };
+
+
     useEffect(()=>{
+        geolocation();
         portLoading();
         memberLd();
+        locationCompute();
     },[])
+    
+    useEffect(()=>{
+        locationCompute();
+    },[member])
+
+    const apiKey = 'eb851606ceed969fac40c0f6b0c41d16';
+
+    const [threeAddr,setThreeAddr] = useState([]);
+
+    const getFormattedAddress = async (lat, lng) => {
+        try {
+            const response = await axios.get(
+                `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${lng}&y=${lat}`,
+                {
+                    headers: {
+                        Authorization: `KakaoAK ${apiKey}`, // 여기에 발급받은 REST API 키를 넣어주세요.
+                    },
+                }
+            );
+            if (response.data.documents.length > 0) {
+                setThreeAddr(response.data.documents[0].address.region_3depth_name);
+            } else {
+                setAddress('주소를 찾을 수 없습니다.');
+            }
+        } catch (error) {
+            console.error('주소를 불러오는 중 오류 발생:', error);
+        }
+    };
 
 
-    if(!member) return <>로딩중</>
+    
+
+
+    if(!member && !filterMatcheData) return <>로딩중</>
     return (
         <section>
 
             <div className={styles.topBox}>
                 <div className={styles.location}>
-                    <p>역삼동</p>
+                    <p>{threeAddr}</p>
+                    <img src="../asset/list/reload.svg" onClick={()=>{geolocation()}}></img>
                 </div>
             </div>
 
             <div className={styles.orderBox}>
                 <div>
-                    <p className={styles.space}>거리순</p>
-                    <p className={styles.rank}>인기순</p>
+                    <p onClick={()=>{locationCompute()}} className={styles.space}>거리순</p>
+                    <p onClick={()=>{likeRank()}} className={styles.rank}>인기순</p>
                 </div>
 
                 <p>반경 15km</p>
@@ -46,7 +123,7 @@ function List() {
             <div className={styles.designerListBox}>
                 <ul>
                     {
-                        member.map((item, index) => (
+                        filterMatcheData.map((item, index) => (
                             <li key={index}>
                                 <Link href={`/pages/detail?key=${item.key}`}>
                                 <div className={styles.imgBox}>
@@ -58,7 +135,7 @@ function List() {
                             </div>
                             <div className={styles.infoBox}>
                                 <div className={styles.info}>
-                                    <p className={styles.name}>{item.nickname} (2.1Km)</p>
+                                    <p className={styles.name}>{item.nickname} ({getDistanceFromLatLonInKm(location.latitude, location.longitude, item.lat, item.lng).toFixed(1)} km)</p>
                                     <p className={styles.like}>{item.like}</p>
                                     <span className={styles.time}>{item.dTime1} ~ {item.dTime2}</span>
                                 </div>

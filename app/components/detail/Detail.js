@@ -18,16 +18,19 @@ import { useParams, useRouter, useSearchParams } from "next/navigation";
 function Detail() {
     const [on, setOn] = useState(false);
     const router = useRouter();
-    const [location, setLocation] = useState(null);
     const [detailItem, setDetailItem] = useState([]);
     const [detailProtPic, setDetailProtPic] = useState([]);
-
     const [likeCheck, setLikeCheck] = useState(null);
+    const [comment, setComment] = useState([]);
+    const [loginUserInfo,setLoginUserInfo] = useState([]);
 
-    const { member } = useContext(myContext);
+    const [inputValue,setInputValue] = useState('');
+
+    const {member, memberLd} = useContext(myContext);
 
     const paramsData = useSearchParams();
     const objKey = paramsData.get("key");
+    const sKey = JSON.parse(sessionStorage.getItem("loginObj")).key;
 
 
     const detailGet = async () => {
@@ -47,18 +50,14 @@ function Detail() {
 
 
     const likeLoad = async () => {
-        const sKey = JSON.parse(sessionStorage.getItem("loginObj")).key;
         await axios.get(`/api/detail?sKey=${sKey}&objKey=${objKey}`)
             .then(res => {
                 setLikeCheck(res.data);
             })
     }
 
-   
-
     //클릭시
     const likeTest = async () => {
-        const sKey = JSON.parse(sessionStorage.getItem("loginObj")).key;
         await axios.get(`/api/detail?sKey=${sKey}&objKey=${objKey}`)
             .then(res => {
                 if (res.data) {
@@ -77,20 +76,75 @@ function Detail() {
 
                 }
             })
-
     }
 
+    const loginUserInfoGet = async () =>{
+        await axios.get(`/api/member?key=${sKey}`)
+        .then(res=>{
+            setLoginUserInfo(res.data);
+        })
+    }
+
+    const commentLoad = async () => {
+        await axios.get(`/api/comment?objKey=${objKey}`)
+            .then(res => {
+                setComment(res.data);
+            })
+    }
+
+    const commentSubmit = async (e) => {
+        e.preventDefault();
+        setInputValue('');
+        const date = new Date();
+        let year = date.getFullYear();
+        let month = date.getMonth() + 1;
+        let day = date.getDate();
+        let hours = date.getHours().toString().padStart(2, "0");
+        let minutes = date.getMinutes().toString().padStart(2, "0");
+        let time = `${year}.${month}.${day} ${hours}:${minutes}`;
+
+        const formData = new FormData(e.target);
+        formData.append("key", Date.now());
+        formData.append("time", time)
+        formData.append("objKey", objKey)
+        formData.append("sKey", JSON.parse(sessionStorage.getItem("loginObj")).key);
+        formData.append("nickname", JSON.parse(sessionStorage.getItem("loginObj")).nickname);
+        const objData = Object.fromEntries(formData)
+        await axios.post(`/api/comment`, objData)
+            .then(res => {
+                // setComment(res.data)
+                commentLoad();
+            })
+    }
+
+    const commentDel = async (commentItem) => {
+        const sel = confirm("정말 삭제하시겠습니까??");
+        if(sel){
+            if(sKey === commentItem.sKey){
+                await axios.delete(`/api/comment?key=${commentItem.key}`)
+                .then(res => {
+                    // setComment(res.data)
+                    commentLoad();
+                })
+            } else{
+                alert("너 누기야~!")
+            }
+        }
+    }
+    
 
     useEffect(() => {
+        commentLoad();
         detailGet();
         detailPortPicGet();
         likeLoad();
+        memberLd();
+        loginUserInfoGet();
     }, [])
 
 
     useEffect(() => {
         likeLoad();
-        console.log(likeCheck);
     }, [member])
 
 
@@ -98,30 +152,8 @@ function Detail() {
         setOn(!on);
     }
 
-    // const geolocation = () => {
 
-    //     if (navigator.geolocation) {
-    //         navigator.geolocation.getCurrentPosition(
-    //             (position) => {
-    //                 // 위치 정보 가져오기 성공
-    //                 const { latitude, longitude } = position.coords;
-    //                 setLocation({ latitude, longitude });
-    //                 // console.log(location);
-    //             },
-    //             (error) => {
-    //                 // 위치 정보 가져오기 실패
-    //                 console.error('Error getting geolocation:', error);
-    //             }
-    //         );
-    //     }
-
-    // }
-
-    // useEffect(() => {
-    //     geolocation();
-    // }, [])
-
-    if (!detailItem[0]) return <>로딩중</>
+    if (!detailItem[0] || !loginUserInfo[0]) return <>로딩중</>
     return (
         <section>
             <div className={styles.top}>
@@ -255,53 +287,48 @@ function Detail() {
             </div>
 
             <div className={styles.commentBox}>
-                <p className={styles.title}>문의하기 35개</p>
-                <ul>
-                    <li>
-                        <div className={styles.left}>
-                            <div></div>
-                        </div>
-                        <div className={styles.right}>
-                            <div className={styles.authorBox}>
-                                <div className={styles.left}>
-                                    <p className={styles.nickName}>닉네임</p>
-                                    <span className={styles.time}>2023.11.12 12:00</span>
-                                </div>
-                                <div className={styles.right}>
-                                    <p className={styles.update}>수정학디</p>
-                                    <p className={styles.delete}>삭제하기</p>
-                                </div>
-                            </div>
-                            <div className={styles.comment}>
-                                <p>
-                                    저희 애기 애기때부터 미용하던 곳입니다~ ^^ 사장님 너무 친절하시고 좋아요! 앞으로도 믿고 저희 애기 맡길게요~!!
-                                </p>
-                            </div>
-                        </div>
-                    </li>
 
-                    <li>
-                        <div className={styles.left}>
-                            <div></div>
+                <form onSubmit={(e) => { commentSubmit(e) }}>
+                    <div className={styles.left}>
+                        <div className={styles.writerImgBox}>
+                            <img src={loginUserInfo[0].imgUrl}></img>
                         </div>
-                        <div className={styles.right}>
-                            <div className={styles.authorBox}>
+                        <p className={styles.writerName}>{loginUserInfo[0].nickname}</p>
+                    </div>
+                    <div className={styles.right}>
+                        <input value={inputValue} type="text" name="text" required onChange={(e)=>{setInputValue(e.target.value)}}></input>
+                        <button>등록</button>
+                    </div>
+
+                </form>
+
+                <p className={styles.title}>문의하기 {comment.length}개</p>
+                <ul>
+                    {
+                        comment.map((commentItem, index) => (
+                            <li key={index}>
                                 <div className={styles.left}>
-                                    <p className={styles.nickName}>닉네임</p>
-                                    <span className={styles.time}>2023.11.12 12:00</span>
+                                        {
+                                            member.filter(item=>item.key == commentItem.sKey).map((obj,index)=>(<img key={index} src={obj.imgUrl}></img>))
+                                        }
                                 </div>
                                 <div className={styles.right}>
-                                    <p className={styles.update}>수정학디</p>
-                                    <p className={styles.delete}>삭제하기</p>
+                                    <div className={styles.authorBox}>
+                                        <div className={styles.left}>
+                                            <p className={`${styles.nickName} ${objKey === commentItem.sKey ? styles.writer : ""}`}>{commentItem.nickname}</p>
+                                            <span className={styles.time}>{commentItem.time}</span>
+                                        </div>
+                                        <div className={styles.right}>
+                                            <p onClick={()=>commentDel(commentItem)} className={styles.delete}>삭제하기</p>
+                                        </div>
+                                    </div>
+                                    <div className={styles.comment}>
+                                        <p>{commentItem.text}</p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className={styles.comment}>
-                                <p>
-                                    저희 애기 애기때부터 미용하던 곳입니다~ ^^ 사장님 너무 친절하시고 좋아요! 앞으로도 믿고 저희 애기 맡길게요~!!
-                                </p>
-                            </div>
-                        </div>
-                    </li>
+                            </li>
+                        ))
+                    }
                 </ul>
             </div>
 
