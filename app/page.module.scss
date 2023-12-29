@@ -1,0 +1,97 @@
+.main {
+    position: relative;
+    background: #fffaed;
+    height: 1400px;
+    .titWrapper {
+        height: 160px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 35px;
+        .location {
+            display: flex;
+            align-items: center;
+            > img {
+                margin-right: 12px;
+            }
+            .arrow {
+                > img {
+                    margin-left: 12px;
+                    width: 13px;
+                }
+            }
+        }
+    }
+    .icon {
+        button {
+            cursor: pointer;
+        }
+        > .serch {
+            background: #fffaed;
+            vertical-align: middle;
+            margin-right: 30px;
+        }
+        > .notice {
+            background: #fffaed;
+            vertical-align: middle;
+        }
+    }
+
+    .title {
+        margin-left: 35px;
+        margin-bottom: 20px;
+        font-size: 30px;
+    }
+    .famousWrapper {
+        margin: auto 32px;
+        border-radius: 30px;
+        background: #fff;
+
+        box-shadow: 2px 6px 32px 0px rgba(139, 95, 46, 0.08);
+
+        .title {
+        }
+        .famousList {
+            padding: 62px 29px 60px 35px;
+            > li {
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                margin-bottom: 60px;
+                img {
+                }
+                .wrap {
+                    margin-left: 30px;
+
+                    .name {
+                        font-size: 22px;
+                        font-weight: 500;
+                        line-height: 39px;
+                    }
+                    .grade {
+                        margin-top: 10px;
+                        svg {
+                            width: 17px;
+                            height: 16px;
+                            fill: #ffc700;
+                        }
+                    }
+                    .type {
+                        color: #909090;
+                        margin-top: 10px;
+                    }
+                    .hours {
+                        background: #ff8500;
+                        border-radius: 12px;
+                        color: #fff;
+                        width: 130px;
+                        height: 32px;
+                        text-align: center;
+                        line-height: 32px;
+                        margin-top: 10px;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,107 @@
+section {
+    .topBox {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .location {
+            > p {
+            }
+        }
+    }
+
+    .orderBox {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        > div {
+            display: flex;
+            // align-items: center;
+            width: 50%;
+            margin: 3% 0;
+            > p {
+                padding: 0 5%;
+            }
+            .rank {
+                // display: flex;
+                position: relative;
+                &::after {
+                    content: "";
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    width: 2px;
+                    height: 100%;
+                    background-color: #ff8500;
+                }
+            }
+            .space {
+            }
+        }
+
+        > p {
+            padding: 0 5%;
+            &::before {
+                content: "!";
+                display: inline-block;
+                width: 20px;
+                aspect-ratio: 1;
+                border-radius: 50%;
+                background-color: rgb(129, 129, 129);
+                text-align: center;
+                line-height: 20px;
+                margin-right: 5px;
+            }
+        }
+    }
+
+    .designerListBox {
+        > ul {
+            > li {
+                border-radius: 23px;
+                background-color: rgb(171, 171, 238);
+                padding: 5%;
+                padding-bottom: 5%;
+                margin-bottom: 4%;
+                .imgBox {
+                    display: flex;
+                    justify-content: space-between;
+                    > div {
+                        width: 30%;
+                        aspect-ratio: 1;
+                        border-radius: 10%;
+                        background-color: aqua;
+                    }
+                }
+                .infoBox {
+                    margin: 3% 0;
+                    display: flex;
+                    justify-content: space-between;
+                    .info {
+                        .name {
+                            font-weight: bold;
+                        }
+                        .like {
+                            font-size: 14px;
+                            line-height: 2;
+                        }
+                        .time {
+                            display: inline-block;
+                            background-color: #ff8500;
+                            color: white;
+                            font-size: 12px;
+                            border-radius: 10px;
+                            padding: 1%;
+                        }
+                    }
+                    .profileImg {
+                        width: 40px;
+                        height: 100%;
+                        border-radius: 50%;
+                        aspect-ratio: 1;
+                        background-color: chartreuse;
+                    }
+                }
+            }
+        }
+    }
+}

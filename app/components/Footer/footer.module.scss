@@ -1,0 +1,29 @@
+.gnb {
+    > .menu {
+        background-color: #fff;
+        display: flex;
+        position: absolute;
+        bottom: 0;
+        width: 800px;
+        padding: 21px 67px 54px 66px;
+        justify-content: space-between;
+        align-items: center;
+        li {
+            button {
+                cursor: pointer;
+                color: #666666;
+                font-size: 20px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                img {
+                    margin-bottom: 8px;
+                }
+                &:active img {
+                    /* 버튼이 활성화되었을 때 내부 이미지에 스타일 적용 */
+                    background-image: url(/heart.png);
+                }
+            }
+        }
+    }
+}
