@@ -15,7 +15,7 @@ export default function Splash() {
     
     setTimeout(() => {
       if(loginBool == 'true'){//이전에 로그인 하고 로그아웃 안한 경우(바로 메인화면으로 가기)
-          navigation.push('/');
+          navigation.push('/pages/list');
       }else{//로그인 한 적 없을 때 바로 intro(회원가입 화면)화면으로
         elSplash.current.classList.add('noVisual');
       }
