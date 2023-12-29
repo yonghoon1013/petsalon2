@@ -5,7 +5,7 @@ import { myContext } from '../Context'
 import axios from 'axios';
 
 function Mypage() {
-  const {portLd, portPic, setPortPic} = useContext(myContext);
+  const {portLd, portPic, setPortPic, userMode, lgChecking} = useContext(myContext);
   const [data, setData] = useState([]);
   const [memView, setMemView] = useState([]);
   const [view, setView] = useState([]);
@@ -25,6 +25,10 @@ function Mypage() {
   const infMddNumber2 = useRef([]);
   const infMddNumber3 = useRef([]);
   
+  useEffect(()=>{
+    lgChecking();
+  })
+
   const dataLd = async () => {
     const sKey = sessionStorage.getItem("key");
     await axios.get(`/api/member?key=${sKey}`)
@@ -125,7 +129,8 @@ function Mypage() {
   if(!data[0]) return <>로딩중</>
 
   return (
-    <section className={styles.mypageSec}>
+    <>
+    <section className={`${styles.mypageSec} ${userMode == "user" ? styles.active : ""}`}>
 
       <div className={styles.profile}>
         <div className={styles.title}>
@@ -261,6 +266,50 @@ function Mypage() {
       </div>
 
     </section>
+    <section className={`${styles.mypageSec} ${userMode == "designer" ? styles.active : ""}`}>
+
+      <div className={styles.profile}>
+        <div className={styles.title}>
+          <strong>마이페이지</strong>
+          <button className={styles.memSetting} onClick={()=>{setMode("modify")}}>
+            <figure><img src='../asset/mypage/setting.png'/></figure>
+          </button>
+        </div>
+        <div className={`${styles.titleBox} ${mode == "list" ? styles.active : ""}`}>
+          <figure className={styles.profPic}>
+            <img src={data[0].imgUrl}/>
+          </figure>
+          <div className={styles.profName}>
+            <strong>{data[0].nickname}</strong>
+            <button className={styles.nameSett}>
+              <figure><img src='../asset/mypage/pensil.png'/></figure>
+            </button>
+          </div>          
+          <span className={styles.profEmail}></span>         
+          <p className={styles.profDesc}>{data[0].info}</p>         
+        </div>
+        <form onSubmit={profUpload} className={`${styles.titleBoxMod} ${mode == "modify" ? styles.active : ""}`}>
+          <input ref={memMdProf} name='upload' type='file' onChange={(e)=>{
+            e.preventDefault();
+            let pic = e.target.files[0];
+            pic && setMemView(URL.createObjectURL(pic));
+          }}/>
+          <figure className={styles.profPic}>
+            <img src={memView}/>
+          </figure>
+          <input value={data[0].imgUrl} name='oldProf'/>
+          <input ref={memMdNickname} name="nickname" type='text'/>
+          <input ref={memMdPassword} name='password' type='password'/>
+          <input name='password2' type='password'/>
+          <input ref={memMdInfo} name="info"/>
+          <button>저장</button>
+          <button onClick={()=>{setMode("list")}} type='button'>취소</button>
+        </form>
+      </div>
+    </section>
+
+
+    </>
   )
 }
 

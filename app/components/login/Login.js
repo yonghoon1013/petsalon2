@@ -42,6 +42,7 @@ function Login() {
               // nickname: res.data[0].nickname
               //loginObj 객체
           sessionStorage.setItem("loginBool", true);
+          sessionStorage.setItem("key", res.data[0].key);
           sessionStorage.setItem("loginObj", JSON.stringify(loginObj));
           navigation.push('/');
         } else {
