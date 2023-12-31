@@ -24,16 +24,18 @@ function Mypage() {
   const infMddNumber1 = useRef([]);
   const infMddNumber2 = useRef([]);
   const infMddNumber3 = useRef([]);
+  const elWork = useRef([]);
   
   useEffect(()=>{
     lgChecking();
-  })
+  }, [data]);
 
   const dataLd = async () => {
     const sKey = sessionStorage.getItem("key");
     await axios.get(`/api/member?key=${sKey}`)
     .then(res=>{
       setData(res.data);
+      // setWorking(res.data[0].working);
       memMdNickname.current.value = res.data[0].nickname;
       memMdPassword.current.value = res.data[0].nickname;
       memMdInfo.current.value = res.data[0].nickname;
@@ -121,13 +123,27 @@ function Mypage() {
     })
   }
 
+  const workingChange = async () => {
+    const sKey = sessionStorage.getItem("key");
+    if(data[0].working) {
+      await axios.put(`/api/working`, {key: sKey, working: false})
+      .then(res=>{
+        setData(res.data);
+      });
+    } else {
+      await axios.put(`/api/working`, {key: sKey, working: true})
+      .then(res=>{
+        setData(res.data);
+      });
+    };
+  };
+
   useEffect(()=>{
     dataLd();
     portLd();
   }, []);
 
   if(!data[0]) return <>로딩중</>
-
   return (
     <>
     <section className={`${styles.mypageSec} ${userMode == "user" ? styles.active : ""}`}>
@@ -171,7 +187,7 @@ function Mypage() {
         </form>
         <div className={styles.working}>
           <div><strong>영업시작</strong></div>
-          <div><input type='checkbox'/></div>
+          <div><input checked={data[0].working} onChange={()=>{workingChange()}} ref={elWork} type='checkbox'/></div>
         </div>
       </div>
 
