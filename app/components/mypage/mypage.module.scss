@@ -83,38 +83,43 @@
 			flex-direction: column;
 			justify-content: center;
 			align-items: center;
-
-			>.profPic {
-				width: 150px;
-				height: 150px;
-				border-radius: 100%;
-				display: flex;
-				flex-direction: column;
-				justify-content: center;
-				align-items: center;
-				>img {width: 100%;}
+			>.portInputBox{
+				>.portInput{}
+				>.profPic {
+					width: 150px;
+					height: 150px;
+					border-radius: 100%;
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					align-items: center;
+					>img {
+						border-radius: 100%;
+						width: 100%;
+						height: 100%;
+						object-fit: contain;
+					}
+				}
+				>.tempInput{display: none;}
 			}
-
-			>.profName {
-				font-weight: bold;
-				margin: 10px 0 0 0;
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				>strong{}
-				>.nameSett{
-					>figure{
-						width: 20px;
-						height: 20px;
-						background-color: white;
-						>img{width: 100%;}
+			>.infoInputBox{
+				margin-top: 50px;
+				>.InputDiv{
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+					margin-top: 10px;
+					>input{
+						margin-left: 15px;
+						border: 1px solid black;
 					}
 				}
 			}
-
-			>.profEmail {margin: 10px 0 0 0;}
-
-			>.profDesc {margin: 10px 0 0 0;}
+			>.profModBttnBox{
+				display: flex;
+				>.saveBttn{}
+				>.cancelBttn{}
+			}
 		}
 
 		>.working{

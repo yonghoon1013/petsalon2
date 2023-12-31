@@ -5,7 +5,7 @@ import { myContext } from '../Context'
 import axios from 'axios';
 
 function Mypage() {
-  const {portLd, portPic, setPortPic, userMode, lgChecking} = useContext(myContext);
+  const {portLd, portPic, setPortPic, userMode, lgChecking, alertBoard} = useContext(myContext);
   const [data, setData] = useState([]);
   const [memView, setMemView] = useState([]);
   const [view, setView] = useState([]);
@@ -14,8 +14,11 @@ function Mypage() {
   const [picMode, setPicMode] = useState("list");
   const memMdProf = useRef([]);
   const memMdNickname = useRef([]);
+  const memMdNickname2 = useRef([]);
   const memMdPassword = useRef([]);
+  const memMdPassword2 = useRef([]);
   const memMdInfo = useRef([]);
+  const memMdInfo2 = useRef([]);
   const infMdDesc = useRef([]);
   const infMddPrice = useRef([]);
   const infMddTime1 = useRef([]);
@@ -25,6 +28,8 @@ function Mypage() {
   const infMddNumber2 = useRef([]);
   const infMddNumber3 = useRef([]);
   const elWork = useRef([]);
+
+  console.log(memMdNickname);
   
   useEffect(()=>{
     lgChecking();
@@ -35,10 +40,13 @@ function Mypage() {
     await axios.get(`/api/member?key=${sKey}`)
     .then(res=>{
       setData(res.data);
-      // setWorking(res.data[0].working);
+      console.log(res.data)
       memMdNickname.current.value = res.data[0].nickname;
-      memMdPassword.current.value = res.data[0].nickname;
-      memMdInfo.current.value = res.data[0].nickname;
+      memMdPassword.current.value = res.data[0].password;
+      memMdInfo.current.value = res.data[0].info;
+      memMdNickname2.current.value = res.data[0].nickname;
+      memMdPassword2.current.value = res.data[0].password;
+      memMdInfo2.current.value = res.data[0].info;
       infMdDesc.current.value = res.data[0].dDesc;
       infMddPrice.current.value = res.data[0].dPrice;
       infMddTime1.current.value = res.data[0].dTime1;
@@ -55,20 +63,24 @@ function Mypage() {
 		const sKey = sessionStorage.getItem("key");
 		const formData = new FormData(e.target);
 		const objData = Object.fromEntries(formData);
-    if (objData.upload.size == 0) {
-      axios.put(`/api/infoModify/${sKey}`, { key: sKey, imgUrl: e.target.oldProf.value, item: objData})
-      .then(res=>{
-        setData(res.data);
-      });
-    } else {
-      const fr = new FileReader();
-      fr.readAsDataURL(objData.upload);
-      fr.onload = (e) => {
-        axios.put(`/api/infoModify/${sKey}`, { key: sKey, imgUrl: e.target.result, item: objData})
+    if(objData.password == objData.password2){
+      if (objData.upload.size == 0) {
+        axios.put(`/api/infoModify/${sKey}`, { key: sKey, imgUrl: e.target.oldProf.value, item: objData})
         .then(res=>{
           setData(res.data);
         });
-      };
+      } else {
+        const fr = new FileReader();
+        fr.readAsDataURL(objData.upload);
+        fr.onload = (e) => {
+          axios.put(`/api/infoModify/${sKey}`, { key: sKey, imgUrl: e.target.result, item: objData})
+          .then(res=>{
+            setData(res.data);
+          });
+        };
+      }
+    } else {
+      alertBoard("비밀번호를 다시 적어주세요");
     }
     setMode("list");
 	}
@@ -111,7 +123,7 @@ function Mypage() {
       // e.target.dNumber1.value = res.data[0].dNumber1;
       // e.target.dNumber2.value = res.data[0].dNumber2;
       // e.target.dNumber3.value = res.data[0].dNumber3;
-    })
+    });
   };
 
   const portDel = async (e, item) => {
@@ -169,21 +181,35 @@ function Mypage() {
           <p className={styles.profDesc}>{data[0].info}</p>         
         </div>
         <form onSubmit={profUpload} className={`${styles.titleBoxMod} ${mode == "modify" ? styles.active : ""}`}>
-          <input ref={memMdProf} name='upload' type='file' onChange={(e)=>{
-            e.preventDefault();
-            let pic = e.target.files[0];
-            pic && setMemView(URL.createObjectURL(pic));
-          }}/>
-          <figure className={styles.profPic}>
-            <img src={memView}/>
-          </figure>
-          <input value={data[0].imgUrl} name='oldProf'/>
-          <input ref={memMdNickname} name="nickname" type='text'/>
-          <input ref={memMdPassword} name='password' type='password'/>
-          <input name='password2' type='password'/>
-          <input ref={memMdInfo} name="info"/>
-          <button>저장</button>
-          <button onClick={()=>{setMode("list")}} type='button'>취소</button>
+          <div className={styles.portInputBox}>
+            <input className={styles.portInput} ref={memMdProf} name='upload' type='file' onChange={(e)=>{
+              e.preventDefault();
+              let pic = e.target.files[0];
+              pic && setMemView(URL.createObjectURL(pic));
+            }}/>
+            <figure className={styles.profPic}>
+              <img src={memView}/>
+            </figure>
+            <input className={styles.tempInput} value={data[0].imgUrl} name='oldProf'/>
+          </div>
+          <div className={styles.infoInputBox}>
+            <div className={styles.InputDiv}>
+              <p>닉네임</p><input ref={memMdNickname} name="nickname" type='text'/>
+            </div>
+            <div className={styles.InputDiv}>
+            <p>비밀번호</p><input ref={memMdPassword} name='password' type='password'/>
+            </div>
+            <div className={styles.InputDiv}>
+            <p>비밀번호 확인</p><input name='password2' type='password'/>
+            </div>
+            <div className={styles.InputDiv}>
+            <p>소개</p><input ref={memMdInfo} name="info"/>
+            </div>
+          </div>
+          <div className={styles.profModBttnBox}>
+            <button className={styles.saveBttn}>저장</button>
+            <button className={styles.cancelBttn} onClick={()=>{setMode("list")}} type='button'>취소</button>
+          </div>
         </form>
         <div className={styles.working}>
           <div><strong>영업시작</strong></div>
@@ -284,7 +310,7 @@ function Mypage() {
     </section>
     <section className={`${styles.mypageSec} ${userMode == "designer" ? styles.active : ""}`}>
 
-      <div className={styles.profile}>
+    <div className={styles.profile}>
         <div className={styles.title}>
           <strong>마이페이지</strong>
           <button className={styles.memSetting} onClick={()=>{setMode("modify")}}>
@@ -305,26 +331,40 @@ function Mypage() {
           <p className={styles.profDesc}>{data[0].info}</p>         
         </div>
         <form onSubmit={profUpload} className={`${styles.titleBoxMod} ${mode == "modify" ? styles.active : ""}`}>
-          <input ref={memMdProf} name='upload' type='file' onChange={(e)=>{
-            e.preventDefault();
-            let pic = e.target.files[0];
-            pic && setMemView(URL.createObjectURL(pic));
-          }}/>
-          <figure className={styles.profPic}>
-            <img src={memView}/>
-          </figure>
-          <input value={data[0].imgUrl} name='oldProf'/>
-          <input ref={memMdNickname} name="nickname" type='text'/>
-          <input ref={memMdPassword} name='password' type='password'/>
-          <input name='password2' type='password'/>
-          <input ref={memMdInfo} name="info"/>
-          <button>저장</button>
-          <button onClick={()=>{setMode("list")}} type='button'>취소</button>
+          <div className={styles.portInputBox}>
+            <input className={styles.portInput} ref={memMdProf} name='upload' type='file' onChange={(e)=>{
+              e.preventDefault();
+              let pic = e.target.files[0];
+              pic && setMemView(URL.createObjectURL(pic));
+            }}/>
+            <figure className={styles.profPic}>
+              <img src={memView}/>
+            </figure>
+            <input className={styles.tempInput} value={data[0].imgUrl} name='oldProf'/>
+          </div>
+          <div className={styles.infoInputBox}>
+            <div className={styles.InputDiv}>
+              <p>닉네임</p><input ref={memMdNickname2} name="nickname" type='text'/>
+            </div>
+            <div className={styles.InputDiv}>
+            <p>비밀번호</p><input ref={memMdPassword2} name='password' type='password'/>
+            </div>
+            <div className={styles.InputDiv}>
+            <p>비밀번호 확인</p><input name='password2' type='password'/>
+            </div>
+            <div className={styles.InputDiv}>
+            <p>소개</p><input ref={memMdInfo2} name="info"/>
+            </div>
+          </div>
+          <div className={styles.profModBttnBox}>
+            <button className={styles.saveBttn}>저장</button>
+            <button className={styles.cancelBttn} onClick={()=>{setMode("list")}} type='button'>취소</button>
+          </div>
         </form>
       </div>
+
+
     </section>
-
-
     </>
   )
 }
