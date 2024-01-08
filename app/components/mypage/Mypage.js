@@ -203,7 +203,7 @@ function Mypage() {
             <p>비밀번호 확인</p><input name='password2' type='password'/>
             </div>
             <div className={styles.InputDiv}>
-            <p>소개</p><input ref={memMdInfo} name="info"/>
+            <p>소개</p><textarea className={styles.descInput} ref={memMdInfo} name="info"/>
             </div>
           </div>
           <div className={styles.profModBttnBox}>
@@ -222,29 +222,33 @@ function Mypage() {
         <div className={styles.pics}>
           <ul className={`${styles.picBox} ${picMode == "list" ? styles.active : ""}`}>
             <li onClick={()=>{setPicMode("write")}} className={styles.picAdd}>
-              <figure><img/></figure>
+              <span class="material-symbols-outlined">add</span>
             </li>
             {
               portPic.map(item=>(
                 <li className={styles.addedPicsBox}>
                   <figure className={styles.addedPics}>
                     <img src={item.imgUrl}/>
-                    <button onClick={(e)=>{portDel(e, item)}}>삭제</button>
+                    <span onClick={(e)=>{portDel(e, item)}} class="material-symbols-outlined">delete</span>
                   </figure>
                 </li>
               ))
             }
           </ul>
           <form onSubmit={portPicUpload} className={`${styles.picBoxModi} ${picMode == "write" ? styles.active : ""}`}>
-            <figure><img src={view}/></figure>
-            <input required onChange={(e)=>{
-              e.preventDefault();
-              const pic = e.target.files[0];
-              pic && setView(URL.createObjectURL(pic));
-            }}
-            name='upload' type='file'/>
-            <button>업로드</button>
-            <button onClick={()=>{setPicMode("list")}} type='button'>취소</button>
+            <div className={styles.inputBox}>
+              <figure><img src={view}/></figure>
+              <input required onChange={(e)=>{
+                e.preventDefault();
+                const pic = e.target.files[0];
+                pic && setView(URL.createObjectURL(pic));
+              }}
+              name='upload' type='file'/>
+            </div>
+            <div className={styles.bttnBox}>
+              <button>업로드</button>
+              <button onClick={()=>{setPicMode("list")}} type='button'>취소</button>
+            </div>
           </form>
         </div>
       </div>
@@ -285,7 +289,7 @@ function Mypage() {
           </div>
           <div className={styles.dPrice}>
             <span>가격정보</span>
-            <input ref={infMddPrice} name='dPrice'/>
+            <textarea ref={infMddPrice} name='dPrice'/>
           </div>
           <div className={styles.dTime}>
             <span>영업시간</span>
@@ -298,12 +302,16 @@ function Mypage() {
           </div>
           <div className={styles.dNumber}>
             <span>H.P</span>
-            <input ref={infMddNumber1} maxLength={3} name='dNumber1'/>
-            <input ref={infMddNumber2} maxLength={4} name='dNumber2'/>
-            <input ref={infMddNumber3} maxLength={4} name='dNumber3'/>
+            <div className={styles.hpBox}>
+              <input ref={infMddNumber1} maxLength={3} name='dNumber1'/>
+              <input ref={infMddNumber2} maxLength={4} name='dNumber2'/>
+              <input ref={infMddNumber3} maxLength={4} name='dNumber3'/>
+            </div>
           </div>
-          <button onClick={()=>{setInfoMode("list")}}>수정완료</button>
-          <button type='button' onClick={()=>{setInfoMode("list")}}>취소</button>
+          <div className={styles.bttnBox}>
+            <button onClick={()=>{setInfoMode("list")}}>수정</button>
+            <button type='button' onClick={()=>{setInfoMode("list")}}>취소</button>
+          </div>
         </form>
       </div>
 
