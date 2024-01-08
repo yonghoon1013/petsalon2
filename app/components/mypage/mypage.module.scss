@@ -83,38 +83,66 @@
 			flex-direction: column;
 			justify-content: center;
 			align-items: center;
-
-			>.profPic {
-				width: 150px;
-				height: 150px;
-				border-radius: 100%;
+			>.portInputBox{
 				display: flex;
 				flex-direction: column;
 				justify-content: center;
 				align-items: center;
-				>img {width: 100%;}
+				>.portInput{}
+				>.profPic {
+					width: 150px;
+					height: 150px;
+					border-radius: 100%;
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					align-items: center;
+					>img {
+						border-radius: 100%;
+						width: 100%;
+						height: 100%;
+						object-fit: cover;
+					}
+				}
+				>.tempInput{display: none;}
 			}
-
-			>.profName {
-				font-weight: bold;
-				margin: 10px 0 0 0;
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				>strong{}
-				>.nameSett{
-					>figure{
-						width: 20px;
-						height: 20px;
-						background-color: white;
-						>img{width: 100%;}
+			>.infoInputBox{
+				margin-top: 50px;
+				>.InputDiv{
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+					margin-top: 10px;
+					>.descInput{
+						border: 1px solid black;
+						border-radius: 8px;
+						padding: 3px;
+						height: 150px;
+						width: 200px;
+						word-wrap: break-word;
+						overflow-wrap: break-word;
+					}
+					>input{
+						padding: 3px;
+						border-radius: 5px;
+						margin-left: 15px;
+						border: 1px solid black;
 					}
 				}
 			}
-
-			>.profEmail {margin: 10px 0 0 0;}
-
-			>.profDesc {margin: 10px 0 0 0;}
+			>.profModBttnBox{
+				display: flex;
+				justify-content: space-between;
+				width: 30%;
+				margin-top: 13px;
+				>button{
+					width: 80px;
+					height: 30px;
+					border-radius: 11px;
+				}
+				>.saveBttn{}
+				>.cancelBttn{}
+			}
 		}
 
 		>.working{
@@ -124,6 +152,7 @@
 		}
 	
 	}
+
 	>.workpics{
 		margin: 130px 0 0 0;
 		>.title{
@@ -155,7 +184,16 @@
 					width: 130px;
 					height: 130px;
 					&.picAdd{
+						cursor: pointer;
 						border: 2px dashed black;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						>span{
+							font-size: 6rem;
+							color: white;
+							z-index: 100;
+						}
 					}
 					&.addedPicsBox{
 						>.addedPics{
@@ -172,10 +210,15 @@
 								height: 100%;
 								border-radius: 13px;
 							}
-							>button{
+							>span{
 								position: absolute;
 								top: 5%;
-								right: 5%;
+								right: 10%;
+								width: 15px;
+								height: 15px;
+								border-radius: 100%;
+								color: red;
+								cursor: pointer;
 							}
 						}
 					}
@@ -192,30 +235,40 @@
 				padding: 5%;
 				display: none;
 				flex-wrap: wrap;
+				flex-direction: column;
 				justify-content: center;
 				align-items: center;
-				gap: 10px;
 				width: 100%;
-				>li{
-					background-color: orange;
-					border-radius: 13px;
-					width: 130px;
-					height: 130px;
-					&.picAdd{
-						border: 2px dashed black;
-					}
+				>.inputBox{
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					flex-direction: column;
 					>figure{
-						width: 100%;
-						height: 100%;
+						width: 150px;
+						height: 150px;
 						>img{
 							width: 100%;
+							height: 100%;
+							object-fit: cover;
+						}}
+				}
+				>.bttnBox{
+					margin-top: 25px;
+					width: 35%;
+					display: flex;
+					justify-content: space-between;
+					>button{
+						width: 80px;
+						height: 30px;
+						border-radius: 11px;
 						}
-					}
 				}
 			}
 
 		}
 	}
+
 	>.info{
 		position: relative;
 		margin: 130px 0 0 0;
@@ -258,9 +311,10 @@
 			>.dAddress{}
 			>.dNumber{}
 		}
+
 		>.infoBoxModi{
 			&.active{
-				display: block;
+				display: inline-block;
 			}
 			display: none;
 			box-shadow: 0px 0px 20px rgb(218, 218, 218);
@@ -277,14 +331,44 @@
 						margin: 10px 0 0 0;
 					}
 				}
+				>.hpBox{
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+					>input{
+						padding: 3px;
+						border: 1px solid #797979;
+						border-radius: 8px;
+						margin-top: 11px;
+					}
+				}
+				>textarea{
+					padding: 3px;
+					border: 1px solid #797979;
+					border-radius: 8px;
+					margin-top: 11px;
+					height: 150px;
+				}
+				>input{
+					padding: 3px;
+					border: 1px solid #797979;
+					border-radius: 8px;
+					margin-top: 11px;
+				}
+				&.bttnBox{
+					display: flex;
+					flex-direction: unset;
+					justify-content: space-between;
+					align-items: center;
+					width: 35%;
+					>button{
+						width: 80px;
+						height: 30px;
+						border-radius: 11px;
+					}
+				}
 			}
-			>.dDesc{}
-			>.dPrice{}
-			>.dTime{}
-			>.dAddress{}
-			>.dNumber{}
 		}
-
 
 	}
 }
