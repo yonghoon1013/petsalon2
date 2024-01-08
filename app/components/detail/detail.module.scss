@@ -61,17 +61,17 @@ section{
                     justify-content: space-around;
                     >li{
                         position: relative;
+                        width: 25%;
                         >div{
                             cursor: pointer;    
                             >.img{
-                                width: 45px;
-                                aspect-ratio: 1;
+                                width: 100%;
                                 display: flex;
                                 justify-content: center;
                                 align-items: center;
                                 >img{
-                                    width: 100%;
-                                    height: 100%;
+                                    width: 45px;
+                                    aspect-ratio: 1;
                                 }
                             }
                             >.name{
@@ -83,13 +83,61 @@ section{
                             content: '';
                             position: absolute;
                             top: 50%;
-                            right: -100%;
+                            right: 0;
                             transform: translate(100%,-50%);
                             height: 80%;
                             width: 2px;
                             background-color: #FF8500;
                         }
 
+                    }
+                }
+
+                .kakaoMapBox{
+                    position: relative;
+                    .kakaoMapCon{
+                        display: none;
+                        position: absolute;
+                        z-index: 80;
+                        width: 300px;
+                        height: 300px;
+                        >.map{
+                            width: 100%;
+                            height: 100%;
+                        }
+                    }
+                    .kakaoMapCon.on{
+                        display: block;
+                    }
+                }
+
+                .shareBox{
+                    position: relative;
+                    .shareCon{
+                        display: none;
+                        border-radius: 10px;
+                        border:  1px solid black;
+                        background-color: white;
+                        position: absolute;
+                        z-index: 80;
+                        >ul{
+                            display: flex;
+                            >li{
+                                width: 60px;
+                                margin: 20px;
+                                text-align: center;
+                                img{
+                                    width: 50px;
+                                    aspect-ratio: 1;
+                                }
+                                >p{
+                                    font-size: 14px;
+                                }
+                            }
+                        }
+                    }
+                    .shareCon.on{
+                        display: block;
                     }
                 }
             }
