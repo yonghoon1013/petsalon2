@@ -37,6 +37,7 @@ time, mark, audio, video {
 html{
 	background-color: #f1f1f1;
 	font-family: 'GmarketSansMedium', sans-serif;
+	button, input, strong, textarea{font-family: 'GmarketSansMedium', sans-serif;}
 	body{
 		main{
 			section{
@@ -44,7 +45,6 @@ html{
 				min-width: 350px;
 				margin: 0 auto;
 			}
-
 		}
 	}
 }

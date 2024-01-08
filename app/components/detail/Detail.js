@@ -25,11 +25,16 @@ function Detail() {
     const [locationActive, setLocationActive] = useState(false);
     const [inputValue, setInputValue] = useState('');
     const kakaoMap = useRef(null);
-    const { member, memberLd, sKey } = useContext(myContext);
+    const { member, memberLd } = useContext(myContext);
     const shareRef = useRef(null);
 
     const paramsData = useSearchParams();
     const objKey = paramsData.get("key");
+
+    let sKey;
+    if (typeof window !== "undefined") {
+        sKey = JSON.parse(sessionStorage.getItem("loginObj")).key;
+    }
 
     const detailGet = async () => {
         await axios.get(`/api/member?key=${objKey}`)

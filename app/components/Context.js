@@ -13,11 +13,6 @@ function Context({children}) {
   const [userMode, setUserMode] = useState("designer");
   const navi = useRouter();
 
-  let sKey;
-  if (typeof window !== "undefined") {
-      sKey = JSON.parse(sessionStorage.getItem("loginObj")).key;
-  }
-
   const lgChecking = () => {
     const key = sessionStorage.getItem("key");
     if (!key) {
@@ -83,7 +78,7 @@ function Context({children}) {
 	}//alertBoard() 함수정의
 
   return (
-    <myContext.Provider value={{member, memberLd, favoriteLd, Fav, portLd, portPic, setPortPic, alertBoard, userMode, lgChecking, location, geolocation, sKey}}>
+    <myContext.Provider value={{member, memberLd, favoriteLd, Fav, portLd, portPic, setPortPic, alertBoard, userMode, lgChecking, location, geolocation}}>
         {children}
     </myContext.Provider>
   )
