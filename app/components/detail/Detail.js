@@ -190,7 +190,7 @@ function Detail() {
     }
 
     const urlCopy = () => {
-        const url = location.href;
+        const url = window.location.href;
         let dumy = document.createElement("input");
         document.body.appendChild(dumy);
         dumy.value = url;
@@ -198,6 +198,7 @@ function Detail() {
         document.execCommand("copy")
         alert("URL이 클립보드에 복사되었습니다.")
         document.body.removeChild(dumy);
+        console.log(url);
     }
 
 
@@ -288,7 +289,7 @@ function Detail() {
 
     if (!detailItem[0] || !loginUserInfo[0]) return <>로딩중</>
     return (
-        <section>
+        <section className={styles.detailSection}>
             <div className={styles.top}>
                 <button onClick={() => router.back()}><img src="../asset/detail/arrow-gray-icon.svg"></img></button>
                 <p>상세보기</p>
