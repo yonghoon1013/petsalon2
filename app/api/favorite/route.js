@@ -22,9 +22,17 @@ export async function GET(req) {
 export async function DELETE(req) {
     const qData = await Object.fromEntries(req.nextUrl.searchParams);
     const {client, collection} = await dbConnect("favorite");
-    await collection.deleteOne({objKey: qData.key});
-    const dataGet = await collection.find({sKey: qData.sKey}).toArray();
+    await collection.deleteMany({objKey: qData.objKey, sKey: qData.sKey});
+    const dataGet = await collection.find({objKey: qData.objKey}).toArray();
+
+    await likeUpdate(qData, dataGet);
 
     await client.close();
     return Response.json(dataGet);
+}
+
+async function likeUpdate(qData, res){
+    const {client, collection} = await dbConnect("member");
+    await collection.updateOne({key: qData.objKey}, {$set: {like: String(res.length)}});
+    await client.close();
 }

@@ -42,12 +42,13 @@ function Favorite() {
 	}, [member, Fav]);
 
 
-	const goDetail = (key) => {
-		navi.push(`/pages/detail?key=${key}`)
+	const goDetail = (objKey) => {
+		navi.push(`/pages/detail?key=${objKey}`)
 	}
 
-	const removeDesigner = async (key) => {
-		await axios.delete(`/api/favorite?key=${key}`)
+	const removeDesigner = async (objKey) => {
+		const sKey = sessionStorage.getItem("key")
+		await axios.delete(`/api/favorite?objKey=${objKey}&sKey=${sKey}`)
 		.then(res=>{
 			favoriteLd();
 		})
