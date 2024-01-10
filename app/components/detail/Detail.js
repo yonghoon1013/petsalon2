@@ -289,7 +289,7 @@ function Detail() {
 
 
     if (!detailItem[0] || !loginUserInfo[0]) {
-        return (<Loading/>)
+        return (<Loading/>) 
     }
     return (
         <section>
