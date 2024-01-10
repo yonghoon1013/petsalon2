@@ -1,5 +1,7 @@
 "use client";
-import Footer from "@/app/Footer";
+// import Footer from "@/app/Footer";
+import Footer from "@/app/components/footer/Footer"; //수정)
+import Loading from "@/app/components/loading/Loading"; //수정)
 import Link from "next/link";
 import styles from "./list.module.scss";
 import React, { useContext, useEffect, useState } from 'react';
@@ -104,6 +106,10 @@ function List() {
 
 
     if(!member && !filterMatcheData) return <>로딩중</>
+
+    // return (
+    //     <Loading/>
+    // )
     return (
         <section>
 
@@ -153,7 +159,8 @@ function List() {
                 </ul>
             </div>
 
-			<Footer />
+            {/* home around myList myPage  */}
+			<Footer currentLink = 'myPage'/>
         </section>
     )
 }
