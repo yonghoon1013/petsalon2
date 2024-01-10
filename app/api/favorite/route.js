@@ -42,7 +42,6 @@ export async function DELETE(req) {
     return Response.json(dataGet);
 }
 
-
 async function likeUpdate(qData, res){
     const {client, collection} = await dbConnect("member");
     await collection.updateOne({key: qData.objKey}, {$set: {like: String(res.length)}});
