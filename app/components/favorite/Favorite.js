@@ -1,5 +1,6 @@
 "use client";
-import Footer from "@/app/Footer";
+import Footer from "@/app/components/footer/Footer"; //수정)
+import Loading from "@/app/components/loading/Loading"; //수정)
 import styles from "./style.module.scss"
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { myContext } from "../Context";
@@ -71,6 +72,8 @@ function Favorite() {
 			test.current.style.display = "block"
 		}
 	}
+
+	if(!member) return (<Loading/>) 
 	return (
 		<section className={styles.favoriteSection}>
 			<div className={styles.titleWrapper}>
@@ -121,7 +124,8 @@ function Favorite() {
 					))
 				}
 			</ul>
-			<Footer />
+            {/* home around myList myPage  */}
+            <Footer currentLink = 'myList'/>
 		</section>
 	);
 }

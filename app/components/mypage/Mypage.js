@@ -1,8 +1,11 @@
 "use client"
+import Footer from "@/app/components/footer/Footer"; //수정)
+import Loading from "@/app/components/loading/Loading"; //수정)
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import styles from './mypage.module.scss'
 import { myContext } from '../Context'
 import axios from 'axios';
+import { useRouter } from "next/navigation";
 
 function Mypage() {
   const {portLd, portPic, setPortPic, userMode, lgChecking, alertBoard} = useContext(myContext);
@@ -28,6 +31,7 @@ function Mypage() {
   const infMddNumber2 = useRef([]);
   const infMddNumber3 = useRef([]);
   const elWork = useRef([]);
+  const router = useRouter();
 
   console.log(memMdNickname);
   
@@ -155,11 +159,14 @@ function Mypage() {
     portLd();
   }, []);
 
-  if(!data[0]) return <>로딩중</>
-  return (
+  if(!data[0]) return (<Loading/>) 
+  return (  
     <>
     <section className={`${styles.mypageSec} ${userMode == "user" ? styles.active : ""}`}>
-
+    <button onClick={()=>{
+      sessionStorage.clear();
+      router.push(`/pages/login`);
+      }}>로그아웃</button>
       <div className={styles.profile}>
         <div className={styles.title}>
           <strong>마이페이지</strong>
@@ -371,8 +378,9 @@ function Mypage() {
         </form>
       </div>
 
-
     </section>
+            {/* home around myList myPage  */}
+            <Footer currentLink = 'myPage'/>
     </>
   )
 }
