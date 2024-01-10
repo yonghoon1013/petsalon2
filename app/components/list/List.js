@@ -1,5 +1,7 @@
 "use client";
-import Footer from "@/app/Footer";
+// import Footer from "@/app/Footer";
+import Footer from "@/app/components/footer/Footer"; //수정)
+import Loading from "@/app/components/loading/Loading"; //수정)
 import Link from "next/link";
 import styles from "./list.module.scss";
 import React, { useContext, useEffect, useState } from 'react';
@@ -102,8 +104,11 @@ function List() {
 
 
 
+    if(!member && !filterMatcheData) return (<Loading/>) 
 
-    if(!member && !filterMatcheData) return <>로딩중</>
+    // return (
+    //     <Loading/>
+    // )
     return (
         <section className={styles.listSection}>
 
@@ -130,7 +135,7 @@ function List() {
                                 <Link href={`/pages/detail?key=${item.key}`}>
                                 <div className={styles.imgBox}>
                                         {
-                                            view.filter(obj=>obj.sKey == item.key).map((p,index2)=>(
+                                            view.filter(obj=>obj.sKey == item.key).slice(0,3).map((p,index2)=>(
                                                 <img key={index2} src={p.imgUrl}></img>
                                             ))
                                             }
@@ -153,7 +158,8 @@ function List() {
                 </ul>
             </div>
 
-			<Footer />
+            {/* home around myList myPage  */}
+			<Footer currentLink = 'home'/>
         </section>
     )
 }

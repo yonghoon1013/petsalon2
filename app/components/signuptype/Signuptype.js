@@ -98,14 +98,14 @@ export default function Signuptype() {
         <form className='signUpTypeForm' onSubmit={signUpFun}>
             <div className='typeWrapper'>
                 <figure className='groomerWrapper'>
-                    <input type='radio' name='type' value='groomer' id='groomer' onChange={nextActiveFun}/>
+                    <input type='radio' name='type' value='designer' id='groomer' onChange={nextActiveFun}/>
                     <label htmlFor='groomer'/>
 
                     <figcaption>미용사</figcaption>
                 </figure>   
 
                 <figure className='petOwnerWrapper'>
-                    <input type='radio' name='type' value='petOwner' id='petOwner' onChange={nextActiveFun}/>
+                    <input type='radio' name='type' value='user' id='petOwner' onChange={nextActiveFun}/>
                     <label htmlFor='petOwner'/>
 
                     <figcaption>댕냥이</figcaption>
