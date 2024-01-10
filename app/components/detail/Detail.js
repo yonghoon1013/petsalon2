@@ -5,6 +5,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { myContext } from '../Context';
 import axios from "axios";
 
+import Loading from "@/app/components/loading/Loading"; //수정)
+
 import 'swiper/css';
 import 'swiper/css/pagination';
 
@@ -287,7 +289,9 @@ function Detail() {
     }, []);
 
 
-    if (!detailItem[0] || !loginUserInfo[0]) return <>로딩중</>
+    if (!detailItem[0] || !loginUserInfo[0]) {
+        return (<Loading/>) 
+    }
     return (
         <section className={styles.detailSection}>
             <div className={styles.top}>
