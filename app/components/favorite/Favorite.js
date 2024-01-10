@@ -30,7 +30,7 @@ function Favorite() {
 			<path d="M12 2l2.6 8.4h8.4l-7 5.4 2.6 8.4-7-5.4-7 5.4 2.6-8.4-7-5.4h8.4z" />
 		</svg>
 	);
-console.log(member);
+
 	const making = async () => {
 		const l2 = member.filter(obj => {
 			return (Fav.some(item => item.objKey == obj.key));
@@ -53,13 +53,11 @@ console.log(member);
 	},[filtered])
 	
 
-
 	const goDetail = (objKey) => {
 		navi.push(`/pages/detail?key=${objKey}`)
 	}
 
 	const removeDesigner = async (objKey) => {
-		console.log(sKey);
 		await axios.delete(`/api/favorite?objKey=${objKey}&sKey=${sKey}`)
 			.then(res => {
 				favoriteLd();
