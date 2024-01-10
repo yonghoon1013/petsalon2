@@ -1,0 +1,108 @@
+.favoriteSection{
+    box-shadow: none;
+    .titleWrapper{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .title{
+            font-size: 28px;
+            font-weight: bold;
+            width: 50%;
+        }
+        .icon{
+            width: 50%;
+            display: flex;
+            justify-content: flex-end;
+            >button{
+                margin: 0 5%;
+            }
+            .serch{
+                >img{
+
+                }
+            }
+            .notice{
+                >img{
+
+                }
+            }
+        }
+    }
+
+    .mainWrapper{
+        margin-top: 20% ;
+        text-align: center;
+        background-color: white;
+        padding: 5%;
+        border-radius: 30px;
+        >.text{
+            margin-top: 5%;
+            font-size: 20px;
+            line-height: 1.5;
+        }
+        .more{
+            margin: 5% 0;
+            cursor: pointer;
+            color: white;
+            background-color: #FF8500;
+            padding: 2%;
+            border-radius: 30px;
+        }
+    }
+
+
+    .favoriteList{
+        >li{
+            cursor: pointer;
+            position: relative;
+            margin-top: 3%;
+            background-color: white;
+            display: flex;
+            justify-content: space-between;
+            padding: 5%;
+            border-radius: 30px;
+            >.closeButton{
+                background-image: url(/close.png);
+                background-repeat: no-repeat;
+                width: 10px;
+                height: 10px;
+                background-size: contain;
+                position: absolute;
+                right: 20px;
+                top: 10%;
+                cursor: pointer;
+                z-index: 999;
+            }
+            >.imgBox{
+                width: 20%;
+                >img{
+                    width: 100%;
+                    aspect-ratio: 1;
+                }
+            }
+            .wrap{
+                width: 70%;
+                >.name{
+                    font-size: 18px;
+                    font-weight: bold;
+                }
+            > .grade {
+                margin: 1.5% 0;
+                svg {
+                    width: 17px;
+                    height: 16px;
+                    fill: #ffc700;
+                }
+            }
+                >.hours{
+                    width: 150px;
+                    text-align: center;
+                    padding: 1.5% 0;
+                    background-color: #FF8500;
+                    border-radius: 30px;
+                    color: white;
+                }
+            }
+        }
+    }
+}

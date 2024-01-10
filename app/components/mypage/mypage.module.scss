@@ -1,4 +1,8 @@
 .mypageSec {
+	button{
+		background-color: rgb(212, 212, 212);
+		cursor: pointer;
+	}
 	&.active{display: none;}
 	box-shadow: 0px 0px 20px rgb(218, 218, 218);
 	background-color: #FFFAED;

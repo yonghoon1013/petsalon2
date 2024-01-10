@@ -79,6 +79,10 @@ footer, header, hgroup, menu, nav, section {
 	display: block;
 }
 
+button{
+	background: none;
+}
+
 body {
 	line-height: 1;
 	&::-webkit-scrollbar{
