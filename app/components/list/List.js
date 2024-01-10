@@ -105,7 +105,7 @@ function List() {
 
     if(!member && !filterMatcheData) return <>로딩중</>
     return (
-        <section>
+        <section className={styles.listSection}>
 
             <div className={styles.topBox}>
                 <div className={styles.location}>
