@@ -215,7 +215,7 @@ function Detail() {
 		document.body.appendChild(script);
 
 		script.onload = () => {
-			Kakao.init('9ca81e01a40fd83bbfb14e219ad5eb0a'); // 사용하려는 앱의 JavaScript 키 입력
+			Kakao.init('647e5d4eca26ea4df7ba83ca043a166f'); // 사용하려는 앱의 JavaScript 키 입력
 
 		};
 
@@ -227,7 +227,7 @@ function Detail() {
 
 	const kakaoMapLoad = () => {
 		const script = document.createElement("script");
-		script.src = "//dapi.kakao.com/v2/maps/sdk.js?appkey=9ca81e01a40fd83bbfb14e219ad5eb0a&autoload=false";
+		script.src = "//dapi.kakao.com/v2/maps/sdk.js?appkey=647e5d4eca26ea4df7ba83ca043a166f&autoload=false";
 		script.async = true;
 		document.head.appendChild(script);
 

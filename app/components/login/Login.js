@@ -58,7 +58,7 @@ function Login() {
     const kakaoLoginBtn = () => {
         
       if(!Kakao.isInitialized()) {//초기화(init)이 되있는지 여부에 따라 true, false
-        Kakao.init('a9eac40c80c43a51d4280e2f8cbd816f') //초기화는 한 번만 //이미 된 상태에서 또 하면 오류라서 이렇게 함
+        Kakao.init('647e5d4eca26ea4df7ba83ca043a166f') //초기화는 한 번만 //이미 된 상태에서 또 하면 오류라서 이렇게 함
       }
       
       //발급받은 키 중 javascript키를 사용해준다.

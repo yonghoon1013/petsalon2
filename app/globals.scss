@@ -130,6 +130,7 @@ input:focus, textarea:focus{
 }
 
 .gnb {
+	z-index: 1000;
 	> .menu {
 		background-color: #fff;
 		display: flex;
