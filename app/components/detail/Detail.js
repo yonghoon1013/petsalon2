@@ -33,9 +33,16 @@ function Detail() {
     const paramsData = useSearchParams();
     const objKey = paramsData.get("key");
 
+    const kakaoApiKey = "9ca81e01a40fd83bbfb14e219ad5eb0a";
+
     let sKey;
     if (typeof window !== "undefined") {
-        sKey = JSON.parse(sessionStorage.getItem("loginObj")).key;
+        const key = sessionStorage.getItem("key");
+        if(key){
+            sKey = JSON.parse(sessionStorage.getItem("loginObj")).key;
+        } else{
+            router.push(`/pages/login?detailNum=${window.location.href}`);
+        }
     }
 
     const detailGet = async () => {
@@ -47,7 +54,7 @@ function Detail() {
 
 
     const detailPortPicGet = async () => {
-        await axios.get(`/api/portPic?key=${objKey}`)
+        await axios.get(`/api/portPic?sKey=${objKey}`)
             .then(res => {
                 setDetailProtPic(res.data);
             })
@@ -171,8 +178,8 @@ function Detail() {
                 imageUrl: 'http://k.kakaocdn.net/dn/Q2iNx/btqgeRgV54P/VLdBs9cvyn8BJXB3o7N8UK/kakaolink40_original.png',
                 link: {
                     // [내 애플리케이션] > [플랫폼] 에서 등록한 사이트 도메인과 일치해야 함
-                    mobileWebUrl: 'http://localhost:3000',
-                    webUrl: 'http://localhost:3000',
+                    mobileWebUrl: window.location.href,
+                    webUrl: window.location.href,
                 },
             },
             social: {
@@ -183,14 +190,13 @@ function Detail() {
                 {
                     title: '자세히 보기',
                     link: {
-                        mobileWebUrl: 'http://localhost:3000',
-                        webUrl: 'http://localhost:3000',
+                        mobileWebUrl: window.location.href,
+                        webUrl: window.location.href,
                     },
                 }
             ],
         });
     }
-
     const urlCopy = () => {
         const url = window.location.href;
         let dumy = document.createElement("input");
@@ -200,9 +206,7 @@ function Detail() {
         document.execCommand("copy")
         alert("URL이 클립보드에 복사되었습니다.")
         document.body.removeChild(dumy);
-        console.log(url);
     }
-
 
 
     useEffect(() => {
@@ -215,7 +219,7 @@ function Detail() {
         document.body.appendChild(script);
 
         script.onload = () => {
-            Kakao.init('9ca81e01a40fd83bbfb14e219ad5eb0a'); // 사용하려는 앱의 JavaScript 키 입력
+            Kakao.init(kakaoApiKey); // 사용하려는 앱의 JavaScript 키 입력
 
         };
 
@@ -227,7 +231,7 @@ function Detail() {
 
     const kakaoMapLoad = () => {
         const script = document.createElement("script");
-        script.src = "//dapi.kakao.com/v2/maps/sdk.js?appkey=9ca81e01a40fd83bbfb14e219ad5eb0a&autoload=false";
+        script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${kakaoApiKey}&autoload=false`;
         script.async = true;
         document.head.appendChild(script);
 
@@ -295,7 +299,7 @@ function Detail() {
     return (
         <section className={styles.detailSection}>
             <div className={styles.top}>
-                <button onClick={() => router.back()}><img src="../asset/detail/arrow-gray-icon.svg"></img></button>
+                <button onClick={() => router.push('/pages/list')}><img src="../asset/detail/arrow-gray-icon.svg"></img></button>
                 <p>상세보기</p>
             </div>
             <div className={styles.detailIntro}>
