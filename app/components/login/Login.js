@@ -2,7 +2,7 @@
 
 import axios from 'axios'
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useContext, useRef, useState } from 'react'
 import { myContext } from '../Context';
 
@@ -11,9 +11,10 @@ function Login() {
   const {alertBoard} = useContext(myContext);
     const navigation = useRouter();
 
+    const paramsData = useSearchParams();
+    const detailLink = paramsData.get("detailNum");
     const elPwInput = useRef();
     const [type, setType] = useState('password');
-
     const kakaoLogout = () => {
         if(Kakao.Auth.getAccessToken()) {
             Kakao.API.request({
@@ -48,17 +49,21 @@ function Login() {
           sessionStorage.setItem("loginBool", true);
           sessionStorage.setItem("key", res.data[0].key);
           sessionStorage.setItem("loginObj", JSON.stringify(loginObj));
-          navigation.push('/pages/list');
+          if(detailLink){
+            navigation.push(detailLink);
+          } else{
+            navigation.push('/pages/list');
+          }
+
         } else {
           alertBoard("아이디 또는 비밀번호를 다시 확인해주세요."); //"응 실패 그거"
         }
       })
     }//loginFn(e) 함수정의
-
     const kakaoLoginBtn = () => {
         
       if(!Kakao.isInitialized()) {//초기화(init)이 되있는지 여부에 따라 true, false
-        Kakao.init('647e5d4eca26ea4df7ba83ca043a166f') //초기화는 한 번만 //이미 된 상태에서 또 하면 오류라서 이렇게 함
+        Kakao.init('9ca81e01a40fd83bbfb14e219ad5eb0a') //초기화는 한 번만 //이미 된 상태에서 또 하면 오류라서 이렇게 함
       }
       
       //발급받은 키 중 javascript키를 사용해준다.
