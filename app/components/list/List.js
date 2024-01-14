@@ -77,7 +77,7 @@ function List() {
         locationCompute();
     },[member])
 
-    const apiKey = 'eb851606ceed969fac40c0f6b0c41d16';
+    const apiKey = 'eb851606ceed969fac40c0f6b0c41d16'; //eb851606ceed969fac40c0f6b0c41d16 // rest api
 
     const [threeAddr,setThreeAddr] = useState([]);
 
