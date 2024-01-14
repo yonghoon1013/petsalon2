@@ -44,7 +44,6 @@ function Mypage() {
     await axios.get(`/api/member?key=${sKey}`)
     .then(res=>{
       setData(res.data);
-      console.log(res.data)
       memMdNickname.current.value = res.data[0].nickname;
       memMdPassword.current.value = res.data[0].password;
       memMdInfo.current.value = res.data[0].info;
