@@ -16,9 +16,11 @@ function Mypage() {
   const [infoMode, setInfoMode] = useState("list");
   const [picMode, setPicMode] = useState("list");
   const memMdProf = useRef([]);
-  const memMdNickname = useRef([]);
+  // const memMdNickname = useRef([]);
+  const [memMdNickname,setMemMdNickname] = useState([]);
   const memMdNickname2 = useRef([]);
-  const memMdPassword = useRef([]);
+  // const memMdPassword = useRef([]);
+  const [memMdPassword,setMemMdPassword] = useState([]);
   const memMdPassword2 = useRef([]);
   const memMdInfo = useRef([]);
   const memMdInfo2 = useRef([]);
@@ -47,8 +49,10 @@ function Mypage() {
     await axios.get(`/api/member?key=${sKey}`)
     .then(res=>{
       setData(res.data);
-      memMdNickname.current.value = res.data[0].nickname;
-      memMdPassword.current.value = res.data[0].password;
+      // memMdNickname.current.value = res.data[0].nickname;
+      setMemMdNickname(res.data[0].nickname);
+      // memMdPassword.current.value = res.data[0].password;
+      setMemMdPassword(res.data[0].password);
       memMdInfo.current.value = res.data[0].info;
       memMdNickname2.current.value = res.data[0].nickname;
       memMdPassword2.current.value = res.data[0].password;
@@ -198,10 +202,12 @@ function Mypage() {
           </div>
           <div className={styles.infoInputBox}>
             <div className={styles.InputDiv}>
-              <p>닉네임</p><input ref={memMdNickname} name="nickname" type='text'/>
+            {/* ref={memMdNickname} */}
+              <p>닉네임</p><input value={memMdNickname} name="nickname" type='text'/>
             </div>
             <div className={styles.InputDiv}>
-            <p>비밀번호</p><input ref={memMdPassword} name='password' type='password'/>
+            {/* ref={memMdPassword} */}
+            <p>비밀번호</p><input value={memMdPassword} name='password' type='password'/>
             </div>
             <div className={styles.InputDiv}>
             <p>비밀번호 확인</p><input name='password2' type='password'/>
