@@ -203,7 +203,7 @@ function Mypage() {
           <div className={styles.infoInputBox}>
             <div className={styles.InputDiv}>
             {/* ref={memMdNickname} */}
-              <p>닉네임</p><input value={memMdNickname} name="nickname" type='text'/>
+              <p>닉네임</p><input value={memMdNickname} onChange={(e)=>{setMemMdNickname(e.target.value)}} name="nickname" type='text'/>
             </div>
             <div className={styles.InputDiv}>
             {/* ref={memMdPassword} */}
