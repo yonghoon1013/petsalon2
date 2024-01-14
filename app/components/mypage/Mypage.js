@@ -33,14 +33,17 @@ function Mypage() {
   const elWork = useRef([]);
   const router = useRouter();
 
-  console.log(memMdNickname);
+  let sKey;
+  if (typeof window !== "undefined") {
+    sKey = JSON.parse(sessionStorage.getItem("loginObj")).key;
+  }
+
   
   useEffect(()=>{
     lgChecking();
   }, [data]);
 
   const dataLd = async () => {
-    const sKey = sessionStorage.getItem("key");
     await axios.get(`/api/member?key=${sKey}`)
     .then(res=>{
       setData(res.data);
@@ -63,7 +66,6 @@ function Mypage() {
 
   const profUpload = async (e) => {
 		e.preventDefault();
-		const sKey = sessionStorage.getItem("key");
 		const formData = new FormData(e.target);
 		const objData = Object.fromEntries(formData);
     if(objData.password == objData.password2){
@@ -91,7 +93,6 @@ function Mypage() {
 
   const portPicUpload = async (e) => {
     e.preventDefault();
-    const sKey = sessionStorage.getItem("key");
     const formData = new FormData(e.target);
     formData.append("key", Date.now());
     formData.append("sKey", sKey);
@@ -110,7 +111,6 @@ function Mypage() {
   
   const infoModify = async (e) => {
     e.preventDefault();
-    const sKey = sessionStorage.getItem("key");
     const formData = new FormData(e.target);
     formData.append("key", sKey);
     const objData = Object.fromEntries(formData);
@@ -131,7 +131,6 @@ function Mypage() {
 
   const portDel = async (e, item) => {
     e.preventDefault();
-    const sKey = sessionStorage.getItem("key");
     await axios.delete(`/api/portPic?key=${item.key}&sKey=${sKey}`)
     .then(res=>{
       setPortPic(res.data)
@@ -139,7 +138,6 @@ function Mypage() {
   }
 
   const workingChange = async () => {
-    const sKey = sessionStorage.getItem("key");
     if(data[0].working) {
       await axios.put(`/api/working`, {key: sKey, working: false})
       .then(res=>{
