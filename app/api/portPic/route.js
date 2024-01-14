@@ -3,8 +3,7 @@ import dbConnect from "../db";
 export async function GET(req) {
     const qData = await Object.fromEntries(req.nextUrl.searchParams);
     const { client, collection } = await dbConnect("dPics");
-    const data = await collection.find({sKey: qData.key}).toArray();
-    // const data = await collection.find({objKey: qData.objKey}).toArray();
+    const data = await collection.find({sKey: qData.sKey}).toArray();
     await client.close();
     return Response.json(data);
 }
