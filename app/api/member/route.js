@@ -12,12 +12,13 @@ export async function GET(req) {
 
 export async function POST(req) {
     const qData = await req.json();
+    console.log('dksljfa', qData);
     const {client, collection} = await dbConnect("member");
     await collection.insertOne({id: qData.id, password: qData.pw, nickname:qData.nick, key: qData.key, info: "", imgUrl: "", lng: "", lat: "", dAddress: "", dDesc: "", dNumber1: "", dNumber2: "", dNumber3: "", dPrice: "", dTime1: "", dTime2: "", like: "0", working: false, mode:qData.type});
     const dataGet = await collection.find().toArray();
 
     await client.close();
-    return Response.json(dataGet);
+    return Response.json('');
 }
 
 export async function DELETE(req) {

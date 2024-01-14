@@ -162,7 +162,7 @@ function Mypage() {
   if(!data[0]) return (<Loading/>) 
   return (  
     <>
-    <section className={`${styles.mypageSec} ${userMode == "user" ? styles.active : ""}`}>
+    <section className={`footerPlus ${styles.mypageSec} ${userMode == "user" ? styles.active : ""}`}>
     <button onClick={()=>{
       sessionStorage.clear();
       router.push(`/pages/login`);
@@ -219,8 +219,11 @@ function Mypage() {
           </div>
         </form>
         <div className={styles.working}>
-          <div><strong>영업시작</strong></div>
-          <div><input checked={data[0].working} onChange={()=>{workingChange()}} ref={elWork} type='checkbox'/></div>
+            <div><strong>영업시작</strong></div>
+            <div className={styles.toggleWrapper}>
+              <input checked={data[0].working} onChange={()=>{workingChange()}} ref={elWork} type='checkbox' id="salesStart" className={styles.checkInput}/>
+              <label htmlFor="salesStart" className={styles.toggleLabel} />
+            </div>
         </div>
       </div>
 
