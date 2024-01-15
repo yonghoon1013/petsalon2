@@ -15,56 +15,54 @@ function Mypage() {
   const [mode, setMode] = useState("list");
   const [infoMode, setInfoMode] = useState("list");
   const [picMode, setPicMode] = useState("list");
-  const memMdProf = useRef([]);
-  const memMdNickname = useRef([]);
-  const memMdNickname2 = useRef([]);
-  const memMdPassword = useRef([]);
-  const memMdPassword2 = useRef([]);
-  const memMdInfo = useRef([]);
-  const memMdInfo2 = useRef([]);
-  const infMdDesc = useRef([]);
-  const infMddPrice = useRef([]);
-  const infMddTime1 = useRef([]);
-  const infMddTime2 = useRef([]);
-  const infMddAddress = useRef([]);
-  const infMddNumber1 = useRef([]);
-  const infMddNumber2 = useRef([]);
-  const infMddNumber3 = useRef([]);
-  const elWork = useRef([]);
+
+  const [nickname, setNickname] = useState([]);
+  const [password, setPassword] = useState([]);
+  const [info, setInfo] = useState([]);
+  const [desc, setDesc] = useState([]);
+  const [price, setPrice] = useState([]);
+  const [time1, setTime1] = useState([]);
+  const [time2, setTime2] = useState([]);
+  const [address, setAddress] = useState([]);
+  const [pNum1, setPNum1] = useState([]);
+  const [pNum2, setPNum2] = useState([]);
+  const [pNum3, setPNum3] = useState([]);
+
   const router = useRouter();
 
-  console.log(memMdNickname);
+
+
+  let sKey;
+	if (typeof window !== "undefined") {
+    sKey = sessionStorage.getItem("key");
+	};
+
   
   useEffect(()=>{
     lgChecking();
   }, [data]);
 
   const dataLd = async () => {
-    const sKey = sessionStorage.getItem("key");
     await axios.get(`/api/member?key=${sKey}`)
     .then(res=>{
       setData(res.data);
       console.log(res.data)
-      memMdNickname.current.value = res.data[0].nickname;
-      memMdPassword.current.value = res.data[0].password;
-      memMdInfo.current.value = res.data[0].info;
-      memMdNickname2.current.value = res.data[0].nickname;
-      memMdPassword2.current.value = res.data[0].password;
-      memMdInfo2.current.value = res.data[0].info;
-      infMdDesc.current.value = res.data[0].dDesc;
-      infMddPrice.current.value = res.data[0].dPrice;
-      infMddTime1.current.value = res.data[0].dTime1;
-      infMddTime2.current.value = res.data[0].dTime2;
-      infMddAddress.current.value = res.data[0].dAddress;
-      infMddNumber1.current.value = res.data[0].dNumber1;
-      infMddNumber2.current.value = res.data[0].dNumber2;
-      infMddNumber3.current.value = res.data[0].dNumber3;
+      setNickname(res.data[0].nickname);
+      setPassword(res.data[0].password);
+      setInfo(res.data[0].info);
+      setDesc(res.data[0].dDesc);
+      setPrice(res.data[0].dPrice);
+      setTime1(res.data[0].dTime1);
+      setTime2(res.data[0].dTime2);
+      setAddress(res.data[0].dAddress);
+      setPNum1(res.data[0].dNumber1);
+      setPNum2(res.data[0].dNumber2);
+      setPNum3(res.data[0].dNumber3);
       });
   };
 
   const profUpload = async (e) => {
 		e.preventDefault();
-		const sKey = sessionStorage.getItem("key");
 		const formData = new FormData(e.target);
 		const objData = Object.fromEntries(formData);
     if(objData.password == objData.password2){
@@ -92,7 +90,6 @@ function Mypage() {
 
   const portPicUpload = async (e) => {
     e.preventDefault();
-    const sKey = sessionStorage.getItem("key");
     const formData = new FormData(e.target);
     formData.append("key", Date.now());
     formData.append("sKey", sKey);
@@ -111,7 +108,6 @@ function Mypage() {
   
   const infoModify = async (e) => {
     e.preventDefault();
-    const sKey = sessionStorage.getItem("key");
     const formData = new FormData(e.target);
     formData.append("key", sKey);
     const objData = Object.fromEntries(formData);
@@ -132,7 +128,6 @@ function Mypage() {
 
   const portDel = async (e, item) => {
     e.preventDefault();
-    const sKey = sessionStorage.getItem("key");
     await axios.delete(`/api/portPic?key=${item.key}&sKey=${sKey}`)
     .then(res=>{
       setPortPic(res.data)
@@ -140,7 +135,6 @@ function Mypage() {
   }
 
   const workingChange = async () => {
-    const sKey = sessionStorage.getItem("key");
     if(data[0].working) {
       await axios.put(`/api/working`, {key: sKey, working: false})
       .then(res=>{
@@ -189,7 +183,7 @@ function Mypage() {
         </div>
         <form onSubmit={profUpload} className={`${styles.titleBoxMod} ${mode == "modify" ? styles.active : ""}`}>
           <div className={styles.portInputBox}>
-            <input className={styles.portInput} ref={memMdProf} name='upload' type='file' onChange={(e)=>{
+            <input className={styles.portInput} name='upload' type='file' onChange={(e)=>{
               e.preventDefault();
               let pic = e.target.files[0];
               pic && setMemView(URL.createObjectURL(pic));
@@ -201,16 +195,16 @@ function Mypage() {
           </div>
           <div className={styles.infoInputBox}>
             <div className={styles.InputDiv}>
-              <p>닉네임</p><input ref={memMdNickname} name="nickname" type='text'/>
+              <p>닉네임</p><input value={nickname} onChange={(e)=>{setNickname(e.target.value)}} name="nickname" type='text'/>
             </div>
             <div className={styles.InputDiv}>
-            <p>비밀번호</p><input ref={memMdPassword} name='password' type='password'/>
+            <p>비밀번호</p><input value={password} onChange={(e)=>{setPassword(e.target.value)}} name='password' type='password'/>
             </div>
             <div className={styles.InputDiv}>
             <p>비밀번호 확인</p><input name='password2' type='password'/>
             </div>
             <div className={styles.InputDiv}>
-            <p>소개</p><textarea className={styles.descInput} ref={memMdInfo} name="info"/>
+            <p>소개</p><textarea className={styles.descInput} value={info} onChange={(e)=>{setInfo(e.target.value)}} name="info"/>
             </div>
           </div>
           <div className={styles.profModBttnBox}>
@@ -221,7 +215,7 @@ function Mypage() {
         <div className={styles.working}>
             <div><strong>영업시작</strong></div>
             <div className={styles.toggleWrapper}>
-              <input checked={data[0].working} onChange={()=>{workingChange()}} ref={elWork} type='checkbox' id="salesStart" className={styles.checkInput}/>
+              <input checked={data[0].working} onChange={()=>{workingChange()}} type='checkbox' id="salesStart" className={styles.checkInput}/>
               <label htmlFor="salesStart" className={styles.toggleLabel} />
             </div>
         </div>
@@ -295,27 +289,27 @@ function Mypage() {
         <form onSubmit={infoModify} className={`${styles.infoBoxModi} ${infoMode == "modify" ? styles.active : ""}`}>
           <div className={styles.dDesc}>
             <span>안내사항</span>
-            <input ref={infMdDesc} name='dDesc'/>
+            <input value={desc} onChange={(e)=>setDesc(e.target.value)} name='dDesc'/>
           </div>
           <div className={styles.dPrice}>
             <span>가격정보</span>
-            <textarea ref={infMddPrice} name='dPrice'/>
+            <textarea value={price} onChange={(e)=>{setPrice(e.target.value)}} name='dPrice'/>
           </div>
           <div className={styles.dTime}>
             <span>영업시간</span>
-            <input ref={infMddTime1} type='time' name='dTime1'/>
-            <input ref={infMddTime2} type='time' name='dTime2'/>
+            <input value={time1} onChange={(e)=>{setTime1(e.target.value)}} type='time' name='dTime1'/>
+            <input value={time2} onChange={(e)=>{setTime2(e.target.value)}} type='time' name='dTime2'/>
           </div>
           <div className={styles.dAddress}>
             <span>주소</span>
-            <input ref={infMddAddress} name='dAddress'/>
+            <input value={address} onChange={(e)=>setAddress(e.target.value)} name='dAddress'/>
           </div>
           <div className={styles.dNumber}>
             <span>H.P</span>
             <div className={styles.hpBox}>
-              <input ref={infMddNumber1} maxLength={3} name='dNumber1'/>
-              <input ref={infMddNumber2} maxLength={4} name='dNumber2'/>
-              <input ref={infMddNumber3} maxLength={4} name='dNumber3'/>
+              <input value={pNum1} onChange={(e)=>{setPNum1(e.target.value)}} maxLength={3} name='dNumber1'/>
+              <input value={pNum2} onChange={(e)=>{setPNum2(e.target.value)}} maxLength={4} name='dNumber2'/>
+              <input value={pNum3} onChange={(e)=>{setPNum3(e.target.value)}} maxLength={4} name='dNumber3'/>
             </div>
           </div>
           <div className={styles.bttnBox}>
@@ -350,7 +344,7 @@ function Mypage() {
         </div>
         <form onSubmit={profUpload} className={`${styles.titleBoxMod} ${mode == "modify" ? styles.active : ""}`}>
           <div className={styles.portInputBox}>
-            <input className={styles.portInput} ref={memMdProf} name='upload' type='file' onChange={(e)=>{
+            <input className={styles.portInput} name='upload' type='file' onChange={(e)=>{
               e.preventDefault();
               let pic = e.target.files[0];
               pic && setMemView(URL.createObjectURL(pic));
@@ -362,16 +356,16 @@ function Mypage() {
           </div>
           <div className={styles.infoInputBox}>
             <div className={styles.InputDiv}>
-              <p>닉네임</p><input ref={memMdNickname2} name="nickname" type='text'/>
+              <p>닉네임</p><input value={nickname} onChange={(e)=>{setNickname(e.target.value)}} name="nickname" type='text'/>
             </div>
             <div className={styles.InputDiv}>
-            <p>비밀번호</p><input ref={memMdPassword2} name='password' type='password'/>
+            <p>비밀번호</p><input value={password} onChange={(e)=>{setPassword(e.target.value)}} name='password' type='password'/>
             </div>
             <div className={styles.InputDiv}>
             <p>비밀번호 확인</p><input name='password2' type='password'/>
             </div>
             <div className={styles.InputDiv}>
-            <p>소개</p><input ref={memMdInfo2} name="info"/>
+            <p>소개</p><input value={info} onChange={(e)=>{setInfo(e.target.value)}} name="info"/>
             </div>
           </div>
           <div className={styles.profModBttnBox}>
