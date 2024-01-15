@@ -15,21 +15,7 @@ function Mypage() {
   const [mode, setMode] = useState("list");
   const [infoMode, setInfoMode] = useState("list");
   const [picMode, setPicMode] = useState("list");
-
-  const [nickname, setNickname] = useState([]);
-  const [password, setPassword] = useState([]);
-  const [info, setInfo] = useState([]);
-  const [desc, setDesc] = useState([]);
-  const [price, setPrice] = useState([]);
-  const [time1, setTime1] = useState([]);
-  const [time2, setTime2] = useState([]);
-  const [address, setAddress] = useState([]);
-  const [pNum1, setPNum1] = useState([]);
-  const [pNum2, setPNum2] = useState([]);
-  const [pNum3, setPNum3] = useState([]);
-
   const router = useRouter();
-
 
 
   let sKey;
@@ -42,22 +28,12 @@ function Mypage() {
     lgChecking();
   }, [data]);
 
+
   const dataLd = async () => {
     await axios.get(`/api/member?key=${sKey}`)
     .then(res=>{
       setData(res.data);
-      console.log(res.data)
-      setNickname(res.data[0].nickname);
-      setPassword(res.data[0].password);
-      setInfo(res.data[0].info);
-      setDesc(res.data[0].dDesc);
-      setPrice(res.data[0].dPrice);
-      setTime1(res.data[0].dTime1);
-      setTime2(res.data[0].dTime2);
-      setAddress(res.data[0].dAddress);
-      setPNum1(res.data[0].dNumber1);
-      setPNum2(res.data[0].dNumber2);
-      setPNum3(res.data[0].dNumber3);
+      console.log(res.data);
       });
   };
 
@@ -195,16 +171,16 @@ function Mypage() {
           </div>
           <div className={styles.infoInputBox}>
             <div className={styles.InputDiv}>
-              <p>닉네임</p><input value={nickname} onChange={(e)=>{setNickname(e.target.value)}} name="nickname" type='text'/>
+              <p>닉네임</p><input value={data[0].nickname} onChange={(e)=>{setData(data.map(item=>{item.nickname = e.target.value; return item;}))}} name="nickname" type='text'/>
             </div>
             <div className={styles.InputDiv}>
-            <p>비밀번호</p><input value={password} onChange={(e)=>{setPassword(e.target.value)}} name='password' type='password'/>
+            <p>비밀번호</p><input value={data[0].password} onChange={(e)=>{setData(data.map(item=>{item.password = e.target.value; return item;}))}} name='password' type='password'/>
             </div>
             <div className={styles.InputDiv}>
             <p>비밀번호 확인</p><input name='password2' type='password'/>
             </div>
             <div className={styles.InputDiv}>
-            <p>소개</p><textarea className={styles.descInput} value={info} onChange={(e)=>{setInfo(e.target.value)}} name="info"/>
+            <p>소개</p><textarea className={styles.descInput} value={data[0].info} onChange={(e)=>{setData(data.map(item=>{item.info = e.target.value; return item;}))}} name="info"/>
             </div>
           </div>
           <div className={styles.profModBttnBox}>
@@ -289,27 +265,27 @@ function Mypage() {
         <form onSubmit={infoModify} className={`${styles.infoBoxModi} ${infoMode == "modify" ? styles.active : ""}`}>
           <div className={styles.dDesc}>
             <span>안내사항</span>
-            <input value={desc} onChange={(e)=>setDesc(e.target.value)} name='dDesc'/>
+            <input value={data[0].dDesc} onChange={(e)=>{setData(data.map(item=>{item.dDesc = e.target.value; return item;}))}} name='dDesc'/>
           </div>
           <div className={styles.dPrice}>
             <span>가격정보</span>
-            <textarea value={price} onChange={(e)=>{setPrice(e.target.value)}} name='dPrice'/>
+            <textarea value={data[0].dPrice} onChange={(e)=>{setData(data.map(item=>{item.dPrice = e.target.value; return item;}))}} name='dPrice'/>
           </div>
           <div className={styles.dTime}>
             <span>영업시간</span>
-            <input value={time1} onChange={(e)=>{setTime1(e.target.value)}} type='time' name='dTime1'/>
-            <input value={time2} onChange={(e)=>{setTime2(e.target.value)}} type='time' name='dTime2'/>
+            <input value={data[0].dTime1} onChange={(e)=>{setData(data.map(item=>{item.dTime1 = e.target.value; return item;}))}} type='time' name='dTime1'/>
+            <input value={data[0].dTime2} onChange={(e)=>{setData(data.map(item=>{item.dTime2 = e.target.value; return item;}))}} type='time' name='dTime2'/>
           </div>
           <div className={styles.dAddress}>
             <span>주소</span>
-            <input value={address} onChange={(e)=>setAddress(e.target.value)} name='dAddress'/>
+            <input value={data[0].dAddress} onChange={(e)=>{setData(data.map(item=>{item.dAddress = e.target.value; return item;}))}} name='dAddress'/>
           </div>
           <div className={styles.dNumber}>
             <span>H.P</span>
             <div className={styles.hpBox}>
-              <input value={pNum1} onChange={(e)=>{setPNum1(e.target.value)}} maxLength={3} name='dNumber1'/>
-              <input value={pNum2} onChange={(e)=>{setPNum2(e.target.value)}} maxLength={4} name='dNumber2'/>
-              <input value={pNum3} onChange={(e)=>{setPNum3(e.target.value)}} maxLength={4} name='dNumber3'/>
+              <input value={data[0].dNumber1} onChange={(e)=>{setData(data.map(item=>{item.dNumber1 = e.target.value; return item;}))}} maxLength={3} name='dNumber1'/>
+              <input value={data[0].dNumber2} onChange={(e)=>{setData(data.map(item=>{item.dNumber2 = e.target.value; return item;}))}} maxLength={4} name='dNumber2'/>
+              <input value={data[0].dNumber3} onChange={(e)=>{setData(data.map(item=>{item.dNumber3 = e.target.value; return item;}))}} maxLength={4} name='dNumber3'/>
             </div>
           </div>
           <div className={styles.bttnBox}>
@@ -356,16 +332,16 @@ function Mypage() {
           </div>
           <div className={styles.infoInputBox}>
             <div className={styles.InputDiv}>
-              <p>닉네임</p><input value={nickname} onChange={(e)=>{setNickname(e.target.value)}} name="nickname" type='text'/>
+              <p>닉네임</p><input value={data[0].nickname} onChange={(e)=>{setData(data.map(item=>{item.nickname = e.target.value; return item;}))}} name="nickname" type='text'/>
             </div>
             <div className={styles.InputDiv}>
-            <p>비밀번호</p><input value={password} onChange={(e)=>{setPassword(e.target.value)}} name='password' type='password'/>
+            <p>비밀번호</p><input value={data[0].password} onChange={(e)=>{setData(data.map(item=>{item.password = e.target.value; return item;}))}} name='password' type='password'/>
             </div>
             <div className={styles.InputDiv}>
             <p>비밀번호 확인</p><input name='password2' type='password'/>
             </div>
             <div className={styles.InputDiv}>
-            <p>소개</p><input value={info} onChange={(e)=>{setInfo(e.target.value)}} name="info"/>
+            <p>소개</p><input value={data[0].info} onChange={(e)=>{setData(data.map(item=>{item.info = e.target.value; return item;}))}} name="info"/>
             </div>
           </div>
           <div className={styles.profModBttnBox}>

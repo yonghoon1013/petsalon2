@@ -86,6 +86,7 @@ function Login() {
                   
                   //local에서 session으로 고친 구간
                   sessionStorage.setItem("loginBool", true);
+                  sessionStorage.setItem("key", res.data[0].key);
                   sessionStorage.setItem("loginObj", JSON.stringify(loginObj));
                   navigation.push('/pages/list');
                 } else {
