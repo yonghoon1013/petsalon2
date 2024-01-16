@@ -63,10 +63,10 @@ function Login() {
     const kakaoLoginBtn = () => {
         
       if(!Kakao.isInitialized()) {//초기화(init)이 되있는지 여부에 따라 true, false
-        Kakao.init('647e5d4eca26ea4df7ba83ca043a166f') //초기화는 한 번만 //이미 된 상태에서 또 하면 오류라서 이렇게 함
+        Kakao.init(process.env.NEXT_PUBLIC_KJSKEY) //초기화는 한 번만 //이미 된 상태에서 또 하면 오류라서 이렇게 함
       }
-      
       //발급받은 키 중 javascript키를 사용해준다.
+
       Kakao.Auth.login({
         success: function (response) {
           Kakao.API.request({
@@ -74,7 +74,7 @@ function Login() {
             success: async function (response) {
               kakaoLogout();
 
-              axios.get(`/api/login?id=${'kakao_' + response.id}&pw=kakao123!`)
+              axios.get(`/api/login?id=${'kakao_' + response.id}&pw=`)
               .then(res=>{
                 
                 if(res.data.length > 0) {//가입한 적이 있을 때)
@@ -88,7 +88,11 @@ function Login() {
                   sessionStorage.setItem("loginBool", true);
                   sessionStorage.setItem("key", res.data[0].key);
                   sessionStorage.setItem("loginObj", JSON.stringify(loginObj));
-                  navigation.push('/pages/list');
+                  if(detailLink){
+                    navigation.push(detailLink);
+                  } else{
+                    navigation.push('/pages/list');
+                  }
                 } else {
                   alertBoard("아직 카카오로 가입하신 적이 없는 회원입니다."); //"응 실패 그거"
                 }
@@ -105,6 +109,7 @@ function Login() {
           console.log(error);
         },//fail(error)
       })
+
     }//kakaoLoginBtn() 함수정의
 
     const pwVisualFun = (e) => {

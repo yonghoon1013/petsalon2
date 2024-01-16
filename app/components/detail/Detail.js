@@ -33,7 +33,7 @@ function Detail() {
 	const paramsData = useSearchParams();
 	const objKey = paramsData.get("key");
 
-	const kakaoApiKey = "647e5d4eca26ea4df7ba83ca043a166f";
+	const kakaoApiKey = process.env.NEXT_PUBLIC_KJSKEY;
 
 	let sKey;
 	if (typeof window !== "undefined") {

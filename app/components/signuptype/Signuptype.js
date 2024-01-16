@@ -54,8 +54,14 @@ export default function Signuptype() {
             //해당 값('id', 'pw', 'nick', 'mode', 'key', 'pwCheck')중 하나여야 함
             const regErrCheck = /\b(?:id|pw|nick|mode|key|pwCheck)\b/; 
 
+            const signUpMode = sessionStorage.getItem("signUpMode");
+
             for(let item in signUpData){
                 if(signUpData[item] == '' || signUpData[item] == null || signUpData[item] == undefined || !regErrCheck.test(item)){
+                    if(signUpMode == 'kakao' && item == 'pw'){
+                        // console.log('됬나오?', signUpData, item);
+                        continue;
+                    }
                     error = true;  
                 }
             }//for(let item in signUpData)

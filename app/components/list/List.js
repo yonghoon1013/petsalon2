@@ -15,7 +15,7 @@ function List() {
     const [view, setView] = useState([]);
     const [filterMatcheData,setFilterMatcheData] = useState([]);
 
-    const kakaoApiKey = 'a43f4548d7ab6e9e81f8e7352d183921';
+    const kakaoApiKey = process.env.NEXT_PUBLIC_KRSKEY;
 
     const portLoading = async () =>{
         await axios.get(`/api/portPic/dd`)
