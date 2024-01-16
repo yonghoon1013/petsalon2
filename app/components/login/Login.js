@@ -15,6 +15,8 @@ function Login() {
     const detailLink = paramsData.get("detailNum");
     const elPwInput = useRef();
     const [type, setType] = useState('password');
+    // const kakaoApiKey = process.env.NEXT_PUBLIC_kakaoJsKey;
+    
     const kakaoLogout = () => {
         if(Kakao.Auth.getAccessToken()) {
             Kakao.API.request({
@@ -63,7 +65,7 @@ function Login() {
     const kakaoLoginBtn = () => {
         
       if(!Kakao.isInitialized()) {//초기화(init)이 되있는지 여부에 따라 true, false
-        Kakao.init('9ca81e01a40fd83bbfb14e219ad5eb0a') //초기화는 한 번만 //이미 된 상태에서 또 하면 오류라서 이렇게 함
+        Kakao.init(process.env.NEXT_PUBLIC_kakaoJsKey) //초기화는 한 번만 //이미 된 상태에서 또 하면 오류라서 이렇게 함
       }
       
       //발급받은 키 중 javascript키를 사용해준다.
@@ -74,7 +76,7 @@ function Login() {
             success: async function (response) {
               kakaoLogout();
 
-              axios.get(`/api/login?id=${'kakao_' + response.id}&pw=kakao123!`)
+              axios.get(`/api/login?id=${'kakao_' + response.id}&pw=`)
               .then(res=>{
                 
                 if(res.data.length > 0) {//가입한 적이 있을 때)
@@ -86,8 +88,13 @@ function Login() {
                   
                   //local에서 session으로 고친 구간
                   sessionStorage.setItem("loginBool", true);
+                  sessionStorage.setItem("key", res.data[0].key);
                   sessionStorage.setItem("loginObj", JSON.stringify(loginObj));
-                  navigation.push('/pages/list');
+                  if(detailLink){
+                    navigation.push(detailLink);
+                  } else{
+                    navigation.push('/pages/list');
+                  }
                 } else {
                   alertBoard("아직 카카오로 가입하신 적이 없는 회원입니다."); //"응 실패 그거"
                 }
