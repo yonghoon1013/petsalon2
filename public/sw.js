@@ -95,7 +95,16 @@ define(['./workbox-e43f5367'], (function (workbox) { 'use strict';
   workbox.registerRoute(/.*/i, new workbox.NetworkOnly({
     "cacheName": "dev",
     plugins: []
-  }), 'GET');
+  }), 'GET'); 
+
+  const precacheFiles = [
+    '/index.html',
+    '/styles/main.css',
+    '/_next/app-build-manifest.json',
+    // ... 다른 파일들
+  ];
+
+  workbox.precaching.precacheAndRoute(precacheFiles);
 
 }));
 //# sourceMappingURL=sw.js.map
