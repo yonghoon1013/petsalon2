@@ -15,7 +15,7 @@ function List() {
     const [view, setView] = useState([]);
     const [filterMatcheData,setFilterMatcheData] = useState([]);
 
-    const kakaoApiKey = 'ada4f617119bd4461bb3450e76355946';
+    // const kakaoApiKey = process.env.NEXT_PUBLIC_kakaoRestKey;
 
     const portLoading = async () =>{
         await axios.get(`/api/portPic/dd`)
@@ -87,7 +87,7 @@ function List() {
                 `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${lng}&y=${lat}`,
                 {
                     headers: {
-                        Authorization: `KakaoAK ${kakaoApiKey}`, // 여기에 발급받은 REST API 키를 넣어주세요.
+                        Authorization: `KakaoAK ${process.env.NEXT_PUBLIC_kakaoRestKey}`, // 여기에 발급받은 REST API 키를 넣어주세요.
                     },
                 }
             );

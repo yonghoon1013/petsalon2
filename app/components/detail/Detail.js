@@ -33,7 +33,7 @@ function Detail() {
     const paramsData = useSearchParams();
     const objKey = paramsData.get("key");
 
-    const kakaoApiKey = "9ca81e01a40fd83bbfb14e219ad5eb0a";
+    // const kakaoApiKey = process.env.NEXT_PUBLIC_kakaoJsKey;
 
     let sKey;
     if (typeof window !== "undefined") {
@@ -219,7 +219,7 @@ function Detail() {
         document.body.appendChild(script);
 
         script.onload = () => {
-            Kakao.init(kakaoApiKey); // 사용하려는 앱의 JavaScript 키 입력
+            Kakao.init(process.env.NEXT_PUBLIC_kakaoJsKey); // 사용하려는 앱의 JavaScript 키 입력
 
         };
 
@@ -231,7 +231,7 @@ function Detail() {
 
     const kakaoMapLoad = () => {
         const script = document.createElement("script");
-        script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${kakaoApiKey}&autoload=false`;
+        script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_kakaoJsKey}&autoload=false`;
         script.async = true;
         document.head.appendChild(script);
 

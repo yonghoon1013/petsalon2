@@ -37,7 +37,7 @@ export default function Intro() {
     }else{// 카카오 회원가입인 경우)
       //console.log(Kakao.isInitialized()); // sdk초기화여부판단
       if(!Kakao.isInitialized()){//초기화(init)이 되있는지 여부에 따라 true, false
-        Kakao.init('9ca81e01a40fd83bbfb14e219ad5eb0a') //초기화는 한 번만 //이미 된 상태에서 또 하면 오류라서 이렇게 함
+        Kakao.init(process.env.NEXT_PUBLIC_kakaoJsKey) //초기화는 한 번만 //이미 된 상태에서 또 하면 오류라서 이렇게 함
       }
       
       //발급받은 키 중 javascript키를 사용해준다.
@@ -54,7 +54,7 @@ export default function Intro() {
                 const objData = {
                   key: Date.now(),
                   id: 'kakao_' + response.id,
-                  pw: 'kakao123!',
+                  pw: '',
                   nick: response.kakao_account.profile.nickname
                 }
                 kakaoLogout();
