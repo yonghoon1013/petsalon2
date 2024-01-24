@@ -83,6 +83,29 @@ export default function Intro() {
     }//else
 
   }//signUpFun() 함수정의
+
+
+  const testLogin = async() =>{
+    axios.get(`/api/login?id=${"test1234"}&pw=${"qwerasd1!"}`)
+    .then(res=>{
+
+      if(res.data.length > 0) {//가입한 아이디가 있을 때)
+        const loginObj = {
+            id: res.data[0].id,
+            key: res.data[0].key,
+            nickname: res.data[0].nickname
+            }//loginObj 객체
+
+        //local에서 session으로 고친 구간
+        sessionStorage.setItem("loginBool", true);
+        sessionStorage.setItem("key", res.data[0].key);
+        sessionStorage.setItem("loginObj", JSON.stringify(loginObj));
+        navigation.push('/pages/list');
+      } else {
+        alertBoard("아이디 또는 비밀번호를 다시 확인해주세요."); //"응 실패 그거"
+      }
+    })
+  }
     
     
   return (
@@ -96,6 +119,7 @@ export default function Intro() {
             </li>
         </ul>
         <div className='btnWrapper'>
+          <div className='testBtn' onClick={()=>{testLogin()}}>테스트로그인</div>
             <button type='button' className='kakaoSignUpBtn' 
             onClick={() => {signUpFun(false)}}>
                 카카오로 회원가입
