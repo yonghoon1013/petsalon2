@@ -125,9 +125,9 @@ function Login() {
 
   return (
         <form className='contentsWrapper' onSubmit={loginFn}>
-            <input type='text' className='idInput' name="id" placeholder='아이디'/>
+            <input type='text' className='idInput' name="id" placeholder='테스트아이디 : test1234'/>
             <div className='pwInputWrapper'>
-                <input type={type} className='pwInput' name="pw" placeholder='비밀번호' ref={elPwInput}/>
+                <input type={type} className='pwInput' name="pw" placeholder='테스트비밀번호 : qwerasd1!' ref={elPwInput}/>
                 <button type='button' className='pwVisualBtn' onClick={pwVisualFun}/>
             </div> 
             <button className='loginBtn'>

@@ -178,7 +178,15 @@ button{
 
                 }
             }
-            
+            >div.testBtn{
+                padding: 10px;
+                cursor: pointer;
+                font-size: 16px;
+                text-align: center;
+                margin-bottom: 10px;
+                color: white;
+                background-color: #2D2D2D;
+            }
             >button.kakaoSignUpBtn{
                 background: $mainColor1;
                 margin-bottom: 24px;
